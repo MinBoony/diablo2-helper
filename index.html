@@ -346,6 +346,617 @@
       <button class="slot-btn" onclick="setSlotFilter('가슴', this)">가슴(갑옷)</button>
       <button class="slot-btn" onclick="setSlotFilter('방패', this)">방패</button>
       <button class="slot-btn" onclick="setSlotFilter('무기', this)">무기</button>
+      // 종합 데이터베이스 (핵심 룬워드 + 유니크 + 주요 사냥터 풀세트)
+    const database = [
+      /* =================== [룬워드 - 무기] =================== */
+      {
+        id: "rw_grief", category: "runeword", slot: "무기", name: "슬픔 (고뇌)", enName: "Grief",
+        sub: "룬워드 요구 레벨 59", desc: "근접 물리 딜러 0티어 종결 무기",
+        primary: "에드 + 티르 + 로 + 말 + 랄 · 5소켓 도검/도끼", summary: "피해 +340~400 절대값 추가, 공속, 치명타",
+        stats: [
+          { name: "공격 속도", val: "+30~40% (변동)" },
+          { name: "피해 추가", val: "+340~400 (변동)" },
+          { name: "적의 대상 방어력 무시", val: "적용" },
+          { name: "치명적 공격", val: "20%" },
+          { name: "적의 독 저항 감소", val: "-20~25% (변동)" }
+        ]
+      },
+      {
+        id: "rw_hoto", category: "runeword", slot: "무기", name: "오크의 심장 (오심)", enName: "Heart of the Oak",
+        sub: "룬워드 요구 레벨 55", desc: "캐스터 계열의 범용 종결 한손 무기",
+        primary: "코 + 벡스 + 풀 + 주울 · 4소켓 프레일류/스태프", summary: "+3 모든 기술, 시전 속도 40%, 모든 저항 30~40",
+        stats: [
+          { name: "모든 기술 레벨", val: "+3" },
+          { name: "시전 속도", val: "+40%" },
+          { name: "모든 저항", val: "+30~40 (변동)" },
+          { name: "최대 마나 증가", val: "15%" },
+          { name: "생명력 회복", val: "+20" }
+        ]
+      },
+      {
+        id: "rw_insight", category: "runeword", slot: "무기", name: "통찰", enName: "Insight",
+        sub: "룬워드 요구 레벨 27", desc: "용병 및 초중반 필수 마나 충전 무기",
+        primary: "랄 + 티르 + 탈 + 솔 · 4소켓 폴암/스태프/활", summary: "명상(메디테이션) 오라로 마나 무한 공급",
+        stats: [
+          { name: "장착 시 명상 오라", val: "12~17레벨 (변동)" },
+          { name: "시전 속도", val: "+35%" },
+          { name: "피해 증가", val: "+200~260% (변동)" },
+          { name: "치명타", val: "+1~6 (변동)" },
+          { name: "마법 아이템 발견 확률", val: "+23%" }
+        ]
+      },
+      {
+        id: "rw_infinity", category: "runeword", slot: "무기", name: "무한 (무공)", enName: "Infinity",
+        sub: "룬워드 요구 레벨 63", desc: "원소 딜러(체라, 자avelin 등) 종결 무기",
+        primary: "베르 + 말 + 베르 + 이스트 · 4소켓 폴암/창", summary: "12레벨 선고(컨빅션) 오라로 적 저항 파괴",
+        stats: [
+          { name: "장착 시 선고 오라", val: "12레벨" },
+          { name: "달리기/걷기 속도", val: "+35%" },
+          { name: "피해 증가", val: "+255~325% (변동)" },
+          { name: "적의 번개 저항 감소", val: "-45~55% (변동)" },
+          { name: "강타 확률", val: "40%" }
+        ]
+      },
+      {
+        id: "rw_call_to_arms", category: "runeword", slot: "무기", name: "소집 (콜투암스)", enName: "Call to Arms",
+        sub: "룬워드 요구 레벨 57", desc: "스왑용 함성(전투 지휘, 전투 명령) 필수 무기",
+        primary: "앰 + 랄 + 말 + 이스트 + 오움 · 5소켓 무기", summary: "모든 캐릭터에게 바바리안 함성 부여",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "시전 속도", val: "+40%" },
+          { name: "전투 명령 (배틀 오더스)", val: "+1~6 (변동)" },
+          { name: "전투 지휘 (배틀 커맨드)", val: "+1~6 (변동)" },
+          { name: "전투의 함성", val: "+1~4 (변동)" }
+        ]
+      },
+      {
+        id: "rw_faith", category: "runeword", slot: "무기", name: "신념 (신뢰)", enName: "Faith",
+        sub: "룬워드 요구 레벨 65", desc: "물리 아마존 종결 활",
+        primary: "오움 + 자 + 렘 + 엘드 · 4소켓 원거리 무기", summary: "광신(파나티시즘) 오라로 극한의 공속 제공",
+        stats: [
+          { name: "장착 시 광신 오라", val: "12~15레벨 (변동)" },
+          { name: "모든 기술 레벨", val: "+1~2 (변동)" },
+          { name: "피해 증가", val: "+330%" },
+          { name: "방어력 무시", val: "적용" },
+          { name: "모든 저항", val: "+15" }
+        ]
+      },
+      {
+        id: "rw_death", category: "runeword", slot: "무기", name: "죽음 (데스)", enName: "Death",
+        sub: "룬워드 요구 레벨 55", desc: "강타와 치명타로 보스를 분쇄하는 무기",
+        primary: "헬 + 엘 + 베르 + 오르트 + 벡스 · 5소켓 도검/도끼", summary: "파괴 불가, 50% 강타, 레벨 비례 치명타",
+        stats: [
+          { name: "파괴 불가", val: "적용" },
+          { name: "피해 증가", val: "+300~385% (변동)" },
+          { name: "강타 확률", val: "50%" },
+          { name: "치명적 공격", val: "레벨당 0.5%" },
+          { name: "마나 흡수", val: "7%" }
+        ]
+      },
+      {
+        id: "rw_botd", category: "runeword", slot: "무기", name: "죽어가는 자의 숨결 (죽숨)", enName: "Breath of the Dying",
+        sub: "룬워드 요구 레벨 69", desc: "파괴 불가와 막대한 깡딜, 올스탯",
+        primary: "벡스 + 헬 + 엘 + 엘드 + 조드 + 에드 · 6소켓 무기", summary: "공속 60%, 피해 최대 400%, 모든 능력치 +30",
+        stats: [
+          { name: "파괴 불가", val: "적용" },
+          { name: "공격 속도", val: "+60%" },
+          { name: "피해 증가", val: "+350~400% (변동)" },
+          { name: "생명력 흡수", val: "12~15% (변동)" },
+          { name: "모든 능력치", val: "+30" }
+        ]
+      },
+      {
+        id: "rw_beast", category: "runeword", slot: "무기", name: "야수 (비스트)", enName: "Beast",
+        sub: "룬워드 요구 레벨 63", desc: "조폭넥 및 곰변신 빌드 필수 무기",
+        primary: "베르 + 티르 + 움 + 말 + 럼 · 5소켓 도끼/셉터/망치", summary: "광신 오라 + 곰인간 변신",
+        stats: [
+          { name: "장착 시 광신 오라", val: "9레벨" },
+          { name: "곰인간 변신", val: "+3" },
+          { name: "피해 증가", val: "+240~270% (변동)" },
+          { name: "강타 확률", val: "20%" },
+          { name: "힘", val: "+25~40 (변동)" }
+        ]
+      },
+
+      /* =================== [룬워드 - 가슴 (갑옷)] =================== */
+      {
+        id: "rw_enigma", category: "runeword", slot: "가슴", name: "수수께끼", enName: "Enigma",
+        sub: "룬워드 요구 레벨 65", desc: "모든 직업의 기동성을 완성하는 최종 갑옷",
+        primary: "자 + 아이드 + 베르 · 3소켓 갑옷", summary: "순간이동 + 레벨 비례 힘 증가 + 매찬",
+        stats: [
+          { name: "순간이동 (텔레포트)", val: "+1" },
+          { name: "모든 기술 레벨", val: "+2" },
+          { name: "달리기/걷기 속도", val: "+45%" },
+          { name: "힘 (레벨 비례)", val: "레벨당 0.75 (최대 74)" },
+          { name: "피해 감소", val: "8%" },
+          { name: "마법 아이템 발견 확률", val: "레벨당 1%" }
+        ]
+      },
+      {
+        id: "rw_fortitude_body", category: "runeword", slot: "가슴", name: "인내 (갑옷)", enName: "Fortitude",
+        sub: "룬워드 요구 레벨 59", desc: "물리 딜러 본체 및 용병용 종결 갑옷",
+        primary: "엘 + 솔 + 돌 + 로 · 4소켓 갑옷", summary: "피해 +300%, 모든 저항 25~30, 칠링 아머",
+        stats: [
+          { name: "피해 증가", val: "+300%" },
+          { name: "방어력 증가", val: "+200%" },
+          { name: "모든 저항", val: "+25~30 (변동)" },
+          { name: "생명력 (레벨 비례)", val: "레벨당 +1~1.5 (변동)" },
+          { name: "피격 시 15레벨 칠링아머 발동", val: "20%" }
+        ]
+      },
+      {
+        id: "rw_chains_of_honor", category: "runeword", slot: "가슴", name: "명예의 굴레 (명굴)", enName: "Chains of Honor",
+        sub: "룬워드 요구 레벨 63", desc: "올스킬과 압도적인 저항력의 밸런스 갑옷",
+        primary: "돌 + 움 + 베르 + 이스트 · 4소켓 갑옷", summary: "+2 모든 기술, 모든 저항 +65, 피해 감소 8%",
+        stats: [
+          { name: "모든 기술 레벨", val: "+2" },
+          { name: "모든 저항", val: "+65" },
+          { name: "피해 감소", val: "8%" },
+          { name: "악마에게 주는 피해", val: "+200%" },
+          { name: "생명력 흡수", val: "8%" },
+          { name: "힘", val: "+20" }
+        ]
+      },
+      {
+        id: "rw_treachery", category: "runeword", slot: "가슴", name: "배신 (트랫셔리)", enName: "Treachery",
+        sub: "룬워드 요구 레벨 43", desc: "용병 공속 프레임 확보 및 생존용 가성비 갑옷",
+        primary: "샤엘 + 주울 + 렘 · 3소켓 갑옷", summary: "공속 45%, 피격 시 흐리기(페이드) 발동",
+        stats: [
+          { name: "공격 속도", val: "+45%" },
+          { name: "피격 시 15레벨 흐리기 발동", val: "5%" },
+          { name: "타격 회복 속도", val: "+20%" },
+          { name: "냉기 저항", val: "+30%" }
+        ]
+      },
+      {
+        id: "rw_stealth", category: "runeword", slot: "가슴", name: "잠행 (스텔스)", enName: "Stealth",
+        sub: "룬워드 요구 레벨 17", desc: "노말 초반 최고의 국민 육성 갑옷",
+        primary: "탈 + 에드 · 2소켓 갑옷", summary: "이동속도 25%, 시전속도 25%, 패힛 25%",
+        stats: [
+          { name: "달리기/걷기 속도", val: "+25%" },
+          { name: "시전 속도", val: "+25%" },
+          { name: "타격 회복 속도", val: "+25%" },
+          { name: "마나 재생", val: "+15%" },
+          { name: "독 저항", val: "+30%" }
+        ]
+      },
+      {
+        id: "rw_smoke", category: "runeword", slot: "가슴", name: "연기", enName: "Smoke",
+        sub: "룬워드 요구 레벨 37", desc: "악몽~지옥 진입 시 저항력 해결사",
+        primary: "네프 + 룸 · 2소켓 갑옷", summary: "모든 저항 +50, 방어력 증가",
+        stats: [
+          { name: "모든 저항", val: "+50" },
+          { name: "방어력 증가", val: "+75%" },
+          { name: "타격 회복 속도", val: "+20%" },
+          { name: "원거리 공격 방어력", val: "+280" }
+        ]
+      },
+      {
+        id: "rw_hustle_armor", category: "runeword", slot: "가슴", name: "서두름 (허슬 갑옷)", enName: "Hustle",
+        sub: "룬워드 요구 레벨 39", desc: "신규 패치 가성비 공속/이속 갑옷",
+        primary: "샤엘 + 코 + 엘드 · 3소켓 갑옷", summary: "달리기 65%, 공속 40%, 민첩 +10",
+        stats: [
+          { name: "달리기/걷기 속도", val: "+65%" },
+          { name: "공격 속도", val: "+40%" },
+          { name: "타격 회복 속도", val: "+20%" },
+          { name: "민첩", val: "+10" }
+        ]
+      },
+
+      /* =================== [룬워드 - 머리 (투구)] =================== */
+      {
+        id: "rw_flickering_flame", category: "runeword", slot: "머리", name: "꺼져가는 불길 (불길)", enName: "Flickering Flame",
+        sub: "룬워드 요구 레벨 55", desc: "화염 원소 딜러 종결 투구",
+        primary: "네프 + 풀 + 벡스 · 3소켓 투구", summary: "정화 오라 + 적 화염 저항 깎기",
+        stats: [
+          { name: "장착 시 정화(클렌징) 오라", val: "4~8레벨 (변동)" },
+          { name: "화염 기술 레벨", val: "+3" },
+          { name: "적의 화염 저항 감소", val: "-10~15% (변동)" },
+          { name: "화염 저항 최대치", val: "+5%" }
+        ]
+      },
+      {
+        id: "rw_lore", category: "runeword", slot: "머리", name: "전승 (학식)", enName: "Lore",
+        sub: "룬워드 요구 레벨 27", desc: "초반 +1 스킬 레벨업용 국민 투구",
+        primary: "오르트 + 솔 · 2소켓 투구", summary: "+1 모든 기술, 번개 저항 30%",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "번개 저항", val: "+30%" },
+          { name: "에너지", val: "+10" },
+          { name: "처치 시 마나 획득", val: "+2" }
+        ]
+      },
+      {
+        id: "rw_cure", category: "runeword", slot: "머리", name: "치료", enName: "Cure",
+        sub: "룬워드 요구 레벨 35", desc: "기도 용병 세팅 종결 힐링 투구",
+        primary: "샤엘 + 이오 + 탈 · 3소켓 투구", summary: "정화 오라로 저주 및 중독 시간 대폭 단축",
+        stats: [
+          { name: "장착 시 정화 오라", val: "1레벨" },
+          { name: "타격 회복 속도", val: "+20%" },
+          { name: "독 저항", val: "+40~60% (변동)" },
+          { name: "독 지속시간 감소", val: "50%" }
+        ]
+      },
+      {
+        id: "rw_delirium", category: "runeword", slot: "머리", name: "착란 (구 둔병)", enName: "Delirium",
+        sub: "룬워드 요구 레벨 51", desc: "군중 제어 및 드루/바바 스킬 세팅 투구",
+        primary: "렘 + 이스트 + 이오 · 3소켓 투구", summary: "+2 모든 기술 및 혼란 유발",
+        stats: [
+          { name: "모든 기술 레벨", val: "+2" },
+          { name: "타격 시 11레벨 혼란 시전", val: "11%" },
+          { name: "마법 아이템 발견 확률", val: "+25%" }
+        ]
+      },
+
+      /* =================== [룬워드 - 방패] =================== */
+      {
+        id: "rw_spirit_shield", category: "runeword", slot: "방패", name: "영혼 (스피리트 방패)", enName: "Spirit Shield",
+        sub: "룬워드 요구 레벨 25", desc: "원소 및 마법 딜러 0티어 방패 (모넉 스피릿)",
+        primary: "탈 + 주울 + 오르트 + 앰 · 4소켓 방패", summary: "+2 모든 기술, 시전 속도 최대 35%, 3색 저항 35%",
+        stats: [
+          { name: "모든 기술 레벨", val: "+2" },
+          { name: "시전 속도", val: "+25~35% (변동)" },
+          { name: "타격 회복 속도", val: "+55%" },
+          { name: "화염 제외 3색 저항", val: "각 +35%" },
+          { name: "마나", val: "+89~112 (변동)" }
+        ]
+      },
+      {
+        id: "rw_phoenix_shield", category: "runeword", slot: "방패", name: "불사조 (방패)", enName: "Phoenix",
+        sub: "룬워드 요구 레벨 65", desc: "속죄 오라로 피/마나를 자동 충전하는 방패",
+        primary: "벡스 + 벡스 + 로 + 자 · 4소켓 방패", summary: "속죄(리뎀션) 오라, 피해 +350~400%, 화염 깎기",
+        stats: [
+          { name: "장착 시 속죄 오라", val: "10~15레벨 (변동)" },
+          { name: "피해 증가", val: "+350~400% (변동)" },
+          { name: "적의 화염 저항 감소", val: "-28%" },
+          { name: "최대 화염 저항", val: "+10%" },
+          { name: "최대 번개 저항", val: "+5%" }
+        ]
+      },
+      {
+        id: "rw_exile", category: "runeword", slot: "방패", name: "망명 (엑자일)", enName: "Exile",
+        sub: "룬워드 요구 레벨 57", desc: "횃불 슴딘 종결 전용 방패",
+        primary: "벡스 + 오움 + 이스트 + 돌 · 4소켓 성기사 전용 방패", summary: "타격 시 생명력 추출(라탭) 및 반항 오라",
+        stats: [
+          { name: "타격 시 5레벨 생명력 추출 시전", val: "15%" },
+          { name: "장착 시 반항(디파이언스) 오라", val: "13~16레벨 (변동)" },
+          { name: "성기사 공격 오라", val: "+2" },
+          { name: "내구도 자동 회복 (에테리얼 제작)", val: "적용" }
+        ]
+      },
+      {
+        id: "rw_rhyme", category: "runeword", slot: "방패", name: "각운 (제작)", enName: "Rhyme",
+        sub: "룬워드 요구 레벨 29", desc: "빙결 방지 및 매찬을 챙기는 육성용 방패",
+        primary: "샤엘 + 에드 · 2소켓 방패", summary: "빙결되지 않음, 모든 저항 +25, 매찬 25%",
+        stats: [
+          { name: "빙결되지 않음", val: "적용" },
+          { name: "모든 저항", val: "+25" },
+          { name: "막기 속도", val: "+40%" },
+          { name: "마법 아이템 발견 확률", val: "+25%" }
+        ]
+      },
+
+      /* =================== [유니크 - 머리] =================== */
+      {
+        id: "uq_shako", category: "unique", slot: "머리", name: "할리퀸 관모 (샤코)", enName: "Harlequin Crest",
+        sub: "고유 투구 요구 레벨 62", desc: "디아2 최고의 범용 국민 투구",
+        primary: "샤코 베이스 고유 아이템", summary: "+2 모든 기술, 막대한 피/마나, 데미지 감소, 매찬 50%",
+        stats: [
+          { name: "모든 기술 레벨", val: "+2" },
+          { name: "생명력 (레벨 비례)", val: "레벨당 +1.5" },
+          { name: "마나 (레벨 비례)", val: "레벨당 +1.5" },
+          { name: "피해 감소", val: "10%" },
+          { name: "마법 아이템 발견 확률", val: "+50%" }
+        ]
+      },
+      {
+        id: "uq_griffon", category: "unique", slot: "머리", name: "그리폰의 눈 (다이어뎀)", enName: "Griffon's Eye",
+        sub: "고유 투구 요구 레벨 76", desc: "번개 세팅(자벨마, 체라) 최종 종결",
+        primary: "다이어뎀 베이스 고유 아이템", summary: "+1 스킬, 패캐 25%, 라깎 최대 20%",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "시전 속도", val: "+25%" },
+          { name: "적의 번개 저항 감소", val: "-15~20% (변동)" },
+          { name: "번개 기술 피해", val: "+10~15% (변동)" }
+        ]
+      },
+      {
+        id: "uq_andy", category: "unique", slot: "머리", name: "안다리엘의 두개골 (안다머리)", enName: "Andariel's Visage",
+        sub: "고유 투구 요구 레벨 83", desc: "용병 0티어 피흡/공속 투구",
+        primary: "데몬헤드 베이스 고유 아이템", summary: "+2 스킬, 공속 20%, 라흡 8~10%, 힘 최대 30",
+        stats: [
+          { name: "모든 기술 레벨", val: "+2" },
+          { name: "공격 속도", val: "+20%" },
+          { name: "생명력 흡수", val: "8~10% (변동)" },
+          { name: "힘", val: "+25~30 (변동)" },
+          { name: "화염 저항", val: "-30% (랄룬 작업 필수)" }
+        ]
+      },
+      {
+        id: "uq_vampire_gaze", category: "unique", slot: "머리", name: "흡혈귀의 시선 (그림헬름)", enName: "Vampire Gaze",
+        sub: "고유 투구 요구 레벨 41", desc: "쌍흡과 높은 물리 피해 감소를 제공하는 방어 투구",
+        primary: "그림헬름 베이스 고유 아이템", summary: "라흡/마흡, 피해 감소 최대 20%",
+        stats: [
+          { name: "생명력 흡수", val: "6~8% (변동)" },
+          { name: "마나 흡수", val: "6~8% (변동)" },
+          { name: "피해 감소", val: "15~20% (변동)" },
+          { name: "마법 피해 감소", val: "10~15 (변동)" }
+        ]
+      },
+      {
+        id: "uq_arreat", category: "unique", slot: "머리", name: "아리앗의 턱뼈 (슬가)", enName: "Arreat's Face",
+        sub: "고유 투구 요구 레벨 42", desc: "야만용사(바바리안) 종결 전용 투구",
+        primary: "슬레이어 가드 베이스 (바바 전용)", summary: "+2 바바스킬, 전투스킬 +2, 올레지 30, 힘/민첩",
+        stats: [
+          { name: "야만용사 기술 레벨", val: "+2" },
+          { name: "전투 기술 레벨", val: "+2" },
+          { name: "타격 회복 속도", val: "+30%" },
+          { name: "모든 저항", val: "+30" },
+          { name: "힘 / 민첩", val: "각 +20" }
+        ]
+      },
+      {
+        id: "uq_jalal", category: "unique", slot: "머리", name: "잘랄의 갈기 (토템)", enName: "Jalal's Mane",
+        sub: "고유 투구 요구 레벨 42", desc: "드루이드 전용 종결 투구",
+        primary: "토테믹 마스크 베이스 (드루 전용)", summary: "+2 드루스킬, 변신스킬 +2, 올레지 30, 힘 +20",
+        stats: [
+          { name: "드루이드 기술 레벨", val: "+2" },
+          { name: "변신 기술 레벨", val: "+2" },
+          { name: "타격 회복 속도", val: "+30%" },
+          { name: "모든 저항", val: "+30" },
+          { name: "힘", val: "+20" }
+        ]
+      },
+
+      /* =================== [유니크 - 가슴 (갑옷)] =================== */
+      {
+        id: "uq_viper", category: "unique", slot: "가슴", name: "독사마술사의 가죽 (구교복)", enName: "Skin of the Vipermagi",
+        sub: "고유 갑옷 요구 레벨 29", desc: "육성부터 후반까지 쓰이는 캐스터 명품 갑옷",
+        primary: "서펀트스킨 아머 베이스", summary: "+1 스킬, 패캐 30%, 올레지 최대 35",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "시전 속도", val: "+30%" },
+          { name: "모든 저항", val: "+20~35 (변동)" },
+          { name: "마법 피해 감소", val: "9~13 (변동)" }
+        ]
+      },
+      {
+        id: "uq_skullder", category: "unique", slot: "가슴", name: "스컬더의 분노 (러셋아머)", enName: "Skullder's Ire",
+        sub: "고유 갑옷 요구 레벨 42", desc: "앵벌(MF) 특화 갑옷",
+        primary: "러셋 아머 베이스", summary: "+1 스킬, 레벨 비례 압도적 매찬 증가",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "마법 아이템 발견 확률", val: "레벨당 1.25% (최대 123%)" },
+          { name: "내구도 자동 회복", val: "적용 (에테리얼 인기)" }
+        ]
+      },
+      {
+        id: "uq_shaftstop", category: "unique", slot: "가슴", name: "메쉬아머 (샤프트스톱)", enName: "Shaftstop",
+        sub: "고유 갑옷 요구 레벨 38", desc: "물리 피해 감소 30%를 자랑하는 방어형 갑옷",
+        primary: "메쉬 아머 베이스", summary: "피해 감소 30%, 생명력 +60",
+        stats: [
+          { name: "피해 감소", val: "30%" },
+          { name: "원거리 방어력", val: "+250" },
+          { name: "생명력", val: "+60" }
+        ]
+      },
+
+      /* =================== [유니크 - 방패] =================== */
+      {
+        id: "uq_herald", category: "unique", slot: "방패", name: "자카룸의 전령 (자카럼)", enName: "Herald of Zakarum",
+        sub: "고유 방패 요구 레벨 42", desc: "성기사(팔라딘) 0티어 방패",
+        primary: "길디드 실드 베이스 (성기사 전용)", summary: "+2 성기사스킬, +2 전투스킬, 올레지 50, 높은 블럭률",
+        stats: [
+          { name: "성기사 기술 레벨", val: "+2" },
+          { name: "전투 기술 레벨", val: "+2" },
+          { name: "모든 저항", val: "+50" },
+          { name: "막기 확률 증가", val: "+30%" },
+          { name: "힘 / 활력", val: "각 +20" }
+        ]
+      },
+      {
+        id: "uq_homunculus", category: "unique", slot: "방패", name: "호문쿨루스 (호문)", enName: "Homunculus",
+        sub: "고유 방패 요구 레벨 42", desc: "강령술사(네크로맨서) 명품 전용 방패",
+        primary: "하이어러펀트 트로피 (네크 전용)", summary: "+2 네크스킬, 저주 +2, 올레지 40, 마나재생 33%",
+        stats: [
+          { name: "강령술사 기술 레벨", val: "+2" },
+          { name: "저주 기술 레벨", val: "+2" },
+          { name: "모든 저항", val: "+40" },
+          { name: "마나 재생", val: "+33%" }
+        ]
+      },
+      {
+        id: "uq_stormshield", category: "unique", slot: "방패", name: "폭풍막이 (모나크)", enName: "Stormshield",
+        sub: "고유 방패 요구 레벨 73", desc: "피해 감소 35%를 제공하는 극한의 방어형 모넉",
+        primary: "모나크 베이스 고유 아이템", summary: "피해 감소 35%, 번개/냉기 저항 대폭 증가",
+        stats: [
+          { name: "피해 감소", val: "35%" },
+          { name: "번개 저항", val: "+25%" },
+          { name: "냉기 저항", val: "+60%" },
+          { name: "막기 확률 증가", val: "+25%" }
+        ]
+      },
+
+      /* =================== [유니크 - 무기] =================== */
+      {
+        id: "uq_oculus", category: "unique", slot: "무기", name: "망령의 울부짖음 (신오브)", enName: "The Oculus",
+        sub: "고유 무기 요구 레벨 42", desc: "원소술사(소서리스) 앵벌용 대표 보주",
+        primary: "스월링 크리스탈 베이스", summary: "+3 소서스킬, 패캐 30%, 올레지 20, 매찬 50%",
+        stats: [
+          { name: "원소술사 기술 레벨", val: "+3" },
+          { name: "시전 속도", val: "+30%" },
+          { name: "모든 저항", val: "+20" },
+          { name: "마법 아이템 발견 확률", val: "+50%" },
+          { name: "피격 시 25% 확률로 순간이동", val: "주의 옵션" }
+        ]
+      },
+      {
+        id: "uq_death_web", category: "unique", slot: "무기", name: "죽음의 거미줄 (데스웹)", enName: "Death's Web",
+        sub: "고유 무기 요구 레벨 66", desc: "독넥(독 강령술사) 최종 졸업 무기",
+        primary: "원드 베이스 최고 희귀 고유템", summary: "적의 독 저항 최대 -50% 깎기, +2 올스킬",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "독과 뼈 기술", val: "+1~2 (변동)" },
+          { name: "적의 독 저항 감소", val: "-40~50% (변동)" },
+          { name: "적 처치 시 마나 획득", val: "+7~12" }
+        ]
+      },
+      {
+        id: "uq_titan", category: "unique", slot: "무기", name: "거인의 복수 (타이탄의 복수)", enName: "Titan's Revenge",
+        sub: "고유 무기 요구 레벨 42", desc: "자벨마의 영원한 국민 투창",
+        primary: "세레모니얼 재벌린 (아마 전용)", summary: "+2 아마스킬, +2 자벨스킬, 수량 자동 회복",
+        stats: [
+          { name: "아마존 기술 레벨", val: "+2" },
+          { name: "투창과 창 기술", val: "+2" },
+          { name: "달리기/걷기 속도", val: "+30%" },
+          { name: "힘 / 민첩", val: "각 +20" },
+          { name: "수량 자동 회복 (에테리얼 종결)", val: "적용" }
+        ]
+      },
+      {
+        id: "uq_windforce", category: "unique", slot: "무기", name: "바람살 (윈드포스)", enName: "Windforce",
+        sub: "고유 무기 요구 레벨 73", desc: "디아2를 상징하는 전설의 물리 활",
+        primary: "하이드라 보우 베이스 (TC87)", summary: "레벨 비례 막대한 맥뎀, 밀쳐내기(넉백)",
+        stats: [
+          { name: "최대 피해 (레벨 비례)", val: "레벨당 +3.125" },
+          { name: "공격 속도", val: "+20%" },
+          { name: "밀쳐내기 (넉백)", val: "적용" },
+          { name: "마나 흡수", val: "6~8% (변동)" }
+        ]
+      },
+
+      /* =================== [유니크 - 장신구 및 기타] =================== */
+      {
+        id: "uq_soj", category: "unique", slot: "기타", name: "요르단의 반지 (조던링)", enName: "The Stone of Jordan",
+        sub: "고유 반지 요구 레벨 29", desc: "디아2 화폐의 기준이자 최고의 캐스터 링",
+        primary: "고유 반지", summary: "+1 모든 기술, 최대 마나 25% 증가",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "최대 마나 증가", val: "25%" },
+          { name: "번개 피해 추가", val: "1~12" }
+        ]
+      },
+      {
+        id: "uq_bk_ring", category: "unique", slot: "기타", name: "불카토스의 결혼반지 (발카링)", enName: "Bul-Kathos' Wedding Band",
+        sub: "고유 반지 요구 레벨 58", desc: "+1 스킬과 생명력을 챙기는 반지",
+        primary: "고유 반지", summary: "+1 모든 기술, 레벨 비례 생명력 증가, 라이프 흡수",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "생명력 (레벨 비례)", val: "레벨당 +0.5" },
+          { name: "생명력 흡수", val: "3~5% (변동)" }
+        ]
+      },
+      {
+        id: "uq_mara", category: "unique", slot: "기타", name: "마라의 만화경 (마라 아뮬)", enName: "Mara's Kaleidoscope",
+        sub: "고유 목걸이 요구 레벨 67", desc: "국민 종결 올스킬/올레지 목걸이",
+        primary: "고유 목걸이", summary: "+2 모든 기술, 모든 저항 20~30, 모든 능력치 +5",
+        stats: [
+          { name: "모든 기술 레벨", val: "+2" },
+          { name: "모든 저항", val: "+20~30 (변동)" },
+          { name: "모든 능력치", val: "+5" }
+        ]
+      },
+      {
+        id: "uq_arachnid", category: "unique", slot: "기타", name: "거미줄 그물띠 (스웹 벨트)", enName: "Arachnid Mesh",
+        sub: "고유 허리띠 요구 레벨 80", desc: "캐스터 유일의 패캐 20% 벨트",
+        primary: "스파이더웹 새시 베이스", summary: "+1 모든 기술, 시전 속도 20%",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "시전 속도", val: "+20%" },
+          { name: "대상 감속", val: "10%" },
+          { name: "최대 마나 증가", val: "5%" }
+        ]
+      },
+      {
+        id: "uq_war_traveler", category: "unique", slot: "기타", name: "전쟁 여행자 (배추 부츠)", enName: "War Traveler",
+        sub: "고유 장화 요구 레벨 42", desc: "추가 데미지와 최고 매찬을 지닌 앵벌 신발",
+        primary: "배틀 부츠 베이스", summary: "매찬 최대 50%, 추가 피해 15-25, 힘 +10",
+        stats: [
+          { name: "마법 아이템 발견 확률", val: "+30~50% (변동)" },
+          { name: "피해 추가", val: "15~25" },
+          { name: "달리기/걷기 속도", val: "+25%" },
+          { name: "힘 / 활력", val: "각 +10" }
+        ]
+      },
+      {
+        id: "uq_magefist", category: "unique", slot: "기타", name: "마수 (메피장갑)", enName: "Magefist",
+        sub: "고유 장갑 요구 레벨 23", desc: "패캐 20%와 마나 재생을 제공하는 캐스터 장갑",
+        primary: "라이트 건틀릿 베이스", summary: "시전 속도 20%, 화염 기술 +1, 마나 재생 25%",
+        stats: [
+          { name: "시전 속도", val: "+20%" },
+          { name: "화염 기술 레벨", val: "+1" },
+          { name: "마나 재생", val: "+25%" }
+        ]
+      },
+
+      /* =================== [사냥터 & TC] =================== */
+      {
+        id: "zone_pit", category: "zone", slot: "사냥터", name: "구덩이 (피트 1~2층)", enName: "The Pit",
+        sub: "ACT 1 타모 고원 지하", desc: "접근성이 가장 뛰어난 대표 85레벨 사냥터",
+        primary: "기본 지역 TC 85 · 몬스터 Lv 85", summary: "일반 상태에서도 모든 종결템 드롭 가능",
+        baseMonsterLv: 85, baseTc: 85,
+        stats: [
+          { name: "액트 및 위치", val: "ACT 1 타모 고원" },
+          { name: "기본 지역 레벨", val: "Lv 85" },
+          { name: "기본 드롭 TC", val: "TC 85 (TC87 종결템 드롭 가능)" }
+        ]
+      },
+      {
+        id: "zone_chaos", category: "zone", slot: "사냥터", name: "혼돈의 성역 (카오스 생츄어리)", enName: "Chaos Sanctuary",
+        sub: "ACT 4 디아블로 성역", desc: "높은 몬스터 밀도와 고급 룬 파밍의 성지",
+        primary: "기본 지역 TC 85 · 디아블로 출현", summary: "레벨링과 룬 파밍에 최적화된 지역",
+        baseMonsterLv: 85, baseTc: 85,
+        stats: [
+          { name: "액트 및 위치", val: "ACT 4 불길의 강 건너" },
+          { name: "기본 지역 레벨", val: "Lv 85" },
+          { name: "보스 몬스터", val: "디아블로 (Lv 94)" }
+        ]
+      },
+      {
+        id: "zone_baal", category: "zone", slot: "사냥터", name: "세계석 성채 & 파괴의 왕좌", enName: "Worldstone Keep",
+        sub: "ACT 5 바알 성채", desc: "최고 난이도 사냥터 및 최종 보스 바알",
+        primary: "기본 지역 TC 85 · 바알 출현", summary: "풍부한 경험치와 고레벨 파밍",
+        baseMonsterLv: 85, baseTc: 85,
+        stats: [
+          { name: "액트 및 위치", val: "ACT 5 아리앗 정상 너머" },
+          { name: "기본 지역 레벨", val: "Lv 85" },
+          { name: "보스 몬스터", val: "바알 (Lv 99)" }
+        ]
+      },
+      {
+        id: "zone_travincal", category: "zone", slot: "사냥터", name: "트라빈칼", enName: "Travincal",
+        sub: "ACT 3 하이 카운슬 서식지", desc: "삥바바 및 고급 룬 파밍 전문 구역",
+        primary: "기본 지역 TC 82 · 의회원 다수 분포", summary: "골드 및 고급 룬 수급 최적화",
+        baseMonsterLv: 82, baseTc: 82,
+        stats: [
+          { name: "액트 및 위치", val: "ACT 3 트라빈칼 사원" },
+          { name: "기본 지역 레벨", val: "Lv 82" },
+          { name: "특징", val: "의회원(카운슬) 고정 챔피언 다수" }
+        ]
+      },
+      {
+        id: "zone_ancient_tunnels", category: "zone", slot: "사냥터", name: "고대 하수도 (고하)", enName: "Ancient Tunnels",
+        sub: "ACT 2 잊힌 도시 지하", desc: "냉기 면역 몬스터가 거의 없어 극블리 소서 성지",
+        primary: "기본 지역 TC 85 · 언데드 위주", summary: "초반 파밍에 안전한 85레벨 던전",
+        baseMonsterLv: 85, baseTc: 85,
+        stats: [
+          { name: "액트 및 위치", val: "ACT 2 잊힌 도시" },
+          { name: "기본 지역 레벨", val: "Lv 85" },
+          { name: "특징", val: "기본 냉기 면역 몬스터 없음" }
+        ]
+      },
+      {
+        id: "zone_cow", category: "zone", slot: "사냥터", name: "비밀의 젖소 목장 (카우방)", enName: "Secret Cow Level",
+        sub: "ACT 1 로그 캠프 포탈", desc: "엄청난 수의 소들이 몰려 있어 베이스 재료 및 룬 파밍",
+        primary: "기본 지역 TC 81 · 몬스터 밀도 최고", summary: "소켓용 무기/갑옷 베이스 및 룬 대량 획득",
+        baseMonsterLv: 81, baseTc: 81,
+        stats: [
+          { name: "액트 및 위치", val: "ACT 1 바위 벌판 워트의 의족 조합" },
+          { name: "기본 지역 레벨", val: "Lv 81" },
+          { name: "특징", val: "밀도가 매우 높아 룬 및 흰색/에테 베이스 파밍 최적" }
+        ]
+      }
+    ];
     </div>
 
     <div class="results-meta">
