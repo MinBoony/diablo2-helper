@@ -1,115 +1,702 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta name="google-site-verification" content="xylaNiiE94P9MbbA3JuBA9PcJ8TR-mqNBHSooHh0w6E" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- 구글 검색에 잡히는 제목과 설명 -->
-  <title>디아블로 2 레저렉션 도우미 | 룬워드 & 레시피 가이드</title>
-  <meta name="description" content="디아블로 2 레저렉션 룬워드 조합법 및 도우미 정보를 빠르게 검색하세요." />
-  <meta name="keywords" content="디아블로2, 디아블로2 레저렉션, 룬워드, 룬 조합, 디아2 도우미" />
-  
+  <!-- Google Search Console 소유권 메타태그 유지 -->
+  <meta name="google-site-verification" content="xylaNiiE94P9MbbA3JuBA9PcJ8TR-mqNBHSooHhOw6E" />
+  <title>모험가 도우미 | 디아블로 2 레저렉션 가이드</title>
+  <meta name="description" content="디아블로 2 레저렉션 룬워드, 유니크, 실시간 공포의 영역, TC 계산기 및 사냥터 도우미" />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #121212;
-      color: #e0e0e0;
-      margin: 0;
-      padding: 20px;
+    :root {
+      --bg-base: #090706;
+      --bg-card: #140f0c;
+      --bg-card-hover: #1e1612;
+      --bg-panel: #120e0b;
+      --border-dark: #291d16;
+      --border-gold: #543e24;
+      --text-gold: #d8a860;
+      --text-bright-gold: #f5cf89;
+      --text-orange: #d16b28;
+      --text-main: #c4b5a5;
+      --text-sub: #7a6b60;
+      --tz-red: #a32215;
     }
-    .container {
-      max-width: 700px;
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(130, 45, 15, 0.25), transparent),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(50, 15, 10, 0.4), transparent);
+    }
+
+    /* 1. 최상단 실시간 공포의 영역 바 */
+    .terror-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(90deg, #180905 0%, #2e0d07 50%, #180905 100%);
+      border-bottom: 1px solid #4a1910;
+      padding: 8px 16px;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+    .terror-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .terror-badge {
+      background-color: var(--tz-red);
+      color: #ffd8d3;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 11px;
+    }
+    .terror-act { color: #f7b267; font-weight: bold; }
+    .terror-name { color: #fff; font-weight: 600; }
+    .terror-right { display: flex; align-items: center; gap: 12px; font-size: 12px; }
+    .timer-badge { color: #f5cf89; font-weight: bold; font-family: monospace; font-size: 14px; }
+
+    /* 서브 네비 */
+    .sub-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-icon {
+      border: 1px solid var(--border-gold);
+      transform: rotate(45deg);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .brand-icon span { transform: rotate(-45deg); font-size: 10px; color: var(--text-gold); font-weight: bold; }
+    .brand-text h2 { font-size: 15px; color: var(--text-bright-gold); }
+    .brand-text p { font-size: 9px; color: var(--text-sub); }
+
+    /* 2. 중앙 히어로 섹션 */
+    .hero {
+      text-align: center;
+      padding: 35px 20px 20px;
+      max-width: 800px;
       margin: 0 auto;
     }
-    h1 {
-      color: #d4af37;
-      text-align: center;
-      margin-bottom: 24px;
+    .hero-caption { color: #9c8270; font-size: 13px; letter-spacing: 2px; margin-bottom: 8px; }
+    .hero-title {
+      font-size: 30px;
+      line-height: 1.3;
+      font-weight: 800;
+      color: #ebd39c;
+      text-shadow: 0 0 15px rgba(216, 168, 96, 0.25);
+      margin-bottom: 22px;
     }
-    input {
+    .search-box-wrapper { position: relative; margin-bottom: 12px; }
+    .search-input {
       width: 100%;
-      padding: 14px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      background: #1e1e1e;
+      background: #110d0a;
+      border: 1px solid var(--border-gold);
+      border-radius: 6px;
+      padding: 14px 18px 14px 44px;
+      font-size: 15px;
       color: #fff;
-      box-sizing: border-box;
-      margin-bottom: 24px;
-    }
-    input:focus {
       outline: none;
-      border-color: #d4af37;
     }
-    .card {
-      background: #1c1c1c;
-      border: 1px solid #2e2e2e;
-      border-radius: 8px;
-      padding: 16px 20px;
+    .search-input:focus { border-color: #cca258; box-shadow: 0 0 10px rgba(216, 168, 96, 0.2); }
+    .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-gold); }
+
+    .quick-tags { display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; }
+    .tag-btn {
+      background: #19120e;
+      border: 1px solid #33231a;
+      color: #9d8e82;
+      padding: 3px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .tag-btn:hover { border-color: var(--border-gold); color: var(--text-gold); }
+
+    /* 3. 콘텐츠 영역 */
+    .content-container { max-width: 1200px; margin: 15px auto 60px; padding: 0 20px; }
+
+    /* 1차 탭 */
+    .tabs-bar {
+      display: flex;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      overflow-x: auto;
+    }
+    .tab {
+      background: none;
+      border: none;
+      color: #8c7b70;
+      font-size: 14px;
+      padding: 6px 12px;
+      cursor: pointer;
+      position: relative;
+    }
+    .tab.active { color: var(--text-bright-gold); font-weight: 700; }
+    .tab.active::after {
+      content: "";
+      position: absolute;
+      bottom: -9px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--text-gold);
+    }
+
+    /* 2차 부위별 필터 바 (머리, 가슴, 방패 등) */
+    .sub-filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+      background: #120e0b;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #231812;
+    }
+    .sub-filter-title { font-size: 12px; color: var(--text-sub); margin-right: 4px; }
+    .slot-btn {
+      background: #1a130f;
+      border: 1px solid #36261c;
+      color: #a39588;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .slot-btn.active {
+      background: #3a2618;
+      border-color: var(--text-gold);
+      color: var(--text-bright-gold);
+      font-weight: bold;
+    }
+
+    /* 결과 메타 */
+    .results-meta { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-sub); margin-bottom: 14px; }
+    .results-meta strong { color: var(--text-gold); }
+
+    /* 메인 그리드 레이아웃 */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+
+    .card-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (max-width: 600px) { .card-list { grid-template-columns: 1fr; } }
+
+    .item-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      padding: 14px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      transition: all 0.15s ease;
+    }
+    .item-card:hover { background: var(--bg-card-hover); border-color: #4b3624; }
+    .item-card.selected { border-color: var(--text-gold); background: #201712; }
+    .card-left { display: flex; gap: 10px; }
+    .card-icon { color: var(--text-gold); font-size: 13px; margin-top: 2px; }
+    .card-sub { font-size: 11px; color: var(--text-sub); margin-bottom: 2px; }
+    .card-title { font-size: 15px; font-weight: 700; color: #e9e3d8; margin-bottom: 4px; }
+    .card-desc { font-size: 12px; color: #9c8e82; line-height: 1.4; }
+
+    /* 우측 상세 패널 (스크롤 잘림 방지 처리) */
+    .detail-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-gold);
+      border-radius: 6px;
+      padding: 20px;
+      position: sticky;
+      top: 60px;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+    }
+    .detail-panel::-webkit-scrollbar { width: 6px; }
+    .detail-panel::-webkit-scrollbar-thumb { background: #3c2a1e; border-radius: 3px; }
+
+    .detail-type { font-size: 12px; color: var(--text-sub); margin-bottom: 4px; }
+    .detail-title { font-size: 22px; font-weight: 800; color: var(--text-bright-gold); margin-bottom: 12px; }
+    .detail-box {
+      background: #1a130f;
+      border: 1px solid #332418;
+      border-radius: 4px;
+      padding: 12px;
       margin-bottom: 14px;
     }
-    .card h3 {
-      margin: 0 0 8px 0;
-      color: #d4af37;
-      font-size: 18px;
+    .detail-box-title { font-size: 12px; color: var(--text-sub); margin-bottom: 6px; }
+    .detail-runes { font-size: 13px; color: var(--text-orange); font-weight: 600; line-height: 1.5; }
+
+    /* 레벨 계산기 인풋 */
+    .level-calc-box {
+      background: #17110e;
+      border: 1px dashed var(--border-gold);
+      border-radius: 4px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
     }
-    .runes {
-      color: #ff9800;
+    .level-calc-box input {
+      width: 60px;
+      padding: 4px 6px;
+      background: #090706;
+      border: 1px solid var(--border-gold);
+      color: #fff;
+      text-align: center;
+      border-radius: 4px;
       font-weight: bold;
-      margin-bottom: 8px;
-      font-size: 15px;
     }
-    .bases {
-      color: #aaa;
-      font-size: 14px;
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid #201712;
+      font-size: 13px;
     }
+    .stat-name { color: #d0c5ba; }
+    .stat-value { color: var(--text-gold); font-weight: 600; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>디아블로 2 도우미</h1>
-    <input type="text" id="search" placeholder="룬워드 이름, 베이스, 룬 검색 (예: 영혼, 탈, 4홈)..." onkeyup="filterItems()" />
-    <div id="results"></div>
+
+  <!-- 1. 최상단 실시간 공포의 영역 바 -->
+  <div class="terror-bar">
+    <div class="terror-left">
+      <span class="terror-badge">공포의 영역</span>
+      <span class="terror-act" id="tzCurrentAct">ACT 1</span>
+      <span class="terror-name" id="tzCurrentName">구덩이 (피트 1~2층)</span>
+    </div>
+    <div class="terror-right">
+      <span style="color: #a39588;">다음: <span id="tzNextName">혼돈의 성역</span></span>
+      <span class="timer-badge" id="tzTimer">00:00</span>
+    </div>
   </div>
 
+  <div class="sub-nav">
+    <div class="brand">
+      <div class="brand-icon"><span>D II</span></div>
+      <div class="brand-text">
+        <h2>모험가 도우미</h2>
+        <p>DIABLO II RESURRECTED</p>
+      </div>
+    </div>
+    <div style="color: #64554b; font-size: 12px;">● 한국어 데이터베이스</div>
+  </div>
+
+  <!-- 2. 중앙 히어로 섹션 -->
+  <section class="hero">
+    <div class="hero-caption">성역의 지식을 한곳에</div>
+    <h1 class="hero-title">찾고 싶은 정보를<br />바로 검색하세요.</h1>
+
+    <div class="search-box-wrapper">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" class="search-input" placeholder="룬워드, 유니크, 베이스, 사냥터 검색..." onkeyup="handleSearch()" />
+    </div>
+
+    <div class="quick-tags">
+      <span>빠른 검색:</span>
+      <button class="tag-btn" onclick="quickSearch('영혼')">영혼</button>
+      <button class="tag-btn" onclick="quickSearch('수수께끼')">수수께끼</button>
+      <button class="tag-btn" onclick="quickSearch('샤코')">샤코</button>
+      <button class="tag-btn" onclick="quickSearch('다이어뎀')">그리폰의 눈</button>
+      <button class="tag-btn" onclick="quickSearch('구덩이')">구덩이(피트)</button>
+    </div>
+  </section>
+
+  <!-- 3. 메인 콘텐츠 섹션 -->
+  <main class="content-container">
+    <!-- 1차 카테고리 탭 -->
+    <div class="tabs-bar">
+      <button class="tab active" onclick="setMainTab('runeword', this)">◆ 룬워드</button>
+      <button class="tab" onclick="setMainTab('unique', this)">★ 유니크</button>
+      <button class="tab" onclick="setMainTab('zone', this)">▲ 사냥터 & TC</button>
+    </div>
+
+    <!-- 2차 부위별 슬롯 필터 (머리, 가슴, 방패, 무기 등) -->
+    <div class="sub-filter-bar" id="subFilterBar">
+      <span class="sub-filter-title">부위 필터:</span>
+      <button class="slot-btn active" onclick="setSlotFilter('all', this)">전체</button>
+      <button class="slot-btn" onclick="setSlotFilter('머리', this)">머리(투구)</button>
+      <button class="slot-btn" onclick="setSlotFilter('가슴', this)">가슴(갑옷)</button>
+      <button class="slot-btn" onclick="setSlotFilter('방패', this)">방패</button>
+      <button class="slot-btn" onclick="setSlotFilter('무기', this)">무기</button>
+    </div>
+
+    <div class="results-meta">
+      <div>검색 결과 <strong id="resultCount">0</strong>개 항목 정보</div>
+      <div style="font-size: 11px;">항목을 눌러 상세 정보를 확인하세요</div>
+    </div>
+
+    <div class="main-grid">
+      <!-- 2열 카드 리스트 -->
+      <div class="card-list" id="cardList"></div>
+
+      <!-- 우측 상세 정보 패널 -->
+      <aside class="detail-panel" id="detailPanel">
+        <div class="detail-type" id="dType">상세 정보</div>
+        <div class="detail-title" id="dTitle">항목을 선택하세요</div>
+
+        <!-- 사냥터 탭에서만 동작하는 캐릭터 레벨 입력기 -->
+        <div class="level-calc-box" id="levelCalcBox" style="display: none;">
+          <span>내 캐릭터 레벨:</span>
+          <input type="number" id="charLevelInput" value="85" min="1" max="99" onchange="updateTcCalc()" />
+        </div>
+
+        <div class="detail-box">
+          <div class="detail-box-title" id="dBoxTitle">핵심 요약</div>
+          <div class="detail-runes" id="dBoxContent">정보 없음</div>
+          <div style="font-size: 12px; color: #8e7f73; margin-top: 4px;" id="dSummary"></div>
+        </div>
+
+        <div class="stats-header" style="font-size: 12px; color: var(--text-sub); margin-bottom: 8px;">세부 정보 및 옵션</div>
+        <div id="dStats"></div>
+      </aside>
+    </div>
+  </main>
+
   <script>
-    // 보여줄 데이터 목록 (필요한 만큼 계속 추가할 수 있습니다)
-    const data = [
-      { name: "영혼 (Spirit)", runes: "탈 + 주울 + 오르트 + 앰", bases: "4홈 도검 / 방패", level: "25" },
-      { name: "통찰 (Insight)", runes: "랄 + 티르 + 탈 + 솔", bases: "4홈 폴암 / 스태프 / 활", level: "27" },
-      { name: "잠행 (Stealth)", runes: "탈 + 에드", bases: "2홈 갑옷", level: "17" },
-      { name: "전승 (Lore)", runes: "오르트 + 솔", bases: "2홈 투구", level: "27" },
-      { name: "수수께끼 (Enigma)", runes: "자 + 아이드 + 베르", bases: "3홈 갑옷", level: "65" },
-      { name: "무한 (Infinity)", runes: "베르 + 말 + 베르 + 이스트", bases: "4홈 폴암 / 창", level: "63" }
+    // 공포의 영역 로테이션 데이터 (시간대별 자동 변경)
+    const tzZones = [
+      { act: "ACT 1", name: "구덩이 (피트 1~2층)", baseTc: 85 },
+      { act: "ACT 4", name: "혼돈의 성역", baseTc: 85 },
+      { act: "ACT 2", name: "탈 라샤의 무덤 7개소", baseTc: 80 },
+      { act: "ACT 5", name: "세계석 성채 1~3층 & 파괴의 왕좌", baseTc: 85 },
+      { act: "ACT 3", name: "트라빈칼", baseTc: 82 },
+      { act: "ACT 1", name: "카우방 (비밀의 젖소 목장)", baseTc: 81 },
+      { act: "ACT 5", name: "혹한의 고산지 & 핀들스킨", baseTc: 83 }
     ];
 
-    function render(items) {
-      const container = document.getElementById("results");
-      if (items.length === 0) {
-        container.innerHTML = "<p style='text-align:center; color:#777;'>검색 결과가 없습니다.</p>";
+    function updateTerrorZone() {
+      const now = new Date();
+      const hour = now.getHours();
+      const currentZone = tzZones[hour % tzZones.length];
+      const nextZone = tzZones[(hour + 1) % tzZones.length];
+
+      document.getElementById("tzCurrentAct").innerText = currentZone.act;
+      document.getElementById("tzCurrentName").innerText = currentZone.name;
+      document.getElementById("tzNextName").innerText = `[${nextZone.act}] ${nextZone.name}`;
+
+      // 남은 시간 계산
+      const minsLeft = 59 - now.getMinutes();
+      const secsLeft = 59 - now.getSeconds();
+      document.getElementById("tzTimer").innerText = 
+        `${String(minsLeft).padStart(2, '0')}:${String(secsLeft).padStart(2, '0')}`;
+    }
+    setInterval(updateTerrorZone, 1000);
+    updateTerrorZone();
+
+    // 종합 데이터베이스
+    const database = [
+      // 룬워드
+      {
+        id: "rw_stealth", category: "runeword", slot: "가슴", name: "잠행", enName: "Stealth",
+        sub: "룬워드 요구 레벨 17", desc: "초반 최고의 가성비 갑옷",
+        primary: "탈(Tal) + 에드(Eth) · 2소켓 갑옷", summary: "이속, 시전속도, 마나재생",
+        stats: [
+          { name: "달리기/걷기 속도", val: "+25%" },
+          { name: "시전 속도", val: "+25%" },
+          { name: "타격 회복 속도", val: "+25%" },
+          { name: "마나 재생", val: "+15%" },
+          { name: "독 저항", val: "+30%" }
+        ]
+      },
+      {
+        id: "rw_spirit", category: "runeword", slot: "방패", name: "영혼", enName: "Spirit",
+        sub: "룬워드 요구 레벨 25", desc: "모든 마법 캐릭터의 핵심",
+        primary: "탈 + 주울 + 오르트 + 앰 · 4소켓 검/방패", summary: "+2 모든 기술 및 시전 속도",
+        stats: [
+          { name: "모든 기술 레벨", val: "+2" },
+          { name: "시전 속도", val: "25~35% (변동)" },
+          { name: "타격 회복 속도", val: "+55%" },
+          { name: "생명력", val: "+22" },
+          { name: "마나", val: "+89~112 (변동)" }
+        ]
+      },
+      {
+        id: "rw_lore", category: "runeword", slot: "머리", name: "전승 (학식)", enName: "Lore",
+        sub: "룬워드 요구 레벨 27", desc: "초반 레벨업용 +1 스킬 투구",
+        primary: "오르트(Ort) + 솔(Sol) · 2소켓 투구", summary: "+1 스킬 및 번개 저항",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "에너지", val: "+10" },
+          { name: "번개 저항", val: "+30%" },
+          { name: "처치 시 마나 획득", val: "+2" }
+        ]
+      },
+      {
+        id: "rw_enigma", category: "runeword", slot: "가슴", name: "수수께끼", enName: "Enigma",
+        sub: "룬워드 요구 레벨 65", desc: "텔레포트를 제공하는 최종 갑옷",
+        primary: "자(Jah) + 아이드(Ith) + 베르(Ber) · 3소켓 갑옷", summary: "순간이동 + 레벨 비례 힘 증가",
+        stats: [
+          { name: "순간이동 (텔레포트)", val: "+1" },
+          { name: "모든 기술 레벨", val: "+2" },
+          { name: "달리기/걷기 속도", val: "+45%" },
+          { name: "힘 (레벨 비례)", val: "최대 +74" },
+          { name: "피해 감소", val: "8%" },
+          { name: "마법 아이템 발견 확률", val: "레벨당 +1%" }
+        ]
+      },
+      {
+        id: "rw_insight", category: "runeword", slot: "무기", name: "통찰", enName: "Insight",
+        sub: "룬워드 요구 레벨 27", desc: "용병용 무한 마나 충전 무기",
+        primary: "랄 + 티르 + 탈 + 솔 · 4소켓 폴암/활/스태프", summary: "메디테이션 오라로 마나 회복",
+        stats: [
+          { name: "장착 시 명상 오라", val: "12~17레벨" },
+          { name: "시전 속도", val: "+35%" },
+          { name: "피해 증가", val: "200~260%" },
+          { name: "치명타", val: "+1~6" }
+        ]
+      },
+
+      // 유니크 아이템
+      {
+        id: "uq_shako", category: "unique", slot: "머리", name: "할리퀸 관모 (샤코)", enName: "Harlequin Crest",
+        sub: "고유 투구 요구 레벨 62", desc: "전 직업 공용 최고 인기 투구",
+        primary: "샤코 베이스 고유 아이템", summary: "+2 모든 기술, 막대한 생명력/마나, 매찬 50%",
+        stats: [
+          { name: "모든 기술 레벨", val: "+2" },
+          { name: "생명력 (레벨 비례)", val: "레벨당 +1.5" },
+          { name: "마나 (레벨 비례)", val: "레벨당 +1.5" },
+          { name: "피해 감소", val: "10%" },
+          { name: "마법 아이템 발견 확률", val: "+50%" }
+        ]
+      },
+      {
+        id: "uq_griffon", category: "unique", slot: "머리", name: "그리폰의 눈 (다이어뎀)", enName: "Griffon's Eye",
+        sub: "고유 투구 요구 레벨 76", desc: "번개 원소 빌드의 최종 종결 투구",
+        primary: "다이어뎀 베이스 고유 아이템", summary: "적 번개 저항 깎기 및 시전 속도",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "시전 속도", val: "+25%" },
+          { name: "적 번개 저항 감소", val: "-15~20% (변동)" },
+          { name: "번개 기술 피해 증가", val: "+10~15% (변동)" }
+        ]
+      },
+      {
+        id: "uq_viper", category: "unique", slot: "가슴", name: "독사마술사의 가죽 (소서교복)", enName: "Skin of the Vipermagi",
+        sub: "고유 갑옷 요구 레벨 29", desc: "가성비와 성능을 겸비한 캐스터 갑옷",
+        primary: "서펀트스킨 아머 베이스", summary: "모든 기술 +1, 시전 속도 30%, 올레지",
+        stats: [
+          { name: "모든 기술 레벨", val: "+1" },
+          { name: "시전 속도", val: "+30%" },
+          { name: "모든 저항", val: "+20~35 (변동)" },
+          { name: "마법 피해 감소", val: "9~13" }
+        ]
+      },
+      {
+        id: "uq_herald", category: "unique", slot: "방패", name: "자카룸의 전령 (자카럼)", enName: "Herald of Zakarum",
+        sub: "고유 방패 요구 레벨 42", desc: "성기사(팔라딘) 종결 방패",
+        primary: "길디드 실드 베이스 (성기사 전용)", summary: "+2 성기사 기술 및 +2 전투 기술, 올레지 50",
+        stats: [
+          { name: "성기사 기술 레벨", val: "+2" },
+          { name: "전투 기술 레벨", val: "+2" },
+          { name: "모든 저항", val: "+50" },
+          { name: "방어력 증가", val: "+150~200%" },
+          { name: "힘 / 활력", val: "각 +20" }
+        ]
+      },
+
+      // 사냥터 & TC
+      {
+        id: "zone_pit", category: "zone", slot: "사냥터", name: "구덩이 (피트 1~2층)", enName: "The Pit",
+        sub: "ACT 1 타모 고원 지하", desc: "접근성이 가장 뛰어난 대표 85레벨 사냥터",
+        primary: "기본 지역 TC 85 · 일반 몬스터 Lv 85", summary: "일반 상태에서도 모든 종결템 드롭 가능",
+        baseMonsterLv: 85, baseTc: 85,
+        stats: [
+          { name: "액트 및 위치", val: "ACT 1 타모 고원" },
+          { name: "기본 지역 레벨", val: "Lv 85" },
+          { name: "기본 드롭 TC", val: "TC 85 (TC87 종결템 드롭 가능)" }
+        ]
+      },
+      {
+        id: "zone_chaos", category: "zone", slot: "사냥터", name: "혼돈의 성역 (카오스 생츄어리)", enName: "Chaos Sanctuary",
+        sub: "ACT 4 디아블로 성역", desc: "높은 몬스터 밀도와 룬 파밍의 성지",
+        primary: "기본 지역 TC 85 · 디아블로 출현", summary: "레벨링과 룬 파밍에 최적화된 지역",
+        baseMonsterLv: 85, baseTc: 85,
+        stats: [
+          { name: "액트 및 위치", val: "ACT 4 불길의 강 건너" },
+          { name: "기본 지역 레벨", val: "Lv 85" },
+          { name: "보스 몬스터", val: "디아블로 (Lv 94)" }
+        ]
+      },
+      {
+        id: "zone_travincal", category: "zone", slot: "사냥터", name: "트라빈칼", enName: "Travincal",
+        sub: "ACT 3 하이 카운슬 서식지", desc: "삥바바 및 고급 룬 파밍 전문 구역",
+        primary: "기본 지역 TC 82 · 의회원 다수 분포", summary: "골드 및 룬 파밍 성지",
+        baseMonsterLv: 82, baseTc: 82,
+        stats: [
+          { name: "액트 및 위치", val: "ACT 3 트라빈칼 사원" },
+          { name: "기본 지역 레벨", val: "Lv 82" },
+          { name: "특징", val: "의회원(카운슬) 고정 챔피언 다수" }
+        ]
+      }
+    ];
+
+    let currentMainTab = "runeword";
+    let currentSlot = "all";
+    let currentSelectedId = "rw_spirit";
+
+    function renderList() {
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+
+      const filtered = database.filter(item => {
+        const matchesTab = item.category === currentMainTab;
+        const matchesSlot = currentSlot === "all" || item.slot === currentSlot;
+        const matchesQuery = item.name.toLowerCase().includes(query) ||
+                             item.enName.toLowerCase().includes(query) ||
+                             item.primary.toLowerCase().includes(query) ||
+                             item.desc.toLowerCase().includes(query);
+        return matchesTab && matchesSlot && matchesQuery;
+      });
+
+      document.getElementById("resultCount").innerText = filtered.length;
+      const listEl = document.getElementById("cardList");
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #5a4b41;">조건에 맞는 검색 결과가 없습니다.</div>`;
         return;
       }
-      container.innerHTML = items.map(item => `
-        <div class="card">
-          <h3>${item.name} (착용 레벨: ${item.level})</h3>
-          <div class="runes">필요 룬: ${item.runes}</div>
-          <div class="bases">베이스 재료: ${item.bases}</div>
+
+      listEl.innerHTML = filtered.map(item => `
+        <div class="item-card ${item.id === currentSelectedId ? 'selected' : ''}" onclick="selectItem('${item.id}')">
+          <div class="card-left">
+            <div class="card-icon">◆</div>
+            <div>
+              <div class="card-sub">${item.sub}</div>
+              <div class="card-title">${item.name} <span style="font-size: 11px; color: #726257; font-weight: normal;">${item.enName}</span></div>
+              <div class="card-desc">${item.desc}</div>
+            </div>
+          </div>
         </div>
       `).join("");
     }
 
-    function filterItems() {
-      const query = document.getElementById("search").value.toLowerCase();
-      const filtered = data.filter(i => 
-        i.name.toLowerCase().includes(query) || 
-        i.runes.toLowerCase().includes(query) || 
-        i.bases.toLowerCase().includes(query)
-      );
-      render(filtered);
+    function selectItem(id) {
+      currentSelectedId = id;
+      const item = database.find(i => i.id === id);
+      if (!item) return;
+
+      document.getElementById("dType").innerText = item.sub;
+      document.getElementById("dTitle").innerText = `${item.name} (${item.enName})`;
+      document.getElementById("dBoxContent").innerText = item.primary;
+      document.getElementById("dSummary").innerText = item.summary;
+
+      const levelCalcBox = document.getElementById("levelCalcBox");
+      if (item.category === "zone") {
+        levelCalcBox.style.display = "flex";
+        updateTcCalc();
+      } else {
+        levelCalcBox.style.display = "none";
+        renderStats(item.stats);
+      }
+
+      renderList();
     }
 
-    // 처음 화면에 전체 표시
-    render(data);
+    function renderStats(statsArray) {
+      const statsEl = document.getElementById("dStats");
+      statsEl.innerHTML = statsArray.map(s => `
+        <div class="stat-row">
+          <span class="stat-name">${s.name}</span>
+          <span class="stat-value">${s.val}</span>
+        </div>
+      `).join("");
+    }
+
+    // 캐릭터 레벨에 따른 공포의 영역 TC 및 몬스터 레벨 동적 계산기
+    function updateTcCalc() {
+      const item = database.find(i => i.id === currentSelectedId);
+      if (!item || item.category !== "zone") return;
+
+      const charLv = Math.min(99, Math.max(1, parseInt(document.getElementById("charLevelInput").value) || 85));
+      
+      // 지옥 난이도 기준 공포의 영역 공식
+      const normalMob = Math.min(96, charLv + 2);
+      const championMob = Math.min(98, charLv + 4);
+      const uniqueMob = Math.min(99, charLv + 5);
+
+      // TC87 최고 등급 아이템(윈드포스, 다이어뎀 등) 드롭 가능 여부 판별
+      const canDropTc87 = charLv >= 85 ? "가능 (모든 몬스터)" : (championMob >= 87 ? "챔피언/유니크만 가능" : "불가");
+
+      const calculatedStats = [
+        ...item.stats,
+        { name: "공포의 영역 일반 몬스터", val: `Lv ${normalMob}` },
+        { name: "공포의 영역 챔피언", val: `Lv ${championMob}` },
+        { name: "공포의 영역 고유/보스", val: `Lv ${uniqueMob}` },
+        { name: "TC87 최고 등급 드롭 여부", val: canDropTc87 }
+      ];
+
+      renderStats(calculatedStats);
+    }
+
+    function handleSearch() {
+      renderList();
+    }
+
+    function quickSearch(word) {
+      document.getElementById("searchInput").value = word;
+      renderList();
+    }
+
+    function setMainTab(category, el) {
+      currentMainTab = category;
+      currentSlot = "all";
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      el.classList.add("active");
+
+      // 사냥터 탭일 때는 부위 필터 숨김
+      const subFilter = document.getElementById("subFilterBar");
+      if (category === "zone") {
+        subFilter.style.display = "none";
+      } else {
+        subFilter.style.display = "flex";
+        document.querySelectorAll(".slot-btn").forEach(b => b.classList.remove("active"));
+        document.querySelector(".slot-btn").classList.add("active");
+      }
+
+      // 탭 전환 시 첫 번째 항목 자동 선택
+      const first = database.find(i => i.category === category);
+      if (first) currentSelectedId = first.id;
+
+      renderList();
+      if (first) selectItem(first.id);
+    }
+
+    function setSlotFilter(slot, el) {
+      currentSlot = slot;
+      document.querySelectorAll(".slot-btn").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      renderList();
+    }
+
+    // 초기 로딩
+    selectItem("rw_spirit");
   </script>
 </body>
 </html>
