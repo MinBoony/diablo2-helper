@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 구글 검색에 잡히는 제목과 설명 -->
+  <title>디아블로 2 레저렉션 도우미 | 룬워드 & 레시피 가이드</title>
+  <meta name="description" content="디아블로 2 레저렉션 룬워드 조합법 및 도우미 정보를 빠르게 검색하세요." />
+  <meta name="keywords" content="디아블로2, 디아블로2 레저렉션, 룬워드, 룬 조합, 디아2 도우미" />
+  
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #d4af37;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #1e1e1e;
+      color: #fff;
+      box-sizing: border-box;
+      margin-bottom: 24px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #d4af37;
+    }
+    .card {
+      background: #1c1c1c;
+      border: 1px solid #2e2e2e;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .card h3 {
+      margin: 0 0 8px 0;
+      color: #d4af37;
+      font-size: 18px;
+    }
+    .runes {
+      color: #ff9800;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+    .bases {
+      color: #aaa;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>디아블로 2 도우미</h1>
+    <input type="text" id="search" placeholder="룬워드 이름, 베이스, 룬 검색 (예: 영혼, 탈, 4홈)..." onkeyup="filterItems()" />
+    <div id="results"></div>
+  </div>
+
+  <script>
+    // 보여줄 데이터 목록 (필요한 만큼 계속 추가할 수 있습니다)
+    const data = [
+      { name: "영혼 (Spirit)", runes: "탈 + 주울 + 오르트 + 앰", bases: "4홈 도검 / 방패", level: "25" },
+      { name: "통찰 (Insight)", runes: "랄 + 티르 + 탈 + 솔", bases: "4홈 폴암 / 스태프 / 활", level: "27" },
+      { name: "잠행 (Stealth)", runes: "탈 + 에드", bases: "2홈 갑옷", level: "17" },
+      { name: "전승 (Lore)", runes: "오르트 + 솔", bases: "2홈 투구", level: "27" },
+      { name: "수수께끼 (Enigma)", runes: "자 + 아이드 + 베르", bases: "3홈 갑옷", level: "65" },
+      { name: "무한 (Infinity)", runes: "베르 + 말 + 베르 + 이스트", bases: "4홈 폴암 / 창", level: "63" }
+    ];
+
+    function render(items) {
+      const container = document.getElementById("results");
+      if (items.length === 0) {
+        container.innerHTML = "<p style='text-align:center; color:#777;'>검색 결과가 없습니다.</p>";
+        return;
+      }
+      container.innerHTML = items.map(item => `
+        <div class="card">
+          <h3>${item.name} (착용 레벨: ${item.level})</h3>
+          <div class="runes">필요 룬: ${item.runes}</div>
+          <div class="bases">베이스 재료: ${item.bases}</div>
+        </div>
+      `).join("");
+    }
+
+    function filterItems() {
+      const query = document.getElementById("search").value.toLowerCase();
+      const filtered = data.filter(i => 
+        i.name.toLowerCase().includes(query) || 
+        i.runes.toLowerCase().includes(query) || 
+        i.bases.toLowerCase().includes(query)
+      );
+      render(filtered);
+    }
+
+    // 처음 화면에 전체 표시
+    render(data);
+  </script>
+</body>
+</html>
