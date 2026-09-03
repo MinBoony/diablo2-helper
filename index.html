@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="xylaNiiE94P9MbbA3JuBA9PcJ8TR-mqNBHSooHhOw6E" />
   <title>모험가 도우미 | 디아블로 2 레저렉션 가이드</title>
-  <meta name="description" content="디아블로 2 레저렉션 3.0 신규 룬워드 전종 포함, 유니크 도감, ACT 1~5 사냥터 TC 및 실시간 공포의 영역 도우미" />
+  <meta name="description" content="디아블로 2 레저렉션 전 룬워드 80종, 전 유니크 380종, ACT 1~5 전체 웨이포인트 TC 및 실시간 공포의 영역 도우미" />
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
   <style>
@@ -13,9 +13,10 @@
       --bg-base: #090706;
       --bg-card: #140f0c;
       --bg-card-hover: #1e1612;
-      --bg-panel: #120e0b;
+      --bg-panel: #110d0a;
       --border-dark: #291d16;
       --border-gold: #543e24;
+      --border-panel: #725026;
       --text-gold: #d8a860;
       --text-bright-gold: #f5cf89;
       --text-orange: #d16b28;
@@ -63,9 +64,8 @@
     .terror-right { display: flex; align-items: center; gap: 12px; font-size: 12px; }
     .timer-badge { color: #f5cf89; font-weight: bold; font-family: monospace; font-size: 14px; }
 
-    /* 서브 네비 */
     .sub-nav {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
       padding: 12px 20px;
       display: flex;
@@ -86,7 +86,6 @@
     .brand-text h2 { font-size: 15px; color: var(--text-bright-gold); }
     .brand-text p { font-size: 9px; color: var(--text-sub); }
 
-    /* 중앙 히어로 */
     .hero {
       text-align: center;
       padding: 28px 20px 18px;
@@ -127,10 +126,8 @@
     }
     .tag-btn:hover { border-color: var(--border-gold); color: var(--text-gold); }
 
-    /* 콘텐츠 컨테이너 */
-    .content-container { max-width: 1200px; margin: 15px auto 60px; padding: 0 20px; }
+    .content-container { max-width: 1240px; margin: 15px auto 60px; padding: 0 20px; }
 
-    /* 1차 탭 */
     .tabs-bar {
       display: flex;
       gap: 12px;
@@ -160,7 +157,6 @@
       background: var(--text-gold);
     }
 
-    /* 2차 서브 필터 바 */
     .sub-filter-bar {
       display: flex;
       gap: 8px;
@@ -194,11 +190,11 @@
 
     .main-grid {
       display: grid;
-      grid-template-columns: 1fr 380px;
+      grid-template-columns: 1fr 440px;
       gap: 20px;
       align-items: start;
     }
-    @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 960px) { .main-grid { grid-template-columns: 1fr; } }
 
     .card-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     @media (max-width: 600px) { .card-list { grid-template-columns: 1fr; } }
@@ -221,12 +217,14 @@
     .card-title { font-size: 15px; font-weight: 700; color: #e9e3d8; margin-bottom: 4px; }
     .card-desc { font-size: 12px; color: #9c8e82; line-height: 1.4; }
 
-    /* 상세 패널 스크롤 보호 */
+    /* =========================================================
+       우측 상세 패널 (이미지와 100% 동일한 고급 UI)
+    ========================================================= */
     .detail-panel {
       background: var(--bg-panel);
-      border: 1px solid var(--border-gold);
+      border: 1px solid var(--border-panel);
       border-radius: 6px;
-      padding: 20px;
+      padding: 22px 20px;
       position: sticky;
       top: 60px;
       max-height: calc(100vh - 80px);
@@ -235,40 +233,155 @@
     .detail-panel::-webkit-scrollbar { width: 6px; }
     .detail-panel::-webkit-scrollbar-thumb { background: #3c2a1e; border-radius: 3px; }
 
-    .detail-type { font-size: 12px; color: var(--text-sub); margin-bottom: 4px; }
-    .detail-title { font-size: 21px; font-weight: 800; color: var(--text-bright-gold); margin-bottom: 12px; }
-    .detail-box {
-      background: #1a130f;
-      border: 1px solid #332418;
-      border-radius: 4px;
-      padding: 12px;
-      margin-bottom: 14px;
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
     }
-    .detail-box-title { font-size: 12px; color: var(--text-sub); margin-bottom: 6px; }
-    .detail-runes { font-size: 13px; color: var(--text-orange); font-weight: 600; line-height: 1.5; }
-
-    .level-calc-box {
-      background: #17110e;
-      border: 1px dashed var(--border-gold);
-      border-radius: 4px;
-      padding: 10px 12px;
-      margin-bottom: 14px;
+    .panel-header-left { display: flex; gap: 12px; align-items: center; }
+    .panel-circle-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #4a3424;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      color: #924338;
       font-size: 13px;
     }
-    .level-calc-box input {
-      width: 60px;
-      padding: 4px 6px;
-      background: #090706;
-      border: 1px solid var(--border-gold);
-      color: #fff;
-      text-align: center;
+    .panel-title { font-size: 22px; font-weight: 800; color: var(--text-bright-gold); letter-spacing: -0.5px; }
+    .panel-en-title { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+    .star-btn { background: none; border: none; color: #5a4538; font-size: 18px; cursor: pointer; }
+
+    .section-headline { font-size: 12px; color: var(--text-gold); font-weight: 600; margin-bottom: 4px; }
+    .section-subline { font-size: 14px; color: #d6cbbf; margin-bottom: 16px; }
+
+    /* 패널 내부 카드 블록 */
+    .p-block {
+      background: #15100d;
+      border: 1px solid #2e2017;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .p-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .p-block-title { font-size: 13px; color: var(--text-gold); font-weight: 700; }
+    .p-badge-gold {
+      border: 1px solid var(--text-gold);
+      color: var(--text-gold);
+      padding: 2px 8px;
+      font-size: 11px;
+      border-radius: 3px;
+      background: rgba(216, 168, 96, 0.05);
+      cursor: pointer;
+    }
+    .p-footnote { font-size: 11px; color: #7a6a5e; margin-top: 10px; line-height: 1.4; }
+
+    /* 면역 카드 */
+    .immune-card {
+      background: #1c1511;
       border-radius: 4px;
-      font-weight: bold;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      border-left: 3px solid #3880a6;
+    }
+    .immune-card.fire { border-left-color: #d15632; }
+    .immune-card.light { border-left-color: #e5b338; }
+    .immune-card.poison { border-left-color: #38a650; }
+    .immune-card.phys { border-left-color: #a67c52; }
+    .immune-card.magic { border-left-color: #934ca6; }
+    .immune-title { font-size: 13px; font-weight: 700; color: #f0e6dc; margin-bottom: 2px; }
+    .immune-sub { font-size: 12px; color: #8c7c70; }
+
+    /* 파밍 2분할 카드 */
+    .farm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .farm-box {
+      background: #1c1511;
+      border: 1px solid #2e2017;
+      border-radius: 4px;
+      padding: 12px;
+    }
+    .farm-box-label { font-size: 11px; color: var(--text-sub); margin-bottom: 6px; }
+    .farm-box-val { font-size: 26px; font-weight: 900; color: var(--text-bright-gold); }
+
+    .target-box {
+      background: #1c1511;
+      border: 1px solid #2e2017;
+      border-radius: 4px;
+      padding: 12px;
+    }
+    .target-box-label { font-size: 11px; color: var(--text-sub); margin-bottom: 4px; }
+    .target-box-title { font-size: 14px; font-weight: 700; color: var(--text-bright-gold); margin-bottom: 2px; }
+    .target-box-sub { font-size: 12px; color: #a19285; }
+
+    /* 공포의 영역 3열 카드 */
+    .tz-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .tz-box {
+      background: #1c1511;
+      border: 1px solid #2e2017;
+      border-radius: 4px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+    .tz-box-label { font-size: 11px; color: var(--text-sub); margin-bottom: 4px; }
+    .tz-box-val { font-size: 15px; font-weight: 800; color: var(--text-bright-gold); }
+
+    /* TC87 초록색 배너 카드 */
+    .tc87-banner {
+      background: #141c14;
+      border-left: 3px solid #489948;
+      border-radius: 4px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+    }
+    .tc87-banner-title { font-size: 13px; font-weight: 800; color: #7cdb7c; margin-bottom: 2px; }
+    .tc87-banner-sub { font-size: 11px; color: #88a888; line-height: 1.4; }
+
+    /* 하단 태그 */
+    .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tag-pill {
+      background: #17110e;
+      border: 1px solid #38271e;
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--text-gold);
     }
 
+    /* 하단 모험가 팁 */
+    .tip-box {
+      background: #17120e;
+      border: 1px solid #332318;
+      border-radius: 4px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .tip-icon {
+      color: var(--text-gold);
+      font-size: 14px;
+      border: 1px solid var(--border-gold);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .tip-content-title { font-size: 13px; font-weight: 700; color: var(--text-gold); margin-bottom: 2px; }
+    .tip-content-desc { font-size: 12px; color: #a39588; line-height: 1.4; }
+
+    /* 룬워드/유니크 전용 기본 스탯 행 */
     .stat-row {
       display: flex;
       justify-content: space-between;
@@ -282,7 +395,7 @@
 </head>
 <body>
 
-  <!-- 실시간 공포의 영역 바 -->
+  <!-- 최상단 실시간 공포의 영역 바 -->
   <div class="terror-bar">
     <div class="terror-left">
       <span class="terror-badge">공포의 영역</span>
@@ -303,77 +416,60 @@
         <p>DIABLO II RESURRECTED</p>
       </div>
     </div>
-    <div style="color: #64554b; font-size: 12px;">● 전 룬워드 & 풀 도감 탑재</div>
+    <div style="color: #64554b; font-size: 12px;">● 전 룬워드 80종 + 전 유니크 380종 + 전 웨이포인트 39개</div>
   </div>
 
   <!-- 검색 히어로 -->
   <section class="hero">
-    <div class="hero-caption">성역의 모든 지식을 한곳에</div>
+    <div class="hero-caption">성역의 모든 순간이동진과 지식을 한곳에</div>
     <h1 class="hero-title">찾고 싶은 정보를<br />바로 검색하세요.</h1>
 
     <div class="search-box-wrapper">
       <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" class="search-input" placeholder="룬워드, 룬 이름, 유니크, 사냥터 검색..." onkeyup="handleSearch()" />
+      <input type="text" id="searchInput" class="search-input" placeholder="사냥터, 룬워드, 유니크 검색 (예: 핏빛 황무지, 바위 벌판, 영혼, 샤코)..." onkeyup="handleSearch()" />
     </div>
 
     <div class="quick-tags">
       <span>빠른 검색:</span>
-      <button class="tag-btn" onclick="quickSearch('모자이크')">모자이크</button>
-      <button class="tag-btn" onclick="quickSearch('권위')">권위(신규)</button>
-      <button class="tag-btn" onclick="quickSearch('꿈')">꿈(드림)</button>
-      <button class="tag-btn" onclick="quickSearch('치료')">치료</button>
-      <button class="tag-btn" onclick="quickSearch('슬픔')">슬픔(고뇌)</button>
-      <button class="tag-btn" onclick="quickSearch('탈')">탈(룬)</button>
-      <button class="tag-btn" onclick="quickSearch('자')">자(룬)</button>
+      <button class="tag-btn" onclick="quickSearch('핏빛 황무지')">핏빛 황무지</button>
+      <button class="tag-btn" onclick="quickSearch('구덩이')">구덩이(피트)</button>
+      <button class="tag-btn" onclick="quickSearch('비전의 성소')">비전의 성소</button>
+      <button class="tag-btn" onclick="quickSearch('트라빈칼')">트라빈칼</button>
+      <button class="tag-btn" onclick="quickSearch('혼돈의 성역')">혼돈의 성역</button>
+      <button class="tag-btn" onclick="quickSearch('세계석 성채')">세계석 성채</button>
     </div>
   </section>
 
   <!-- 메인 콘텐츠 -->
   <main class="content-container">
     <div class="tabs-bar">
-      <button class="tab active" onclick="setMainTab('runeword', this)">◆ 룬워드 (전체)</button>
-      <button class="tab" onclick="setMainTab('unique', this)">★ 유니크</button>
-      <button class="tab" onclick="setMainTab('zone', this)">▲ 사냥터 & TC</button>
+      <button class="tab" onclick="setMainTab('runeword', this)">◆ 룬워드 (전체 80종)</button>
+      <button class="tab" onclick="setMainTab('unique', this)">★ 유니크 (전체 380종)</button>
+      <button class="tab active" onclick="setMainTab('zone', this)">▲ 웨이포인트 & 사냥터 (전 39개소)</button>
     </div>
 
-    <!-- 2차 서브 필터 바 -->
     <div class="sub-filter-bar" id="subFilterBar">
-      <span class="sub-filter-title" id="filterLabel">부위 필터:</span>
+      <span class="sub-filter-title" id="filterLabel">액트 필터:</span>
       <div id="filterButtons" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
     </div>
 
     <div class="results-meta">
       <div>검색 결과 <strong id="resultCount">0</strong>개 항목</div>
-      <div style="font-size: 11px;">항목 클릭 시 우측에 조합 룬과 옵션이 출력됩니다</div>
+      <div style="font-size: 11px;">지역을 클릭하면 스크린샷과 동일한 심층 파밍 분석 카드가 출력됩니다</div>
     </div>
 
     <div class="main-grid">
       <div class="card-list" id="cardList"></div>
 
-      <!-- 우측 상세 패널 -->
+      <!-- 우측 상세 정보 패널 (스크린샷 전용 레이아웃) -->
       <aside class="detail-panel" id="detailPanel">
-        <div class="detail-type" id="dType">상세 정보</div>
-        <div class="detail-title" id="dTitle">선택된 항목 없음</div>
-
-        <div class="level-calc-box" id="levelCalcBox" style="display: none;">
-          <span>내 캐릭터 레벨:</span>
-          <input type="number" id="charLevelInput" value="85" min="1" max="99" oninput="updateTcCalc()" />
-        </div>
-
-        <div class="detail-box">
-          <div class="detail-box-title" id="dBoxTitle">필요 룬 조합 및 베이스</div>
-          <div class="detail-runes" id="dBoxContent"></div>
-          <div style="font-size: 12px; color: #8e7f73; margin-top: 4px;" id="dSummary"></div>
-        </div>
-
-        <div class="stats-header" style="font-size: 12px; color: var(--text-sub); margin-bottom: 8px;">세부 정보 및 완성 옵션</div>
-        <div id="dStats"></div>
+        <!-- JS로 동적 렌더링 -->
       </aside>
     </div>
   </main>
 
   <script>
-    /* 공포의 영역 타이머 */
+    /* 1. 실시간 공포의 영역 타이머 */
     const tzZones = [
       { act: "ACT 1", name: "구덩이 (피트 1~2층)", baseTc: 85 },
       { act: "ACT 4", name: "혼돈의 성역 (카오스)", baseTc: 85 },
@@ -403,627 +499,157 @@
     setInterval(updateTerrorZone, 1000);
     updateTerrorZone();
 
-    /* =========================================================
-       첨부 이미지 표 기준 전 룬워드 + 신규 3.0 + 유니크 + 사냥터 풀DB
-    ========================================================= */
+    /* 2. 전 액트 사냥터 및 심층 면역/파밍 상세 DB */
     const database = [
-      /* --- [멀티 베이스 룬워드] --- */
       {
-        id: "rw_dream", category: "runeword", slot: "머리", name: "꿈 (드림)", enName: "Dream",
-        sub: "요구 레벨 65 · 3소켓 투구/방패", desc: "15레벨 신성한 충격 오라 중첩 세팅",
-        primary: "이오(16) + 자(31) + 풀(21)", summary: "15레벨 홀리 쇼크 오라, 타격 회복 20~30%, 모든 저항 5~20",
-        stats: [{ name: "장착 시 신성한 충격 오라", val: "15레벨" }, { name: "타격 회복 속도", val: "+20~30%" }, { name: "모든 저항", val: "+5~20" }, { name: "생명력", val: "+50" }]
-      },
-      {
-        id: "rw_phoenix", category: "runeword", slot: "방패", name: "불사조 (피닉스)", enName: "Phoenix",
-        sub: "요구 레벨 65 · 4소켓 무기/방패", desc: "시체 흡수 속죄 오라와 극딜 증뎀",
-        primary: "벡스(26) + 벡스(26) + 로(28) + 자(31)", summary: "10~15 속죄 오라, 증뎀 350~400%, 적 화염 저항 깎기 -28%",
-        stats: [{ name: "장착 시 속죄(리뎀션) 오라", val: "10~15레벨" }, { name: "피해 증가", val: "+350~400%" }, { name: "적의 화염 저항 감소", val: "-28%" }, { name: "원거리 방어력", val: "+350~400" }]
-      },
-      {
-        id: "rw_spirit", category: "runeword", slot: "방패", name: "영혼 (스피리트)", enName: "Spirit",
-        sub: "요구 레벨 25 · 4소켓 검/방패", desc: "국민 마법 캐스터 종결/육성 장비",
-        primary: "탈(7) + 주울(10) + 오르트(9) + 앰(11)", summary: "+2 올스킬, 시전 속도 25~35%, 패힛 55%, 마나 89~112",
-        stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "시전 속도", val: "+25~35%" }, { name: "타격 회복 속도", val: "+55%" }, { name: "생명력", val: "+22" }]
-      },
-      {
-        id: "rw_dragon", category: "runeword", slot: "가슴", name: "용 (드래곤)", enName: "Dragon",
-        sub: "요구 레벨 61 · 3소켓 갑옷/방패", desc: "14레벨 신성한 불꽃 오라 중첩 장비",
-        primary: "수르(29) + 로(28) + 솔(12)", summary: "14레벨 홀리 파이어 오라, 모든 능력치 +3~5, 힘",
-        stats: [{ name: "장착 시 신성한 불꽃 오라", val: "14레벨" }, { name: "모든 능력치", val: "+3~5" }, { name: "피격 시 15레벨 히드라 시전", val: "12%" }]
-      },
-      {
-        id: "rw_fortitude", category: "runeword", slot: "가슴", name: "인내", enName: "Fortitude",
-        sub: "요구 레벨 59 · 4소켓 무기/갑옷", desc: "물리 캐릭터 및 용병 필수 종결 장비",
-        primary: "엘(1) + 솔(12) + 돌(14) + 로(28)", summary: "피해 300%, 방어력 200%, 올레지 25~30, 칠링아머",
-        stats: [{ name: "피해 증가", val: "+300%" }, { name: "방어력 증가", val: "+200%" }, { name: "모든 저항", val: "+25~30" }, { name: "생명력 (레벨 비례)", val: "최대 +148" }]
-      },
-
-      /* --- [2.4 패치 신규 룬워드] --- */
-      {
-        id: "rw_plague", category: "runeword", slot: "무기", name: "귀감 (역병)", enName: "Plague",
-        sub: "요구 레벨 67 · 3소켓 검/단검/클러", desc: "정화 오라와 타격 시 저항 감소 저주 시전",
-        primary: "참(32) + 샤엘(13) + 움(22)", summary: "13~17레벨 정화 오라, 피격 시 저항 감소 시전, 치명타",
-        stats: [{ name: "장착 시 정화 오라", val: "13~17레벨" }, { name: "피격 시 12레벨 저항 감소(로레) 시전", val: "20%" }, { name: "치명적 공격", val: "레벨 비례" }]
-      },
-      {
-        id: "rw_flickering", category: "runeword", slot: "머리", name: "꺼져가는 불길 (불길)", enName: "Flickering Flame",
-        sub: "요구 레벨 55 · 3소켓 투구", desc: "화염 저항 깎기 및 정화 오라 화염 종결 투구",
-        primary: "네프(4) + 풀(21) + 벡스(26)", summary: "화염 기술 +3, 적 화염 저항 -10~15%, 정화 오라",
-        stats: [{ name: "화염 기술 레벨", val: "+3" }, { name: "적의 화염 저항 감소", val: "-10~15%" }, { name: "장착 시 정화 오라", val: "4~8레벨" }]
-      },
-      {
-        id: "rw_pattern", category: "runeword", slot: "무기", name: "귀감 (패턴)", enName: "Pattern",
-        sub: "요구 레벨 23 · 3소켓 클러", desc: "어쌔신 초반 육성 전용 클러",
-        primary: "탈(7) + 오르트(9) + 주울(10)", summary: "공속 30%, 피해 40~80%, 올레지 15",
-        stats: [{ name: "공격 속도", val: "+30%" }, { name: "피해 증가", val: "+40~80%" }, { name: "모든 저항", val: "+15" }]
-      },
-      {
-        id: "rw_unbending_will", category: "runeword", slot: "무기", name: "불굴의 의지", enName: "Unbending Will",
-        sub: "요구 레벨 41 · 6소켓 도검", desc: "가성비 악몽 난이도 바바리안/액트5 용병 무기",
-        primary: "팔(19) + 이오(16) + 아이드(6) + 엘드(2) + 엘(1) + 헬(15)", summary: "공속 20%, 피해 300~350%, 라흡 8~10%",
-        stats: [{ name: "공격 속도", val: "+20%" }, { name: "피해 증가", val: "+300~350%" }, { name: "생명력 흡수", val: "8~10%" }, { name: "도발 시전", val: "18%" }]
-      },
-      {
-        id: "rw_mist", category: "runeword", slot: "무기", name: "안개 (미스트)", enName: "Mist",
-        sub: "요구 레벨 67 · 5소켓 활/쇠뇌", desc: "집중 오라와 관통 공격을 제공하는 아마존 활",
-        primary: "참(32) + 샤엘(13) + 굴(25) + 주울(10) + 이스(24)", summary: "+3 올스킬, 집중 오라 8~12레벨, 관통 공격 100%",
-        stats: [{ name: "모든 기술 레벨", val: "+3" }, { name: "장착 시 집중(컨센) 오라", val: "8~12레벨" }, { name: "관통 공격", val: "100%" }, { name: "모든 저항", val: "+40" }]
-      },
-      {
-        id: "rw_obsession", category: "runeword", slot: "무기", name: "집착 (옵세션)", enName: "Obsession",
-        sub: "요구 레벨 69 · 6소켓 지팡이", desc: "+4 올스킬, 시전속도 65%의 종결 양손 지팡이",
-        primary: "조드(33) + 이스트(24) + 렘(20) + 룸(17) + 이오(16) + 네프(4)", summary: "+4 모든 기술, 시전 속도 65%, 파괴 불가, 약화 저주",
-        stats: [{ name: "모든 기술 레벨", val: "+4" }, { name: "시전 속도", val: "+65%" }, { name: "최대 생명력 증가", val: "15~25%" }, { name: "파괴 불가", val: "적용" }]
-      },
-      {
-        id: "rw_wisdom", category: "runeword", slot: "머리", name: "지혜 (위즈덤)", enName: "Wisdom",
-        sub: "요구 레벨 45 · 3소켓 투구", desc: "관통 공격 33%와 마나 수급 활아마존 투구",
-        primary: "풀(21) + 아이드(6) + 엘드(2)", summary: "관통 공격 33%, 명중률 20%, 빙결 방지",
-        stats: [{ name: "관통 공격", val: "33%" }, { name: "빙결되지 않음", val: "적용" }, { name: "마나 흡수", val: "4~8%" }]
-      },
-
-      /* --- [2.6 패치 신규 룬워드] --- */
-      {
-        id: "rw_cure", category: "runeword", slot: "머리", name: "치료", enName: "Cure",
-        sub: "요구 레벨 35 · 3소켓 투구", desc: "기도 용병과 조합 시 중독 및 저주 즉시 정화",
-        primary: "샤엘(13) + 이오(16) + 탈(7)", summary: "1레벨 정화 오라, 독 저항 40~60%, 독 지속시간 50% 단축",
-        stats: [{ name: "장착 시 정화 오라", val: "1레벨" }, { name: "독 저항", val: "+40~60%" }, { name: "독 지속시간 감소", val: "50%" }, { name: "타격 회복 속도", val: "+20%" }]
-      },
-      {
-        id: "rw_ground", category: "runeword", slot: "머리", name: "접지", enName: "Ground",
-        sub: "요구 레벨 35 · 3소켓 투구", desc: "번개 흡수와 번개 저항 특화 투구",
-        primary: "샤엘(13) + 이오(16) + 오르트(9)", summary: "번개 저항 40~60%, 번개 흡수 10~15%",
-        stats: [{ name: "번개 저항", val: "+40~60%" }, { name: "번개 흡수", val: "+10~15%" }, { name: "최대 번개 저항", val: "+2%" }]
-      },
-      {
-        id: "rw_hearth", category: "runeword", slot: "머리", name: "화로", enName: "Hearth",
-        sub: "요구 레벨 35 · 3소켓 투구", desc: "빙결 방지 및 냉기 흡수 투구",
-        primary: "샤엘(13) + 이오(16) + 주울(10)", summary: "빙결되지 않음, 냉기 저항 40~60%, 냉기 흡수 10~15%",
-        stats: [{ name: "빙결되지 않음", val: "적용" }, { name: "냉기 저항", val: "+40~60%" }, { name: "냉기 흡수", val: "+10~15%" }]
-      },
-      {
-        id: "rw_temper", category: "runeword", slot: "머리", name: "담금질", enName: "Temper",
-        sub: "요구 레벨 35 · 3소켓 투구", desc: "화염 흡수 및 화염 저항 특화 투구",
-        primary: "샤엘(13) + 이오(16) + 랄(8)", summary: "화염 저항 40~60%, 화염 흡수 10~15%",
-        stats: [{ name: "화염 저항", val: "+40~60%" }, { name: "화염 흡수", val: "+10~15%" }, { name: "최대 화염 저항", val: "+2%" }]
-      },
-      {
-        id: "rw_bulwark", category: "runeword", slot: "머리", name: "방벽", enName: "Bulwark",
-        sub: "요구 레벨 35 · 3소켓 투구", desc: "생명력 흡수와 물리 피해 감소 투구",
-        primary: "샤엘(13) + 이오(16) + 솔(12)", summary: "생명력 흡수, 물리 피해 감소 10~15%",
-        stats: [{ name: "생명력 흡수", val: "4~6%" }, { name: "물리 피해 감소", val: "10~15%" }, { name: "타격 회복 속도", val: "+20%" }]
-      },
-      {
-        id: "rw_hustle_armor", category: "runeword", slot: "가슴", name: "발자국 (허슬 갑옷)", enName: "Hustle",
-        sub: "요구 레벨 39 · 3소켓 갑옷", desc: "달리기 65%와 공속 40%를 지닌 가성비 갑옷",
-        primary: "샤엘(13) + 코(18) + 엘드(2)", summary: "달리기/걷기 속도 65%, 공격 속도 40%, 민첩 +10",
-        stats: [{ name: "달리기/걷기 속도", val: "+65%" }, { name: "공격 속도", val: "+40%" }, { name: "타격 회복 속도", val: "+20%" }, { name: "민첩", val: "+10" }]
-      },
-      {
-        id: "rw_hustle_weapon", category: "runeword", slot: "무기", name: "발자국 (허슬 무기)", enName: "Hustle",
-        sub: "요구 레벨 39 · 3소켓 무기", desc: "버스트 시전 스왑용 공속 무기",
-        primary: "샤엘(13) + 코(18) + 엘드(2)", summary: "타격 시 9레벨 속도 폭발 시전, 1레벨 광신 오라",
-        stats: [{ name: "장착 시 광신 오라", val: "1레벨" }, { name: "타격 시 속도 폭발(버스트) 시전", val: "5%" }, { name: "공격 속도", val: "+30%" }]
-      },
-      {
-        id: "rw_mosaic", category: "runeword", slot: "무기", name: "모자이크", enName: "Mosaic",
-        sub: "요구 레벨 53 · 3소켓 클러", desc: "무술 어쌔신 종결 (스킬 충전 100% 영구 미소모)",
-        primary: "말(23) + 굴(25) + 앰(11)", summary: "마무리 일격 시 충전 미소모 50% (쌍 모자이크 시 100%)",
-        stats: [{ name: "마무리 일격 시 충전 미소모", val: "+50%" }, { name: "무술 기술 레벨", val: "+2" }, { name: "원소 기술 피해", val: "각 +8~15%" }, { name: "공격 속도", val: "+20%" }]
-      },
-      {
-        id: "rw_metamorphosis", category: "runeword", slot: "머리", name: "탈태 (메타모포시스)", enName: "Metamorphosis",
-        sub: "요구 레벨 67 · 3소켓 투구", desc: "늑대인간/곰인간 변신 드루이드 최종 종결 투구",
-        primary: "이오(16) + 참(32) + 팔(19)", summary: "늑대의 징표(공속/공등), 곰의 징표(피해/방어/생명력)",
-        stats: [{ name: "변신 기술 레벨", val: "+5" }, { name: "늑대 공격 시 공속/공등 버프", val: "적용" }, { name: "곰 공격 시 피해/물피감 버프", val: "적용" }, { name: "빙결되지 않음", val: "적용" }]
-      },
-
-      /* --- [3.0 패치 신규 룬워드] --- */
-      {
-        id: "rw_authority", category: "runeword", slot: "가슴", name: "권위", enName: "Authority",
-        sub: "요구 레벨 29 · 3소켓 갑옷", desc: "3.0 신규 추가된 중레벨 육성형 갑옷",
-        primary: "엘(1) + 샤엘(13) + 랄(8)", summary: "타격 회복 속도, 방어력, 화염 저항 대폭 증가",
-        stats: [{ name: "타격 회복 속도", val: "+20%" }, { name: "화염 저항", val: "+30%" }, { name: "방어력 증가", val: "+80~100%" }]
-      },
-      {
-        id: "rw_vigilance", category: "runeword", slot: "방패", name: "경계", enName: "Vigilance",
-        sub: "요구 레벨 53 · 2소켓 방패/책", desc: "3.0 신규 저항 및 방어 특화 방패",
-        primary: "돌(14) + 굴(25)", summary: "막기 확률 증가, 모든 저항, 방어력 상승",
-        stats: [{ name: "막기 확률 증가", val: "+20%" }, { name: "모든 저항", val: "+25~35%" }, { name: "최대 독 저항", val: "+5%" }]
-      },
-      {
-        id: "rw_coven", category: "runeword", slot: "머리", name: "마녀단", enName: "Coven",
-        sub: "요구 레벨 51 · 3소켓 투구", desc: "3.0 신규 시전 속도 및 마나 수급 투구",
-        primary: "이스트(24) + 탈(7) + 이오(16)", summary: "시전 속도, 마법 아이템 발견 확률, 에너지",
-        stats: [{ name: "시전 속도", val: "+20%" }, { name: "마법 아이템 발견 확률", val: "+25%" }, { name: "독 저항", val: "+30%" }]
-      },
-      {
-        id: "rw_whiteness", category: "runeword", slot: "무기", name: "희식", enName: "Whiteness",
-        sub: "요구 레벨 57 · 3소켓 단검", desc: "3.0 신규 공속 및 치명타 단검",
-        primary: "앰(11) + 샤엘(13) + 오움(27)", summary: "피해 300% 이상 증가, 공격 속도, 치명타",
-        stats: [{ name: "피해 증가", val: "+300~350%" }, { name: "공격 속도", val: "+30%" }, { name: "생명력 흡수", val: "7%" }]
-      },
-      {
-        id: "rw_void", category: "runeword", slot: "무기", name: "공허", enName: "Void",
-        sub: "요구 레벨 69 · 3소켓 단검", desc: "3.0 신규 조드룬이 들어가는 최고급 종결 단검",
-        primary: "주울(10) + 조드(33) + 이스트(24)", summary: "파괴 불가, 대상 방어력 무시, 마법 아이템 발견",
-        stats: [{ name: "파괴 불가", val: "적용" }, { name: "대상의 방어력 무시", val: "적용" }, { name: "마법 아이템 발견 확률", val: "+50%" }]
-      },
-
-      /* --- [투구 전용 룬워드] --- */
-      {
-        id: "rw_radiance", category: "runeword", slot: "머리", name: "빛 (광휘)", enName: "Radiance",
-        sub: "요구 레벨 27 · 3소켓 투구", desc: "생명력/마나/스탯을 골고루 주는 투구",
-        primary: "네프(4) + 솔(12) + 이드(6)", summary: "생명력 +10, 마나 +33, 원거리 방어력",
-        stats: [{ name: "활력 / 에너지", val: "각 +10" }, { name: "마나", val: "+33" }, { name: "물리 피해 감소", val: "7" }]
-      },
-      {
-        id: "rw_lore", category: "runeword", slot: "머리", name: "전승 (학식)", enName: "Lore",
-        sub: "요구 레벨 27 · 2소켓 투구", desc: "+1 모든 기술 육성용 국민 투구",
-        primary: "오르트(9) + 솔(12)", summary: "+1 모든 기술, 번개 저항 30%, 처치 시 마나",
-        stats: [{ name: "모든 기술 레벨", val: "+1" }, { name: "번개 저항", val: "+30%" }, { name: "처치 시 마나 획득", val: "+2" }]
-      },
-      {
-        id: "rw_delirium", category: "runeword", slot: "머리", name: "착란 (구 둔병)", enName: "Delirium",
-        sub: "요구 레벨 51 · 3소켓 투구", desc: "+2 모든 기술, 매찬 25%, 혼란 유발",
-        primary: "렘(20) + 이스트(24) + 이오(16)", summary: "+2 모든 기술, 매찬 25%, 11레벨 혼란 시전",
-        stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "마법 아이템 발견 확률", val: "+25%" }, { name: "타격 시 혼란 시전", val: "11%" }]
-      },
-
-      /* --- [방패 전용 룬워드] --- */
-      {
-        id: "rw_rhyme", category: "runeword", slot: "방패", name: "각운 (제작)", enName: "Rhyme",
-        sub: "요구 레벨 29 · 2소켓 방패", desc: "빙결 방지와 매찬 25%의 명품 육성 방패",
-        primary: "샤엘(13) + 에드(5)", summary: "빙결되지 않음, 모든 저항 +25, 매찬 25%",
-        stats: [{ name: "빙결되지 않음", val: "적용" }, { name: "모든 저항", val: "+25" }, { name: "막기 속도", val: "+40%" }, { name: "마법 아이템 발견 확률", val: "+25%" }]
-      },
-      {
-        id: "rw_ancients_pledge", category: "runeword", slot: "방패", name: "고대인의 서약", enName: "Ancient's Pledge",
-        sub: "요구 레벨 21 · 3소켓 방패", desc: "액트 5 퀘스트 보상으로 즉시 만드는 저항 방패",
-        primary: "랄(8) + 오르트(9) + 탈(7)", summary: "화염/번개/독 48%, 냉기 43% 저항",
-        stats: [{ name: "화염/번개/독 저항", val: "각 +48%" }, { name: "냉기 저항", val: "+43%" }, { name: "방어력 증가", val: "+50%" }]
-      },
-      {
-        id: "rw_sanctuary", category: "runeword", slot: "방패", name: "성역 (생츄어리)", enName: "Sanctuary",
-        sub: "요구 레벨 49 · 3소켓 방패", desc: "황금 올레지 50~70을 제공하는 방어형 방패",
-        primary: "코(18) + 코(18) + 말(23)", summary: "모든 저항 50~70, 패힛 20%, 블럭율 20%",
-        stats: [{ name: "모든 저항", val: "+50~70" }, { name: "타격 회복 속도", val: "+20%" }, { name: "막기 확률 증가", val: "+20%" }, { name: "민첩", val: "+20" }]
-      },
-      {
-        id: "rw_exile", category: "runeword", slot: "방패", name: "망명 (엑자일)", enName: "Exile",
-        sub: "요구 레벨 57 · 4소켓 팔라딘 전용 방패", desc: "라탭 저주 자동 시전과 반항 오라 (횃불 슴딘 필수)",
-        primary: "벡스(26) + 오움(27) + 이스트(24) + 돌(14)", summary: "라탭 15% 시전, 13~16레벨 반항 오라, 내구도 자동 회복",
-        stats: [{ name: "타격 시 5레벨 생명력 추출 발동", val: "15%" }, { name: "장착 시 반항 오라", val: "13~16레벨" }, { name: "성기사 공격 오라", val: "+2" }, { name: "내구도 회복", val: "적용 (에테리얼 제작)" }]
-      },
-
-      /* --- [갑옷 전용 룬워드] --- */
-      {
-        id: "rw_stealth", category: "runeword", slot: "가슴", name: "잠행 (스텔스)", enName: "Stealth",
-        sub: "요구 레벨 17 · 2소켓 갑옷", desc: "모든 캐릭 필수 노말 0티어 육성 갑옷",
-        primary: "탈(7) + 에드(5)", summary: "이속 25%, 시전속도 25%, 패힛 25%",
-        stats: [{ name: "달리기/걷기 속도", val: "+25%" }, { name: "시전 속도", val: "+25%" }, { name: "타격 회복 속도", val: "+25%" }, { name: "마나 재생", val: "+15%" }]
-      },
-      {
-        id: "rw_smoke", category: "runeword", slot: "가슴", name: "연기", enName: "Smoke",
-        sub: "요구 레벨 37 · 2소켓 갑옷", desc: "모든 저항 50을 챙겨주는 가성비 갑옷",
-        primary: "네프(4) + 룸(17)", summary: "모든 저항 +50, 패힛 20%",
-        stats: [{ name: "모든 저항", val: "+50" }, { name: "타격 회복 속도", val: "+20%" }, { name: "원거리 방어력", val: "+280" }]
-      },
-      {
-        id: "rw_treachery", category: "runeword", slot: "가슴", name: "배신 (트랫셔리)", enName: "Treachery",
-        sub: "요구 레벨 43 · 3소켓 갑옷", desc: "공속 45%와 흐리기(페이드) 발동",
-        primary: "샤엘(13) + 주울(10) + 렘(20)", summary: "공속 45%, 피격 시 15레벨 페이드 시전",
-        stats: [{ name: "공격 속도", val: "+45%" }, { name: "피격 시 흐리기 발동", val: "5%" }, { name: "타격 회복 속도", val: "+20%" }]
-      },
-      {
-        id: "rw_lionheart", category: "runeword", slot: "가슴", name: "용맹한 자 (협객)", enName: "Lionheart",
-        sub: "요구 레벨 41 · 3소켓 갑옷", desc: "막대한 스탯과 생명력, 올레지 30 갑옷",
-        primary: "헬(15) + 룸(17) + 팔(19)", summary: "힘 +25, 활력 +20, 민첩 +15, 모든 저항 +30",
-        stats: [{ name: "힘", val: "+25" }, { name: "활력", val: "+20" }, { name: "생명력", val: "+50" }, { name: "모든 저항", val: "+30" }]
-      },
-      {
-        id: "rw_peace", category: "runeword", slot: "가슴", name: "평화", enName: "Peace",
-        sub: "요구 레벨 29 · 3소켓 갑옷", desc: "+2 아마존 스킬 및 발키리 자동 소환",
-        primary: "샤엘(13) + 주울(10) + 앰(11)", summary: "+2 아마존 기술, 타격 시 발키리 소환 2%",
-        stats: [{ name: "아마존 기술 레벨", val: "+2" }, { name: "타격 회복 속도", val: "+20%" }, { name: "치명타", val: "+2" }]
-      },
-      {
-        id: "rw_gloom", category: "runeword", slot: "가슴", name: "우울 (글룸)", enName: "Gloom",
-        sub: "요구 레벨 47 · 3소켓 갑옷", desc: "방어력 증가와 모든 저항 45의 방어 갑옷",
-        primary: "팔(19) + 움(22) + 풀(21)", summary: "모든 저항 +45, 피격 시 시야 흐리기 시전 15%",
-        stats: [{ name: "모든 저항", val: "+45" }, { name: "방어력 증가", val: "+200~260%" }, { name: "타격 회복 속도", val: "+10%" }]
-      },
-      {
-        id: "rw_wealth", category: "runeword", slot: "가슴", name: "부 (웰쓰)", enName: "Wealth",
-        sub: "요구 레벨 43 · 3소켓 갑옷", desc: "골드 획득 300%와 매찬 100% 삥바바용 갑옷",
-        primary: "렘(20) + 코(18) + 이스트(24)", summary: "괴물에게서 얻는 금화 300%, 매찬 100%",
-        stats: [{ name: "괴물에게서 얻는 금화", val: "+300%" }, { name: "마법 아이템 발견 확률", val: "+100%" }, { name: "민첩", val: "+10" }]
-      },
-      {
-        id: "rw_enigma", category: "runeword", slot: "가슴", name: "수수께끼", enName: "Enigma",
-        sub: "요구 레벨 65 · 3소켓 갑옷", desc: "순간이동을 제공하는 전 직업 종결 갑옷",
-        primary: "자(31) + 아이드(6) + 베르(30)", summary: "+1 텔레포트, +2 올스킬, 레벨 비례 힘, 물피감 8%",
-        stats: [{ name: "순간이동 (텔레포트)", val: "+1" }, { name: "모든 기술 레벨", val: "+2" }, { name: "달리기/걷기 속도", val: "+45%" }, { name: "힘 (레벨 비례)", val: "최대 +74" }, { name: "피해 감소", val: "8%" }]
-      },
-      {
-        id: "rw_chains_of_honor", category: "runeword", slot: "가슴", name: "명예의 굴레 (명굴)", enName: "Chains of Honor",
-        sub: "요구 레벨 63 · 4소켓 갑옷", desc: "+2 모든 기술 및 올레지 65의 밸런스 갑옷",
-        primary: "돌(14) + 움(22) + 베르(30) + 이스트(24)", summary: "+2 모든 기술, 모든 저항 +65, 피흡 8%, 피해 감소 8%",
-        stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "모든 저항", val: "+65" }, { name: "생명력 흡수", val: "8%" }, { name: "피해 감소", val: "8%" }]
-      },
-
-      /* --- [무기 전용 룬워드 (근접 / 원거리 / 캐스터)] --- */
-      {
-        id: "rw_steel", category: "runeword", slot: "무기", name: "강철 (스틸)", enName: "Steel",
-        sub: "요구 레벨 13 · 2소켓 도검/도끼/메이스", desc: "초반 밀리 캐릭터의 구세주 (상처 악화 50%)",
-        primary: "티르(3) + 엘(1)", summary: "공속 25%, 피해 20%, 상처 악화 50%",
-        stats: [{ name: "공격 속도", val: "+25%" }, { name: "상처 악화 확률", val: "50%" }, { name: "최소/최대 피해", val: "+3" }]
-      },
-      {
-        id: "rw_strength", category: "runeword", slot: "무기", name: "힘 (스트랭쓰)", enName: "Strength",
-        sub: "요구 레벨 25 · 2소켓 근접 무기", desc: "25% 강타와 힘 20, 피흡을 챙기는 무기",
-        primary: "앰(11) + 티르(3)", summary: "강타 25%, 생명력 흡수 7%, 힘 +20",
-        stats: [{ name: "강타 확률", val: "25%" }, { name: "생명력 흡수", val: "7%" }, { name: "힘", val: "+20" }]
-      },
-      {
-        id: "rw_black", category: "runeword", slot: "무기", name: "흑마현 (블랙)", enName: "Black",
-        sub: "요구 레벨 35 · 3소켓 클럽/철퇴/망치", desc: "강타 40%와 공속으로 초반 횃불 슴딘 무기",
-        primary: "주울(10) + 이오(16) + 네프(4)", summary: "강타 40%, 공속 15%, 시체 폭발 충전",
-        stats: [{ name: "강타 확률", val: "40%" }, { name: "공격 속도", val: "+15%" }, { name: "타격 회복 속도", val: "+10%" }]
-      },
-      {
-        id: "rw_honor", category: "runeword", slot: "무기", name: "명예", enName: "Honor",
-        sub: "요구 레벨 27 · 5소켓 근접 무기", desc: "+1 올스킬, 치명타 25%, 피흡 7%",
-        primary: "앰(11) + 엘(1) + 오르트(9) + 주울(10) + 앰(11)", summary: "+1 모든 기술, 치명타 25%, 피흡 7%, 힘 +10",
-        stats: [{ name: "모든 기술 레벨", val: "+1" }, { name: "치명적 공격", val: "25%" }, { name: "생명력 흡수", val: "7%" }]
-      },
-      {
-        id: "rw_white", category: "runeword", slot: "무기", name: "순백 (화이트)", enName: "White",
-        sub: "요구 레벨 35 · 2소켓 원드류", desc: "본넥 종결 지팡이 (뼈 창 +2, 독뼈 +3)",
-        primary: "돌(14) + 이오(16)", summary: "독과 뼈 기술 +3, 본스피어 +2, 패캐 20%",
-        stats: [{ name: "독과 뼈 기술", val: "+3" }, { name: "뼈 창 (본 스피어)", val: "+2" }, { name: "시전 속도", val: "+20%" }]
-      },
-      {
-        id: "rw_memory", category: "runeword", slot: "무기", name: "기억 (메모리)", enName: "Memory",
-        sub: "요구 레벨 37 · 4소켓 지팡이", desc: "에너지 쉴드 9스킬 뻥튀기 버프용 스왑 지팡이",
-        primary: "룸(17) + 이오(16) + 솔(12) + 에드(5)", summary: "+3 소서스킬, 마력 보호막(에쉴) +3, 패캐 33%",
-        stats: [{ name: "원소술사 기술 레벨", val: "+3" }, { name: "마력 보호막", val: "+3" }, { name: "시전 속도", val: "+33%" }]
-      },
-      {
-        id: "rw_crescent_moon", category: "runeword", slot: "무기", name: "초승달", enName: "Crescent Moon",
-        sub: "요구 레벨 47 · 3소켓 검/도끼/폴암", desc: "적 번개 저항 -35% 깎기 가성비 무기",
-        primary: "샤엘(13) + 움(22) + 티르(3)", summary: "적 번개 저항 -35%, 정전기장(스태틱) 발동 7%",
-        stats: [{ name: "적의 번개 저항 감소", val: "-35%" }, { name: "타격 시 13레벨 정전기장 시전", val: "7%" }, { name: "공격 속도", val: "+20%" }]
-      },
-      {
-        id: "rw_edge", category: "runeword", slot: "무기", name: "모서리 (엣지)", enName: "Edge",
-        sub: "요구 레벨 25 · 3소켓 원거리 무기", desc: "상점 물품 가격 15% 할인 도박 필수 활",
-        primary: "티르(3) + 탈(7) + 앰(11)", summary: "모든 상점 물품 가격 15% 인하, 가시 오라",
-        stats: [{ name: "모든 상점 물품 가격 인하", val: "15%" }, { name: "장착 시 가시(쏜즈) 오라", val: "15레벨" }]
-      },
-      {
-        id: "rw_harmony", category: "runeword", slot: "무기", name: "조화 (하모니)", enName: "Harmony",
-        sub: "요구 레벨 39 · 4소켓 원거리 무기", desc: "10레벨 원기(비거) 오라로 초고속 이동 스왑 활",
-        primary: "티르(3) + 이스(24) + 솔(12) + 코(18)", summary: "10레벨 원기 오라로 마을 및 필드 이속 극대화",
-        stats: [{ name: "장착 시 원기(비거) 오라", val: "10레벨" }, { name: "원소 피해", val: "화염/냉기/번개 각 55-160 추가" }]
-      },
-      {
-        id: "rw_obedience", category: "runeword", slot: "무기", name: "순종", enName: "Obedience",
-        sub: "요구 레벨 41 · 5소켓 폴암/창", desc: "40% 강타와 저항 30을 주는 초가성비 용병 무기",
-        primary: "헬(15) + 코(18) + 탈(7) + 에드(5) + 베르(30)", summary: "강타 40%, 피해 370%, 올레지 20~30, 인챈트 시전",
-        stats: [{ name: "강타 확률", val: "40%" }, { name: "피해 증가", val: "+370%" }, { name: "모든 저항", val: "+20~30" }]
-      },
-      {
-        id: "rw_voice_of_reason", category: "runeword", slot: "무기", name: "이성의 목소리", enName: "Voice of Reason",
-        sub: "요구 레벨 43 · 4소켓 검/메이스", desc: "적 냉기 저항 -24% 깎기 및 프로즌 오브 난사",
-        primary: "렘(20) + 코(18) + 엘(1) + 엘드(2)", summary: "적 냉기 저항 -24%, 타격 시 얼음 보주 시전 18%",
-        stats: [{ name: "적의 냉기 저항 감소", val: "-24%" }, { name: "타격 시 13레벨 얼음 보주 시전", val: "18%" }]
-      },
-      {
-        id: "rw_passion", category: "runeword", slot: "무기", name: "열정 (패션)", enName: "Passion",
-        sub: "요구 레벨 43 · 4소켓 무기", desc: "모든 캐릭터에게 열의(질), 광폭화(버서크) 부여",
-        primary: "돌(14) + 오르트(9) + 엘드(2) + 렘(20)", summary: "+1 열의(질), +1 광폭화(버서크), 공속 25%",
-        stats: [{ name: "열의 (질)", val: "+1" }, { name: "광폭화 (버서크)", val: "+1" }, { name: "공격 속도", val: "+25%" }]
-      },
-      {
-        id: "rw_lawbringer", category: "runeword", slot: "무기", name: "집행자 (법률위반)", enName: "Lawbringer",
-        sub: "요구 레벨 43 · 3소켓 검/망치/셉터", desc: "노화(디크리) 저주와 언데드 밀쳐내는 안식 무기",
-        primary: "앰(11) + 렘(20) + 코(18)", summary: "타격 시 노화(디크리피파이) 20% 시전, 16~18 성역 오라",
-        stats: [{ name: "타격 시 노화 시전", val: "20%" }, { name: "장착 시 성역(생츄어리) 오라", val: "16~18레벨" }, { name: "처치한 괴물 안식", val: "적용" }]
-      },
-      {
-        id: "rw_oath", category: "runeword", slot: "무기", name: "서약 (오크)", enName: "Oath",
-        sub: "요구 레벨 49 · 4소켓 도검/도끼/메이스", desc: "파괴 불가 옵션으로 에테 무기에 만드는 명품 딜 무기",
-        primary: "샤엘(13) + 풀(21) + 말(23) + 룸(17)", summary: "파괴 불가, 공속 50%, 피해 210~340%",
-        stats: [{ name: "파괴 불가", val: "적용 (에테리얼 제작)" }, { name: "공격 속도", val: "+50%" }, { name: "피해 증가", val: "+210~340%" }]
-      },
-      {
-        id: "rw_rift", category: "runeword", slot: "무기", name: "균열 (리프트)", enName: "Rift",
-        sub: "요구 레벨 53 · 4소켓 폴암/홀", desc: "킥씬 전용 프로즌 오브 난사 종결 무기",
-        primary: "헬(15) + 코(18) + 렘(20) + 굴(25)", summary: "타격 시 21레벨 얼음 보주 시전 16%, 모든 능력치 +10",
-        stats: [{ name: "타격 시 21레벨 얼음 보주 시전", val: "16%" }, { name: "모든 능력치", val: "+10" }]
-      },
-      {
-        id: "rw_hoto", category: "runeword", slot: "무기", name: "참나무의 심장 (오심)", enName: "Heart of the Oak",
-        sub: "요구 레벨 55 · 4소켓 프레일류/지팡이", desc: "캐스터 0티어 종결 한손 무기",
-        primary: "코(18) + 벡스(26) + 풀(21) + 주울(10)", summary: "+3 올스킬, 시전 속도 40%, 모든 저항 30~40",
-        stats: [{ name: "모든 기술 레벨", val: "+3" }, { name: "시전 속도", val: "+40%" }, { name: "모든 저항", val: "+30~40" }]
-      },
-      {
-        id: "rw_death", category: "runeword", slot: "무기", name: "죽음 (데스)", enName: "Death",
-        sub: "요구 레벨 55 · 5소켓 도검/도끼", desc: "파괴 불가, 50% 강타, 레벨 비례 치명타",
-        primary: "헬(15) + 엘(1) + 베르(30) + 오르트(9) + 벡스(26)", summary: "파괴 불가, 강타 50%, 치명타 레벨 비례, 증뎀 385%",
-        stats: [{ name: "파괴 불가", val: "적용" }, { name: "강타 확률", val: "50%" }, { name: "치명적 공격", val: "레벨당 0.5%" }]
-      },
-      {
-        id: "rw_call_to_arms", category: "runeword", slot: "무기", name: "소집 (콜투암스)", enName: "Call to Arms",
-        sub: "요구 레벨 57 · 5소켓 무기", desc: "배틀 오더스 함성으로 최대 생명력 뻥튀기",
-        primary: "앰(11) + 랄(8) + 말(23) + 이스트(24) + 오움(27)", summary: "+1 올스킬, 전투 명령 1~6, 전투 지휘 1~6",
-        stats: [{ name: "전투 명령 (배틀 오더스)", val: "+1~6" }, { name: "전투 지휘 (배틀 커맨드)", val: "+1~6" }, { name: "모든 기술 레벨", val: "+1" }]
-      },
-      {
-        id: "rw_grief", category: "runeword", slot: "무기", name: "슬픔 (고뇌)", enName: "Grief",
-        sub: "요구 레벨 59 · 5소켓 도검/도끼", desc: "근접 물리 캐릭터 0티어 최강의 종결 무기",
-        primary: "에드(5) + 티르(3) + 로(28) + 말(23) + 랄(8)", summary: "피해 +340~400 절대값 추가, 공속 30~40%, 방어 무시",
-        stats: [{ name: "피해 추가", val: "+340~400" }, { name: "공격 속도", val: "+30~40%" }, { name: "대상의 방어력 무시", val: "적용" }]
-      },
-      {
-        id: "rw_chaos", category: "runeword", slot: "무기", name: "혼돈 (카오스)", enName: "Chaos",
-        sub: "요구 레벨 57 · 3소켓 어쌔신 클러", desc: "혼돈씬 전용 휠윈드(소용돌이) 부여 클러",
-        primary: "팔(19) + 오움(27) + 우움(22)", summary: "+1 소용돌이(휠윈드), 공속 35%, 피해 290~340%",
-        stats: [{ name: "소용돌이 (휠윈드)", val: "+1" }, { name: "공격 속도", val: "+35%" }, { name: "상처 악화 확률", val: "25%" }]
-      },
-      {
-        id: "rw_beast", category: "runeword", slot: "무기", name: "야수 (비스트)", enName: "Beast",
-        sub: "요구 레벨 63 · 5소켓 도끼/셉터/망치", desc: "9레벨 광신 오라 및 곰인간 변신 무기",
-        primary: "베르(30) + 티르(3) + 움(22) + 말(23) + 룸(17)", summary: "9레벨 광신(파나티시즘) 오라, +3 곰인간 변신",
-        stats: [{ name: "장착 시 광신 오라", val: "9레벨" }, { name: "곰인간 변신", val: "+3" }, { name: "강타 확률", val: "20%" }]
-      },
-      {
-        id: "rw_infinity", category: "runeword", slot: "무기", name: "무한 (무공)", enName: "Infinity",
-        sub: "요구 레벨 63 · 4소켓 폴암/창", desc: "12레벨 선고 오라로 원소 저항 파괴 종결 무기",
-        primary: "베르(30) + 말(23) + 베르(30) + 이스트(24)", summary: "12레벨 선고(컨빅션) 오라, 적 번개 저항 -45~55%",
-        stats: [{ name: "장착 시 선고 오라", val: "12레벨" }, { name: "적의 번개 저항 감소", val: "-45~55%" }, { name: "강타 확률", val: "40%" }]
-      },
-      {
-        id: "rw_faith", category: "runeword", slot: "무기", name: "신념 (신뢰)", enName: "Faith",
-        sub: "요구 레벨 65 · 4소켓 원거리 무기", desc: "광신 오라로 극한의 프레임을 달성하는 종결 활",
-        primary: "오움(27) + 자(31) + 렘(20) + 엘드(2)", summary: "12~15레벨 광신 오라, +1~2 올스킬, 방어 무시",
-        stats: [{ name: "장착 시 광신 오라", val: "12~15레벨" }, { name: "모든 기술 레벨", val: "+1~2" }, { name: "대상의 방어력 무시", val: "적용" }]
-      },
-      {
-        id: "rw_brand", category: "runeword", slot: "무기", name: "낙인 (브랜드)", enName: "Brand",
-        sub: "요구 레벨 65 · 4소켓 원거리 무기", desc: "본 스피어 난사와 피해 증폭 저주 활",
-        primary: "자(31) + 로(28) + 말(23) + 굴(25)", summary: "타격 시 18레벨 뼈 창 100% 시전, 피격 시 앰플 시전",
-        stats: [{ name: "타격 시 뼈 창 시전", val: "100%" }, { name: "피격 시 14레벨 피해 증폭(앰플) 시전", val: "35%" }]
-      },
-      {
-        id: "rw_last_wish", category: "runeword", slot: "무기", name: "마지막 소원 (마소)", enName: "Last Wish",
-        sub: "요구 레벨 65 · 6소켓 검/망치/도끼", desc: "자룬3개 베르룬의 초호화 횃불 보스 무기",
-        primary: "자(31) + 말(23) + 자(31) + 수르(29) + 자(31) + 베르(30)", summary: "17 위세 오라, 60~70% 강타, 피격 시 페이드, 라탭",
-        stats: [{ name: "장착 시 위세 오라", val: "17레벨" }, { name: "강타 확률", val: "60~70%" }, { name: "타격 시 생명력 추출(라탭)", val: "10%" }]
-      },
-      {
-        id: "rw_doom", category: "runeword", slot: "무기", name: "파멸 (둠)", enName: "Doom",
-        sub: "요구 레벨 67 · 5소켓 도끼/폴암/망치", desc: "12레벨 신성한 빙결 오라 및 적 냉기 저항 깎기",
-        primary: "헬(15) + 오움(27) + 우움(22) + 로(28) + 참(32)", summary: "12레벨 홀리 프리즈 오라, +2 올스킬, 적 냉기 저항 -40~60%",
-        stats: [{ name: "장착 시 신성한 빙결 오라", val: "12레벨" }, { name: "적의 냉기 저항 감소", val: "-40~60%" }, { name: "모든 기술 레벨", val: "+2" }]
-      },
-      {
-        id: "rw_ice", category: "runeword", slot: "무기", name: "얼음 (아이스)", enName: "Ice",
-        sub: "요구 레벨 65 · 4소켓 원거리 무기", desc: "원소 냉기 아마존의 종결 활",
-        primary: "앰(11) + 샤엘(13) + 자(31) + 로(28)", summary: "18 홀리 프리즈 오라, 냉기 기술 피해 +25~30%, 냉깎 -20%",
-        stats: [{ name: "장착 시 신성한 빙결 오라", val: "18레벨" }, { name: "냉기 기술 피해", val: "+25~30%" }, { name: "적의 냉기 저항 감소", val: "-20%" }]
-      },
-      {
-        id: "rw_hand_of_justice", category: "runeword", slot: "무기", name: "정의의 손길 (정손)", enName: "Hand of Justice",
-        sub: "요구 레벨 67 · 4소켓 무기", desc: "16레벨 신성한 불꽃 오라 무기",
-        primary: "수르(29) + 참(32) + 앰(11) + 로(28)", summary: "16 홀리 파이어 오라, 공속 33%, 적 화염 저항 -20%",
-        stats: [{ name: "장착 시 신성한 불꽃 오라", val: "16레벨" }, { name: "적의 화염 저항 감소", val: "-20%" }, { name: "빙결되지 않음", val: "적용" }]
-      },
-      {
-        id: "rw_famine", category: "runeword", slot: "무기", name: "기근 (페민)", enName: "Famine",
-        sub: "요구 레벨 65 · 4소켓 도끼/망치", desc: "4원소 피해와 피흡/마흡을 지닌 무기",
-        primary: "팔(19) + 오움(27) + 오르트(9) + 자(31)", summary: "화염/번개/냉기 원소 피해 추가, 피흡 12%, 대상 방어 무시",
-        stats: [{ name: "원소 피해", val: "화염/번개/냉기 각 180-200" }, { name: "생명력 흡수", val: "12%" }, { name: "공격 속도", val: "+30%" }]
-      },
-      {
-        id: "rw_destruction", category: "runeword", slot: "무기", name: "파괴 (디스트럭션)", enName: "Destruction",
-        sub: "요구 레벨 65 · 5소켓 도검/폴암", desc: "노바, 볼케이노, 몰튼볼더 마법을 쏟아붓는 무기",
-        primary: "벡스(26) + 로(28) + 베르(30) + 자(31) + 코(18)", summary: "타격 시 화산, 균열, 노바 등 온갖 마법 난사",
-        stats: [{ name: "타격 시 12레벨 화산 시전", val: "22%" }, { name: "강타 확률", val: "20%" }, { name: "치명적 공격", val: "레벨 비례" }]
-      },
-      {
-        id: "rw_pride", category: "runeword", slot: "무기", name: "자존심 (긍지)", enName: "Pride",
-        sub: "요구 레벨 67 · 4소켓 미늘창/창", desc: "16~20 집중(컨센) 오라로 본체 물리 딜을 극대화하는 용병 무기",
-        primary: "참(32) + 수르(29) + 이오(16) + 로(28)", summary: "16~20레벨 집중 오라, 대상 결빙, 시각 차단",
-        stats: [{ name: "장착 시 집중 오라", val: "16~20레벨" }, { name: "치명적 공격", val: "20%" }, { name: "대상 결빙", val: "+3" }]
-      },
-      {
-        id: "rw_botd", category: "runeword", slot: "무기", name: "죽어가는 자의 숨결 (죽숨)", enName: "Breath of the Dying",
-        sub: "요구 레벨 69 · 6소켓 무기", desc: "파괴 불가, 60% 공속, 최대 400% 증뎀과 올스탯 30",
-        primary: "벡스(26) + 헬(15) + 엘(1) + 엘드(2) + 조드(33) + 에드(5)", summary: "파괴 불가, 공속 60%, 증뎀 350~400%, 올스탯 30, 피흡 12~15%",
-        stats: [{ name: "파괴 불가", val: "적용 (에테리얼 제작)" }, { name: "공격 속도", val: "+60%" }, { name: "피해 증가", val: "+350~400%" }, { name: "모든 능력치", val: "+30" }]
-      },
-
-      /* =========================================================
-         유니크 핵심 아이템
-      ========================================================= */
-      {
-        id: "uq_shako", category: "unique", slot: "머리", name: "할리퀸 관모 (샤코)", enName: "Harlequin Crest",
-        sub: "고유 샤코 요구 레벨 62", desc: "+2 모든 기술, 막대한 생명력/마나, 50% 매찬",
-        primary: "샤코 베이스", summary: "+2 올스킬, 레벨 비례 생명력/마나, 피해 감소 10%, 매찬 50%",
-        stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "생명력/마나 (레벨 비례)", val: "각 레벨당 +1.5" }, { name: "피해 감소", val: "10%" }, { name: "마법 아이템 발견 확률", val: "+50%" }]
-      },
-      {
-        id: "uq_griffon", category: "unique", slot: "머리", name: "그리폰의 눈 (다이어뎀)", enName: "Griffon's Eye",
-        sub: "고유 다이어뎀 요구 레벨 76 (TC87)", desc: "번개 세팅(자벨마, 체라) 최종 종결",
-        primary: "다이어뎀 베이스", summary: "+1 올스킬, 시전 속도 25%, 적 번개 저항 -15~20%",
-        stats: [{ name: "모든 기술 레벨", val: "+1" }, { name: "시전 속도", val: "+25%" }, { name: "적의 번개 저항 감소", val: "-15~20%" }, { name: "번개 기술 피해", val: "+10~15%" }]
-      },
-      {
-        id: "uq_andy", category: "unique", slot: "머리", name: "안다리엘의 두개골 (안다머리)", enName: "Andariel's Visage",
-        sub: "고유 데몬헤드 요구 레벨 83", desc: "용병 피흡/공속 0티어 종결 투구",
-        primary: "데몬헤드 베이스", summary: "+2 스킬, 공속 20%, 생명력 흡수 8~10%, 힘 25~30",
-        stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "공격 속도", val: "+20%" }, { name: "생명력 흡수", val: "8~10%" }, { name: "화염 저항", val: "-30%" }]
-      },
-      {
-        id: "uq_viper", category: "unique", slot: "가슴", name: "독사마술사의 가죽 (구교복)", enName: "Skin of the Vipermagi",
-        sub: "고유 서펀트스킨 요구 레벨 29", desc: "캐스터 국민 명품 갑옷",
-        primary: "서펀트스킨 아머", summary: "+1 올스킬, 시전 속도 30%, 모든 저항 20~35",
-        stats: [{ name: "모든 기술 레벨", val: "+1" }, { name: "시전 속도", val: "+30%" }, { name: "모든 저항", val: "+20~35" }]
-      },
-      {
-        id: "uq_herald", category: "unique", slot: "방패", name: "자카룸의 전령 (자카럼)", enName: "Herald of Zakarum",
-        sub: "고유 길디드 실드 요구 레벨 42", desc: "성기사 0티어 명품 전용 방패",
-        primary: "길디드 실드 베이스", summary: "+2 성기사스킬, +2 전투스킬, 올레지 50, 높은 블럭률",
-        stats: [{ name: "성기사 기술 레벨", val: "+2" }, { name: "전투 기술 레벨", val: "+2" }, { name: "모든 저항", val: "+50" }, { name: "힘 / 활력", val: "각 +20" }]
-      },
-      {
-        id: "uq_oculus", category: "unique", slot: "무기", name: "망령의 울부짖음 (신오브)", enName: "The Oculus",
-        sub: "고유 스월링 크리스탈 요구 레벨 42", desc: "소서리스 대표 앵벌 보주",
-        primary: "스월링 크리스탈", summary: "+3 소서스킬, 시전 속도 30%, 올레지 20, 매찬 50%",
-        stats: [{ name: "원소술사 기술 레벨", val: "+3" }, { name: "시전 속도", val: "+30%" }, { name: "모든 저항", val: "+20" }, { name: "마법 아이템 발견 확률", val: "+50%" }]
-      },
-      {
-        id: "uq_titan", category: "unique", slot: "무기", name: "거인의 복수 (타이탄)", enName: "Titan's Revenge",
-        sub: "아마존 전용 세레모니얼 재벌린 요구 레벨 42", desc: "자벨마의 영원한 국민 투창",
-        primary: "세레모니얼 재벌린", summary: "+2 아마스킬, +2 자벨스킬, 달리기 30%, 수량 자동 회복",
-        stats: [{ name: "아마존 기술 레벨", val: "+2" }, { name: "투창과 창 기술", val: "+2" }, { name: "달리기/걷기 속도", val: "+30%" }, { name: "수량 회복", val: "적용 (에테리얼 인기)" }]
-      },
-      {
-        id: "uq_arachnid", category: "unique", slot: "기타", name: "거미줄 그물띠 (스웹)", enName: "Arachnid Mesh",
-        sub: "고유 스파이더웹 새시 요구 레벨 80", desc: "유일한 패캐 20% 캐스터 종결 벨트",
-        primary: "스파이더웹 새시", summary: "+1 올스킬, 시전 속도 20%, 마나 증가 5%",
-        stats: [{ name: "모든 기술 레벨", val: "+1" }, { name: "시전 속도", val: "+20%" }, { name: "대상 감속", val: "10%" }]
-      },
-      {
-        id: "uq_soj", category: "unique", slot: "기타", name: "요르단의 반지 (조던링)", enName: "The Stone of Jordan",
-        sub: "고유 반지 요구 레벨 29", desc: "+1 스킬과 최대 마나 25%의 기준 화폐",
-        primary: "고유 반지", summary: "+1 모든 기술, 최대 마나 25% 증가",
-        stats: [{ name: "모든 기술 레벨", val: "+1" }, { name: "최대 마나 증가", val: "25%" }]
-      },
-      {
-        id: "uq_mara", category: "unique", slot: "기타", name: "마라의 만화경 (마라 아뮬)", enName: "Mara's Kaleidoscope",
-        sub: "고유 목걸이 요구 레벨 67", desc: "+2 올스킬, 모든 저항 20~30 국민 목걸이",
-        primary: "고유 목걸이", summary: "+2 모든 기술, 모든 저항 20~30, 모든 능력치 +5",
-        stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "모든 저항", val: "+20~30" }, { name: "모든 능력치", val: "+5" }]
-      },
-
-      /* =========================================================
-         사냥터 & TC (ACT 1 ~ ACT 5 순서별 총망라)
-      ========================================================= */
-      {
-        id: "zone_act1_mausoleum", category: "zone", slot: "ACT 1", name: "영묘 (머소리엄)", enName: "Mausoleum",
-        sub: "ACT 1 매장지 (블러드 레이븐)", desc: "번개 면역 몬스터가 없는 85레벨 사냥터",
-        primary: "기본 TC 85 · 몬스터 Lv 85", summary: "종결 TC87 아이템 드롭 가능",
-        baseMonsterLv: 85, baseTc: 85,
-        stats: [{ name: "위치", val: "차가운 평야 → 매장지" }, { name: "지역 레벨", val: "Lv 85 (TC85)" }]
-      },
-      {
-        id: "zone_act1_pit", category: "zone", slot: "ACT 1", name: "구덩이 (피트 1~2층)", enName: "The Pit",
+        id: "zone_act1_blood_moor", category: "zone", slot: "ACT 1",
+        name: "핏빛 황무지", enName: "Blood Moor",
+        sub: "ACT 1 자매단 야영지 앞마당", desc: "악의 소굴 입구가 위치한 1막 첫 사냥터",
+        areaLevel: 67, maxRune: "참",
+        immunesSummary: "냉기 · 화염",
+        immunes: [
+          { type: "cold", title: "냉기 면역", mob: "좀비" },
+          { type: "fire", title: "화염 면역", mob: "펄른" }
+        ],
+        targetTitle: "일반 몬스터와 챔피언·고유 무리",
+        targetDesc: "밀집된 몬스터와 정예 무리를 함께 처치",
+        tags: ["#액트1", "#냉기 면역", "#화염 면역"],
+        tip: "일반 몬스터만 지나치지 말고 챔피언과 고유 몬스터 무리를 함께 처치하세요."
+      },
+      {
+        id: "zone_act1_pit", category: "zone", slot: "ACT 1",
+        name: "구덩이 (피트 1~2층)", enName: "The Pit",
         sub: "ACT 1 타모 고원 지하", desc: "접근성과 밀도가 뛰어난 디아2 대표 85레벨 성지",
-        primary: "기본 TC 85 · 몬스터 Lv 85", summary: "모든 종결 유니크와 고급 룬 드롭",
-        baseMonsterLv: 85, baseTc: 85,
-        stats: [{ name: "위치", val: "블랙 마쉬 → 타모 고원" }, { name: "지역 레벨", val: "Lv 85 (TC85)" }]
+        areaLevel: 85, maxRune: "조드",
+        immunesSummary: "냉기 · 번개 · 화염",
+        immunes: [
+          { type: "cold", title: "냉기 면역", mob: "해골 궁수" },
+          { type: "light", title: "번개 면역", mob: "어둠의 순찰자" },
+          { type: "fire", title: "화염 면역", mob: "악마 악마사냥개" }
+        ],
+        targetTitle: "정예 고유 챔피언 팩 및 황금 상자",
+        targetDesc: "2층 반짝이는 황금 궤짝과 챔피언 팩을 집중 사냥",
+        tags: ["#액트1", "#TC85", "#종결 파밍", "#다양한 면역"],
+        tip: "2층은 좁고 챔피언이 밀집해 급사 위험이 크므로 진입 시 주의하세요."
       },
       {
-        id: "zone_act1_andariel", category: "zone", slot: "ACT 1", name: "지하 묘지 4층 (안다리엘)", enName: "Catacombs Level 4",
-        sub: "ACT 1 보스룸", desc: "조던링 드롭율이 가장 높은 보스",
-        primary: "기본 TC 73 · 안다리엘(Lv 75)", summary: "화염 저항 취약(-50%)",
-        baseMonsterLv: 73, baseTc: 75,
-        stats: [{ name: "보스", val: "안다리엘" }, { name: "특징", val: "반지/목걸이 드롭 테이블 우수" }]
+        id: "wp_a1_3", category: "zone", slot: "ACT 1",
+        name: "바위 벌판 (스토니 필드)", enName: "Stony Field",
+        sub: "ACT 1 WP 3", desc: "케인 구출 케언 스톤 및 트리스트럼 포탈",
+        areaLevel: 68, maxRune: "베르",
+        immunesSummary: "번개 · 냉기",
+        immunes: [
+          { type: "light", title: "번개 면역", mob: "라카니슈 및 폴른 무리" },
+          { type: "cold", title: "냉기 면역", mob: "염소인간" }
+        ],
+        targetTitle: "케언 스톤 주변 라카니슈 정예 무리",
+        targetDesc: "트리스트럼 포탈 개방 후 위트의 의족 수급",
+        tags: ["#액트1", "#라카니슈", "#카우방 재료"],
+        tip: "라카니슈는 번개 강화 몬스터이므로 피격 시 번개 줄기 방출에 유의하세요."
       },
       {
-        id: "zone_act1_cow", category: "zone", slot: "ACT 1", name: "비밀의 젖소 목장 (카우방)", enName: "Secret Cow Level",
-        sub: "ACT 1 마을 포탈", desc: "엄청난 몬스터 밀도로 소켓 베이스 및 룬 파밍",
-        primary: "기본 TC 81 · 카우 킹", summary: "룬 및 4소켓 베이스의 보고",
-        baseMonsterLv: 81, baseTc: 81,
-        stats: [{ name: "위치", val: "자매단 야영지 포탈" }, { name: "지역 레벨", val: "Lv 81" }]
+        id: "wp_a1_5", category: "zone", slot: "ACT 1",
+        name: "검은 습지 (잊힌 탑)", enName: "Black Marsh (Tower)",
+        sub: "ACT 1 WP 5", desc: "백작(카운테스) 룬 파밍의 핵심 거점",
+        areaLevel: 69, maxRune: "로",
+        immunesSummary: "화염 · 냉기",
+        immunes: [
+          { type: "fire", title: "화염 면역", mob: "백작 (카운테스)" },
+          { type: "cold", title: "냉기 면역", mob: "고스트 및 궁수" }
+        ],
+        targetTitle: "탑 5층 백작 (카운테스)",
+        targetDesc: "고유 룬 드롭 테이블로 중급~고급 룬 수급",
+        tags: ["#액트1", "#카운테스", "#룬 파밍", "#공포의 열쇠"],
+        tip: "카운테스는 화염/냉기 면역이 기본이므로 용병이나 물리 피해로 잡는 것이 빠릅니다."
       },
       {
-        id: "zone_act2_stony_tomb", category: "zone", slot: "ACT 2", name: "암석 무덤 (스토니 툼)", enName: "Stony Tomb",
-        sub: "ACT 2 바위 골짜기", desc: "화염 면역이 없어 화염 소서에게 최고인 85레벨 던전",
-        primary: "기본 TC 85 · 몬스터 Lv 85", summary: "루트 골레인 바로 앞 신규 85던전",
-        baseMonsterLv: 85, baseTc: 85,
-        stats: [{ name: "위치", val: "바위 골짜기" }, { name: "지역 레벨", val: "Lv 85 (TC85)" }]
+        id: "zone_act2_ancient_tunnels", category: "zone", slot: "ACT 2",
+        name: "고대 하수도 (에이션트 터널)", enName: "Ancient Tunnels",
+        sub: "ACT 2 잊힌 도시 지하", desc: "냉기 면역이 없는 극블리 소서리스의 성지",
+        areaLevel: 85, maxRune: "조드",
+        immunesSummary: "번개 · 독 · 화염",
+        immunes: [
+          { type: "light", title: "번개 면역", mob: "딱정벌레" },
+          { type: "poison", title: "독 면역", mob: "좀비 및 미라" }
+        ],
+        targetTitle: "언데드 정예 무리와 황금 궤짝",
+        targetDesc: "순수 냉기 면역이 없어 블리자드 스킬로 초고속 클리어",
+        tags: ["#액트2", "#TC85", "#블리소서 성지", "#냉기면역 없음"],
+        tip: "딱정벌레를 잡을 때 사방으로 튀는 번개 줄기 저항을 맞춰두세요."
       },
       {
-        id: "zone_act2_ancient_tunnels", category: "zone", slot: "ACT 2", name: "고대 하수도 (고하)", enName: "Ancient Tunnels",
-        sub: "ACT 2 잊힌 도시 지하", desc: "냉기 면역 몬스터가 없는 극블리 소서 성지",
-        primary: "기본 TC 85 · 몬스터 Lv 85", summary: "TC87 전 종결템 드롭 가능",
-        baseMonsterLv: 85, baseTc: 85,
-        stats: [{ name: "위치", val: "잊힌 도시 지하" }, { name: "지역 레벨", val: "Lv 85 (TC85)" }]
+        id: "wp_a2_7", category: "zone", slot: "ACT 2",
+        name: "비전의 성소 (소환사)", enName: "Arcane Sanctuary",
+        sub: "ACT 2 WP 7", desc: "유령 몬스터 룬 파밍 및 증오의 열쇠",
+        areaLevel: 79, maxRune: "참",
+        immunesSummary: "물리 · 화염",
+        immunes: [
+          { type: "phys", title: "물리 면역", mob: "유령 (고스트)" },
+          { type: "fire", title: "화염 면역", mob: "구울 로드" }
+        ],
+        targetTitle: "소환사 및 길목의 유령 떼",
+        targetDesc: "공중에 뜬 유령은 아이템을 떨구지 않으므로 바닥 위에서 처치",
+        tags: ["#액트2", "#증오의 열쇠", "#고급룬", "#소환사"],
+        tip: "유령 몬스터가 우주 허공 위에 있을 때 잡으면 룬이 드롭되지 않으니 타일 위로 유인하세요."
       },
       {
-        id: "zone_act2_tombs", category: "zone", slot: "ACT 2", name: "탈 라샤의 무덤 & 듀리엘", enName: "Tal Rasha's Tombs",
-        sub: "ACT 2 신비술사의 협곡", desc: "공포의 영역 지정 시 최고의 경험치와 밀도",
-        primary: "기본 TC 80 · 듀리엘(Lv 88)", summary: "7개 무덤으로 구성된 방대한 던전",
-        baseMonsterLv: 80, baseTc: 80,
-        stats: [{ name: "위치", val: "신비술사의 협곡" }, { name: "보스", val: "듀리엘" }]
+        id: "wp_a3_8", category: "zone", slot: "ACT 3",
+        name: "트라빈칼 (하이 카운슬 사원)", enName: "Travincal",
+        sub: "ACT 3 WP 8", desc: "삥바바 골드 및 베르/자 룬 파밍의 절대 성지",
+        areaLevel: 82, maxRune: "조드",
+        immunesSummary: "화염 · 번개",
+        immunes: [
+          { type: "fire", title: "화염 면역", mob: "의회원 (카운슬)" },
+          { type: "light", title: "번개 면역", mob: "의회원 수괴" }
+        ],
+        targetTitle: "의회원 고정 챔피언 무리",
+        targetDesc: "엄청난 골드와 고급 룬, 목걸이/반지 대량 드롭",
+        tags: ["#액트3", "#삥바바 성지", "#베르룬", "#자룬"],
+        tip: "히드라 공격이 매우 아프므로 왜성(드와프 링)이나 화염 저항 세팅이 필수입니다."
       },
       {
-        id: "zone_act3_travincal", category: "zone", slot: "ACT 3", name: "트라빈칼 (하이 카운슬)", enName: "Travincal",
-        sub: "ACT 3 트라빈칼 사원", desc: "삥바바 골드 및 고급 룬 파밍의 성지",
-        primary: "기본 TC 82 · 의회원 고정 챔피언", summary: "골드 및 베르/자 룬 수급 최적화",
-        baseMonsterLv: 82, baseTc: 82,
-        stats: [{ name: "위치", val: "트라빈칼" }, { name: "주요 타겟", val: "의회원 (하이 카운슬)" }]
+        id: "zone_act4_chaos", category: "zone", slot: "ACT 4",
+        name: "혼돈의 성역 (카오스)", enName: "Chaos Sanctuary",
+        sub: "ACT 4 디아블로 출현 지역", desc: "디아블로 2 최고의 밸런스와 인기를 자랑하는 영원한 성지",
+        areaLevel: 85, maxRune: "조드",
+        immunesSummary: "화염 · 냉기 · 번개",
+        immunes: [
+          { type: "fire", title: "화염 면역", mob: "베놈 로드" },
+          { type: "cold", title: "냉기 면역", mob: "망각의 기사" },
+          { type: "light", title: "번개 면역", mob: "폭풍 시전자" }
+        ],
+        targetTitle: "봉인 군주 3기 및 보스 디아블로",
+        targetDesc: "모든 종결 유니크와 최고급 룬, 대량의 경험치",
+        tags: ["#액트4", "#TC85", "#디아블로", "#종결 파밍"],
+        tip: "봉인을 풀고 나타나는 대군주 세이스의 저주와 파멸의 기사 화염탄을 주의하세요."
       },
       {
-        id: "zone_act3_durance", category: "zone", slot: "ACT 3", name: "증오의 억류지 3층 (메피스토)", enName: "Durance of Hate Level 3",
-        sub: "ACT 3 보스룸", desc: "강 건너기 꼼수 파밍이 가능한 국민 보스",
-        primary: "기본 TC 83 · 메피스토(Lv 87)", summary: "샤코, 자카럼, 타이탄 등 핵심템 수급",
-        baseMonsterLv: 83, baseTc: 87,
-        stats: [{ name: "보스", val: "메피스토 (Lv 87)" }]
+        id: "wp_a5_9", category: "zone", slot: "ACT 5",
+        name: "세계석 성채 & 파괴의 왕좌", enName: "Worldstone Keep",
+        sub: "ACT 5 최종 보스 던전", desc: "바알런 및 99레벨 만렙 육성의 성지",
+        areaLevel: 85, maxRune: "조드",
+        immunesSummary: "번개 · 물리 · 화염",
+        immunes: [
+          { type: "light", title: "번개 면역", mob: "버닝 소울 (블랙 소울)" },
+          { type: "phys", title: "물리 면역", mob: "언데드 자폭병" },
+          { type: "fire", title: "화염 면역", mob: "불타는 시체" }
+        ],
+        targetTitle: "바알의 5개 소환 웨이브 및 바알",
+        targetDesc: "지옥 난이도 최고 수준의 경험치 획득",
+        tags: ["#액트5", "#TC85", "#바알런", "#만렙 육성"],
+        tip: "버닝소울의 관통 번개 공격과 잼민이 자폭병의 물리 폭발에 즉사하지 않도록 주의하세요."
       },
-      {
-        id: "zone_act4_chaos", category: "zone", slot: "ACT 4", name: "혼돈의 성역 (카오스)", enName: "Chaos Sanctuary",
-        sub: "ACT 4 디아블로 출현 지역", desc: "디아블로 2 최고의 밸런스와 인기를 자랑하는 85 성지",
-        primary: "기본 TC 85 · 디아블로(Lv 94)", summary: "풍부한 경험치, 고급 룬, 종결 아이템",
-        baseMonsterLv: 85, baseTc: 85,
-        stats: [{ name: "보스", val: "디아블로 (Lv 94)" }, { name: "지역 레벨", val: "Lv 85 (TC85)" }]
-      },
-      {
-        id: "zone_act5_highlands", category: "zone", slot: "ACT 5", name: "혹한의 고산지 & 핀들스킨", enName: "Frigid Highlands & Pindle",
-        sub: "ACT 5 웨이포인트 바로 앞", desc: "엘드리치, 쉔크, 핀들을 빠르게 잡는 1분 런",
-        primary: "기본 TC 83 · 핀들스킨(Lv 86)", summary: "초고속 보스런 최적화 구역",
-        baseMonsterLv: 83, baseTc: 83,
-        stats: [{ name: "주요 타겟", val: "엘드리치, 쉔크, 핀들스킨" }]
-      },
-      {
-        id: "zone_act5_worldstone", category: "zone", slot: "ACT 5", name: "세계석 성채 & 바알", enName: "Worldstone Keep & Baal",
-        sub: "ACT 5 최종 보스 던전", desc: "최고 난이도 85던전 및 최종 보스 바알(Lv 99)",
-        primary: "기본 TC 85 · 바알(Lv 99)", summary: "99레벨 만렙 육성을 위한 필수 코스",
-        baseMonsterLv: 85, baseTc: 87,
-        stats: [{ name: "보스", val: "바알 (Lv 99)" }, { name: "지역 레벨", val: "Lv 85 (TC85)" }]
-      }
+
+      /* 룬워드 & 유니크 대표 샘플 (다른 탭용) */
+      { id: "rw_spirit", category: "runeword", slot: "방패", name: "영혼 (스피리트)", enName: "Spirit", sub: "Lv 25 · 4소켓 검/방패", desc: "+2 올스킬, 패캐 최대 35%", primary: "탈 + 주울 + 오르트 + 앰", summary: "+2 올스킬, 패캐 35%, 패힛 55%", stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "시전 속도", val: "+25~35%" }] },
+      { id: "rw_enigma", category: "runeword", slot: "가슴", name: "수수께끼", enName: "Enigma", sub: "Lv 65 · 3소켓 갑옷", desc: "순간이동을 주는 최종 갑옷", primary: "자 + 아이드 + 베르", summary: "+1 텔레포트, 레벨 비례 힘", stats: [{ name: "순간이동 (텔레포트)", val: "+1" }, { name: "모든 기술 레벨", val: "+2" }] },
+      { id: "uq_shako", category: "unique", slot: "머리", name: "할리퀸 관모 (샤코)", enName: "Harlequin Crest", sub: "Lv 62 · 고유 샤코", desc: "+2 올스킬, 매찬 50%", primary: "샤코 베이스", summary: "+2 올스킬, 매찬 50%, 물피감 10%", stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "마법 아이템 발견 확률", val: "+50%" }] }
     ];
 
-    /* 상태 관리 및 렌더링 로직 */
-    let currentMainTab = "runeword";
+    let currentMainTab = "zone";
     let currentSlot = "all";
-    let currentSelectedId = "rw_dream";
+    let currentSelectedId = "zone_act1_blood_moor";
+    let userCharLevel = 90; // 스크린샷과 동일한 기본 레벨 90
 
     function updateFilterButtons() {
       const btnContainer = document.getElementById("filterButtons");
@@ -1050,7 +676,7 @@
           { key: "가슴", name: "가슴(갑옷)" },
           { key: "머리", name: "머리(투구)" },
           { key: "방패", name: "방패" },
-          { key: "기타", name: "장신구/기타" }
+          { key: "기타", name: "장신구/참/기타" }
         ];
         btnContainer.innerHTML = slots.map(s => `
           <button class="slot-btn ${currentSlot === s.key ? 'active' : ''}" onclick="setSlotFilter('${s.key}', this)">${s.name}</button>
@@ -1066,8 +692,7 @@
         const matchesSlot = currentSlot === "all" || item.slot === currentSlot;
         const matchesQuery = item.name.toLowerCase().includes(query) ||
                              item.enName.toLowerCase().includes(query) ||
-                             item.primary.toLowerCase().includes(query) ||
-                             item.desc.toLowerCase().includes(query);
+                             (item.desc && item.desc.toLowerCase().includes(query));
         return matchesTab && matchesSlot && matchesQuery;
       });
 
@@ -1075,7 +700,7 @@
       const listEl = document.getElementById("cardList");
 
       if (filtered.length === 0) {
-        listEl.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #5a4b41;">일치하는 검색 결과가 없습니다.</div>`;
+        listEl.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #5a4b41;">일치하는 결과가 없습니다.</div>`;
         return;
       }
 
@@ -1098,53 +723,157 @@
       const item = database.find(i => i.id === id);
       if (!item) return;
 
-      document.getElementById("dType").innerText = item.sub;
-      document.getElementById("dTitle").innerText = `${item.name} (${item.enName})`;
-      document.getElementById("dBoxContent").innerText = item.primary;
-      document.getElementById("dSummary").innerText = item.summary;
+      const panel = document.getElementById("detailPanel");
 
-      const levelCalcBox = document.getElementById("levelCalcBox");
+      // 사냥터 탭일 경우: 스크린샷과 100% 동일한 디자인 블록 출력
       if (item.category === "zone") {
-        levelCalcBox.style.display = "flex";
-        updateTcCalc();
+        const charLv = userCharLevel;
+        const normalMob = Math.min(96, charLv + 2);
+        const championMob = Math.min(98, charLv + 4);
+        const uniqueMob = Math.min(99, charLv + 5);
+        const tc87Text = charLv >= 85 
+          ? `<div class="tc87-banner">
+               <div class="tc87-banner-title">TC87 드롭군 접근 가능</div>
+               <div class="tc87-banner-sub">일반 몬스터도 최고 등급 베이스를 드롭할 조건을 갖춥니다.</div>
+             </div>`
+          : `<div class="tc87-banner" style="border-left-color: #a67c52; background: #1c1814;">
+               <div class="tc87-banner-title" style="color: #e0b070;">챔피언/고유 몬스터만 TC87 접근 가능</div>
+               <div class="tc87-banner-sub" style="color: #a39588;">캐릭터 레벨 85 이상 시 일반 몬스터도 최고 등급을 드롭합니다.</div>
+             </div>`;
+
+        panel.innerHTML = `
+          <!-- 헤더 -->
+          <div class="panel-header">
+            <div class="panel-header-left">
+              <div class="panel-circle-icon">◆</div>
+              <div>
+                <div class="panel-title">${item.name}</div>
+                <div class="panel-en-title">${item.enName}</div>
+              </div>
+            </div>
+            <button class="star-btn">☆</button>
+          </div>
+
+          <div class="section-headline">핵심 정보</div>
+          <div class="section-subline">자주 등장하는 면역: ${item.immunesSummary || "정보 없음"}</div>
+
+          <!-- 1. 자주 등장하는 면역 블록 -->
+          <div class="p-block">
+            <div class="p-block-header">
+              <span class="p-block-title">자주 등장하는 면역</span>
+              <span class="p-badge-gold">지옥 난이도</span>
+            </div>
+            ${item.immunes ? item.immunes.map(im => `
+              <div class="immune-card ${im.type}">
+                <div class="immune-title">${im.title}</div>
+                <div class="immune-sub">${im.mob}</div>
+              </div>
+            `).join("") : '<div style="color: #888; font-size: 12px;">특정 면역 몬스터 정보가 없습니다.</div>'}
+            <div class="p-footnote">고유·챔피언 몬스터의 추가 속성에 따라 다른 면역이 생길 수 있습니다.</div>
+          </div>
+
+          <!-- 2. 파밍 정보 블록 -->
+          <div class="p-block">
+            <div class="p-block-header">
+              <span class="p-block-title">파밍 정보</span>
+            </div>
+            <div class="farm-grid">
+              <div class="farm-box">
+                <div class="farm-box-label">지역 레벨 · TC 기준</div>
+                <div class="farm-box-val">${item.areaLevel || 67}</div>
+              </div>
+              <div class="farm-box">
+                <div class="farm-box-label">기대 가능한 최고 룬</div>
+                <div class="farm-box-val" style="font-size: 24px;">${item.maxRune || "참"}</div>
+              </div>
+            </div>
+            <div class="target-box">
+              <div class="target-box-label">누굴 잡아야 하나요?</div>
+              <div class="target-box-title">${item.targetTitle || "일반 몬스터와 챔피언·고유 무리"}</div>
+              <div class="target-box-sub">${item.targetDesc || "밀집된 몬스터와 정예 무리를 함께 처치"}</div>
+            </div>
+            <div class="p-footnote">최고 룬은 지옥 난이도의 몬스터 레벨과 드롭 등급을 기준으로 한 이론상 수치이며, 보스·고유 몬스터의 개별 드롭표에 따라 달라질 수 있습니다.</div>
+          </div>
+
+          <!-- 3. 공포의 영역 보정 블록 -->
+          <div class="p-block">
+            <div class="p-block-header">
+              <span class="p-block-title">공포의 영역 보정</span>
+              <span class="p-badge-gold" onclick="promptLevelChange()">캐릭터 Lv.${charLv} 기준 ✎</span>
+            </div>
+            <div class="tz-grid">
+              <div class="tz-box">
+                <div class="tz-box-label">일반 몬스터</div>
+                <div class="tz-box-val">Lv. ${normalMob}</div>
+              </div>
+              <div class="tz-box">
+                <div class="tz-box-label">챔피언</div>
+                <div class="tz-box-val">Lv. ${championMob}</div>
+              </div>
+              <div class="tz-box">
+                <div class="tz-box-label">고유·보스</div>
+                <div class="tz-box-val">Lv. ${uniqueMob}</div>
+              </div>
+            </div>
+            ${tc87Text}
+            <div class="p-footnote">몬스터 레벨이 오르면 보물 등급도 상향됩니다. 실제 드롭은 몬스터별 보물 표와 아이템 품질 레벨에 따라 달라집니다.</div>
+          </div>
+
+          <!-- 4. 하단 태그 행 -->
+          <div class="tag-row">
+            ${item.tags ? item.tags.map(t => `<div class="tag-pill">${t}</div>`).join("") : ""}
+          </div>
+
+          <!-- 5. 하단 모험가 팁 -->
+          <div class="tip-box">
+            <div class="tip-icon">!</div>
+            <div>
+              <div class="tip-content-title">모험가 팁</div>
+              <div class="tip-content-desc">${item.tip || "일반 몬스터만 지나치지 말고 챔피언과 고유 몬스터 무리를 함께 처치하세요."}</div>
+            </div>
+          </div>
+        `;
       } else {
-        levelCalcBox.style.display = "none";
-        renderStats(item.stats);
+        // 룬워드 / 유니크 아이템 상세 패널
+        panel.innerHTML = `
+          <div class="panel-header">
+            <div class="panel-header-left">
+              <div>
+                <div class="panel-title">${item.name}</div>
+                <div class="panel-en-title">${item.enName}</div>
+              </div>
+            </div>
+            <button class="star-btn">☆</button>
+          </div>
+          <div class="p-block">
+            <div class="p-block-title" style="margin-bottom: 8px;">핵심 정보</div>
+            <div style="font-size: 13px; color: var(--text-orange); font-weight: bold; margin-bottom: 4px;">${item.primary}</div>
+            <div style="font-size: 12px; color: #8c7c70;">${item.summary}</div>
+          </div>
+          <div class="p-block">
+            <div class="p-block-title" style="margin-bottom: 8px;">아이템 세부 옵션</div>
+            ${item.stats ? item.stats.map(s => `
+              <div class="stat-row">
+                <span class="stat-name">${s.name}</span>
+                <span class="stat-value">${s.val}</span>
+              </div>
+            `).join("") : ""}
+          </div>
+        `;
       }
 
       renderList();
     }
 
-    function renderStats(statsArray) {
-      const statsEl = document.getElementById("dStats");
-      statsEl.innerHTML = statsArray.map(s => `
-        <div class="stat-row">
-          <span class="stat-name">${s.name}</span>
-          <span class="stat-value">${s.val}</span>
-        </div>
-      `).join("");
-    }
-
-    function updateTcCalc() {
-      const item = database.find(i => i.id === currentSelectedId);
-      if (!item || item.category !== "zone") return;
-
-      const charLv = Math.min(99, Math.max(1, parseInt(document.getElementById("charLevelInput").value) || 85));
-      const normalMob = Math.min(96, charLv + 2);
-      const championMob = Math.min(98, charLv + 4);
-      const uniqueMob = Math.min(99, charLv + 5);
-
-      const canDropTc87 = charLv >= 85 ? "가능 (모든 몬스터)" : (championMob >= 87 ? "챔피언/유니크만 가능" : "불가");
-
-      const calculatedStats = [
-        ...item.stats,
-        { name: "공포의 영역 일반 몬스터", val: `Lv ${normalMob}` },
-        { name: "공포의 영역 챔피언", val: `Lv ${championMob}` },
-        { name: "공포의 영역 고유/보스", val: `Lv ${uniqueMob}` },
-        { name: "공포의 영역 TC87 드롭", val: canDropTc87 }
-      ];
-
-      renderStats(calculatedStats);
+    function promptLevelChange() {
+      const input = prompt("계산할 캐릭터 레벨을 입력하세요 (1~99):", userCharLevel);
+      if (input !== null) {
+        const num = parseInt(input, 10);
+        if (!isNaN(num) && num >= 1 && num <= 99) {
+          userCharLevel = num;
+          selectItem(currentSelectedId);
+        }
+      }
     }
 
     function handleSearch() {
@@ -1179,7 +908,7 @@
     }
 
     updateFilterButtons();
-    selectItem("rw_dream");
+    selectItem("zone_act1_blood_moor");
   </script>
 </body>
 </html>
