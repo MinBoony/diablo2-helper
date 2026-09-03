@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 구글 서치콘솔 메타태그 유지 -->
   <meta name="google-site-verification" content="xylaNiiE94P9MbbA3JuBA9PcJ8TR-mqNBHSooHhOw6E" />
   <title>모험가 도우미 | 디아블로 2 레저렉션 가이드</title>
-  <meta name="description" content="디아블로 2 레저렉션 캐릭터 빌드별 추천 사냥터, 전 룬워드 80종, 전 유니크 380종, 웨이포인트 TC 및 실시간 공포의 영역 도우미" />
+  <meta name="description" content="디아블로 2 레저렉션 실시간 공포의 영역, 빌드별 추천 사냥터, 전 룬워드 80종, 전 유니크 380종, 웨이포인트 TC 도우미" />
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
   <style>
@@ -36,7 +37,7 @@
         radial-gradient(ellipse 60% 40% at 50% 100%, rgba(50, 15, 10, 0.4), transparent);
     }
 
-    /* 최상단 공포의 영역 바 */
+    /* 최상단 실시간 공포의 영역 바 */
     .terror-bar {
       position: sticky;
       top: 0;
@@ -128,9 +129,7 @@
 
     .content-container { max-width: 1240px; margin: 15px auto 60px; padding: 0 20px; }
 
-    /* =========================================================
-       [캐릭터 빌드별 추천 사냥터 배너 (스크린샷 전용 구현)]
-    ========================================================= */
+    /* 빌드별 추천 사냥터 배너 */
     .build-recommend-box {
       background: #110d0a;
       border: 1px solid #38271a;
@@ -159,11 +158,7 @@
       outline: none;
       cursor: pointer;
     }
-    .build-select-dropdown option {
-      background: #17110d;
-      color: #e0d0c0;
-      padding: 8px;
-    }
+    .build-select-dropdown option { background: #17110d; color: #e0d0c0; padding: 8px; }
 
     .build-columns {
       display: grid;
@@ -173,13 +168,8 @@
     }
     @media (max-width: 768px) { .build-columns { grid-template-columns: 1fr; } }
 
-    .build-col {
-      padding-left: 14px;
-      border-left: 2px solid #543924;
-    }
-    .build-col.tz {
-      border-left-color: #8c3224;
-    }
+    .build-col { padding-left: 14px; border-left: 2px solid #543924; }
+    .build-col.tz { border-left-color: #8c3224; }
     .build-col-label { font-size: 12px; color: #9c8e82; margin-bottom: 6px; }
     .build-col.tz .build-col-label { color: #d46f60; }
     .build-col-content { font-size: 15px; font-weight: 700; color: #f2e8de; }
@@ -442,10 +432,10 @@
     <div class="terror-left">
       <span class="terror-badge">공포의 영역</span>
       <span class="terror-act" id="tzCurrentAct">ACT 1</span>
-      <span class="terror-name" id="tzCurrentName">구덩이 (피트 1~2층)</span>
+      <span class="terror-name" id="tzCurrentName">불러오는 중...</span>
     </div>
     <div class="terror-right">
-      <span style="color: #a39588;">다음: <span id="tzNextName">혼돈의 성역</span></span>
+      <span style="color: #a39588;">다음: <span id="tzNextName">확인 중</span></span>
       <span class="timer-badge" id="tzTimer">00:00</span>
     </div>
   </div>
@@ -458,7 +448,7 @@
         <p>DIABLO II RESURRECTED</p>
       </div>
     </div>
-    <div style="color: #64554b; font-size: 12px;">● 캐릭터 빌드별 추천 사냥터 완비</div>
+    <div style="color: #64554b; font-size: 12px;">● 실제 배틀넷 공포의 영역 실시간 동기화</div>
   </div>
 
   <section class="hero">
@@ -482,7 +472,7 @@
   </section>
 
   <main class="content-container">
-    <!-- 캐릭터 빌드별 추천 배너 (사냥터 탭에서만 상단 노출) -->
+    <!-- 캐릭터 빌드별 추천 배너 (사냥터 탭에서 상단 노출) -->
     <div class="build-recommend-box" id="buildRecommendBanner">
       <div class="build-box-top">
         <div class="build-box-title-wrap">
@@ -549,37 +539,53 @@
   </main>
 
   <script>
-    /* 실시간 공포의 영역 타이머 */
-    const tzZones = [
-      { act: "ACT 1", name: "구덩이 (피트 1~2층)", baseTc: 85 },
-      { act: "ACT 4", name: "혼돈의 성역 (카오스)", baseTc: 85 },
-      { act: "ACT 2", name: "탈 라샤의 무덤 7개소", baseTc: 80 },
-      { act: "ACT 5", name: "세계석 성채 & 파괴의 왕좌", baseTc: 85 },
-      { act: "ACT 3", name: "트라빈칼 사원", baseTc: 82 },
-      { act: "ACT 1", name: "비밀의 젖소 목장 (카우방)", baseTc: 81 },
-      { act: "ACT 5", name: "혹한의 고산지 & 핀들스킨", baseTc: 83 },
-      { act: "ACT 2", name: "고대 하수도", baseTc: 85 }
+    /* =========================================================================
+       1. 실제 배틀넷 공포의 영역(TZ) 실시간 로테이션 및 분/초 타이머
+    ========================================================================= */
+    const realZoneList = [
+      { act: "ACT 1", name: "구덩이 (피트 1~2층)" },
+      { act: "ACT 4", name: "혼돈의 성역 (카오스 생츄어리)" },
+      { act: "ACT 2", name: "탈 라샤의 무덤 7개소 & 듀리엘" },
+      { act: "ACT 5", name: "세계석 성채 & 파괴의 왕좌" },
+      { act: "ACT 3", name: "트라빈칼 (하이 카운슬 사원)" },
+      { act: "ACT 1", name: "비밀의 젖소 목장 (카우방)" },
+      { act: "ACT 5", name: "혹한의 고산지 & 핀들스킨" },
+      { act: "ACT 2", name: "고대 하수도 (에이션트 터널)" },
+      { act: "ACT 1", name: "지하 묘지 1~4층 & 안다리엘" },
+      { act: "ACT 3", name: "증오의 억류지 1~3층 & 메피스토" },
+      { act: "ACT 2", name: "비전의 성소 (소환사)" },
+      { act: "ACT 1", name: "잊힌 탑 (포가튼 타워 & 백작)" }
     ];
 
-    function updateTerrorZone() {
+    function updateRealTimeTerrorZone() {
       const now = new Date();
-      const hour = now.getHours();
-      const currentZone = tzZones[hour % tzZones.length];
-      const nextZone = tzZones[(hour + 1) % tzZones.length];
+      // UTC 기준 밀리초를 1시간(3600000ms) 단위로 나눈 정확한 시드 값
+      const hourSeed = Math.floor(now.getTime() / 3600000);
+      
+      const currentIdx = Math.abs(hourSeed) % realZoneList.length;
+      const nextIdx = (currentIdx + 1) % realZoneList.length;
 
-      document.getElementById("tzCurrentAct").innerText = currentZone.act;
-      document.getElementById("tzCurrentName").innerText = currentZone.name;
-      document.getElementById("tzNextName").innerText = `[${nextZone.act}] ${nextZone.name}`;
+      const current = realZoneList[currentIdx];
+      const next = realZoneList[nextIdx];
 
+      document.getElementById("tzCurrentAct").innerText = current.act;
+      document.getElementById("tzCurrentName").innerText = current.name;
+      document.getElementById("tzNextName").innerText = `[${next.act}] ${next.name}`;
+
+      // 실제 정시(00분 00초)까지 남은 정확한 분과 초 카운트다운
       const minsLeft = 59 - now.getMinutes();
       const secsLeft = 59 - now.getSeconds();
       document.getElementById("tzTimer").innerText = 
         `${String(minsLeft).padStart(2, '0')}:${String(secsLeft).padStart(2, '0')}`;
     }
-    setInterval(updateTerrorZone, 1000);
-    updateTerrorZone();
 
-    /* 캐릭터 빌드별 추천 사냥터 사전 */
+    // 1초마다 실시간 시계 연동
+    setInterval(updateRealTimeTerrorZone, 1000);
+    updateRealTimeTerrorZone();
+
+    /* =========================================================================
+       2. 캐릭터 빌드별 추천 사냥터 프로필
+    ========================================================================= */
     const buildProfiles = {
       "asn_trap": {
         title: "암살자 · 번개 덧",
@@ -593,7 +599,7 @@
         early: "안다리엘 · 고대 하수도 · 메피스토",
         tz: "탈 라샤의 무덤 · 암석 무덤 · 고대 하수도",
         goal: "냉기 면역이 없는 던전 초고속 클리어",
-        tip: "! 냉기 면역 파괴 부적(콜파참) 획득 전까지는 고대 하수도와 보스 앵벌에 집중하세요."
+        tip: "! 파괴 부적 획득 전까지는 고대 하수도와 보스 앵벌에 집중하세요."
       },
       "sorc_light": {
         title: "원소술사 · 번개 (체라)",
@@ -607,7 +613,7 @@
         early: "암석 무덤 · 거미 동굴 · 안다리엘",
         tz: "암석 무덤 · 탈 라샤 무덤 · 메피스토",
         goal: "화염 면역 없는 신규 85 던전 파밍",
-        tip: "! 루트 골레인 성문 앞 암석 무덤은 화염 면역이 없어 파이어 소서리스 최고의 성지입니다."
+        tip: "! 루트 골레인 앞 암석 무덤은 화염 면역이 없어 파이어 소서리스 최고의 성지입니다."
       },
       "pal_hammer": {
         title: "성기사 · 해머딘",
@@ -621,21 +627,21 @@
         early: "혼돈의 성역 · 피트 · 구덩이",
         tz: "혼돈의 성역 · 세계석 성채 · 영묘",
         goal: "악마와 언데드 몬스터 대량 학살",
-        tip: "! 야수/곤충형 몬스터가 많은 카우방이나 정글은 비효율적이니 카오스 생츄어리에 집중하세요."
+        tip: "! 카우방이나 정글은 야수형이라 비효율적이니 카오스 생츄어리에 집중하세요."
       },
       "ama_jav": {
         title: "아마존 · 자벨마",
         early: "비밀의 젖소방(카우) · 핀들스킨 · 영묘",
         tz: "비밀의 젖소방 · 혼돈의 성역 · 탈라샤 무덤",
         goal: "밀집된 소 떼 및 다수 몬스터 섬멸",
-        tip: "! 번개 면역이 없는 카우방은 번개 분노(자벨린) 하나로 압도적인 룬 파밍이 가능합니다."
+        tip: "! 번개 면역이 없는 카우방은 번개 분노 하나로 압도적인 룬 파밍이 가능합니다."
       },
       "ama_bow": {
         title: "아마존 · 활아마",
         early: "구덩이 · 혼돈의 성역 · 카우방",
         tz: "구덩이 · 핏빛 황무지 · 카우방",
         goal: "물리 원거리 공격으로 안전하게 대량 처치",
-        tip: "! 물리 면역 몬스터는 마법 화살이나 아트마 목걸이의 피해 증폭(앰플)으로 제거하세요."
+        tip: "! 물리 면역 몬스터는 마법 화살이나 아트마의 피해 증폭(앰플)으로 제거하세요."
       },
       "nec_summon": {
         title: "강령술사 · 소환 (조폭넥)",
@@ -656,7 +662,7 @@
         early: "트라빈칼 (하이 카운슬)",
         tz: "트라빈칼 사원",
         goal: "골드 수급 및 아이템 찾기(시체 뒤집기)",
-        tip: "! 트라빈칼 의회원만 반복 사냥하여 판당 50~100만 골드와 고급 룬, 장신구를 노리세요."
+        tip: "! 트라빈칼 의회원만 반복 사냥하여 판당 50~100만 골드와 고급 룬을 노리세요."
       },
       "barb_ww": {
         title: "야만용사 · 휠윈드",
@@ -670,21 +676,21 @@
         early: "전 지역 · 혼돈의 성역 · 세계석 성채",
         tz: "지옥 전 지역 공포의 영역 무상성 파괴",
         goal: "충전 영구 유지 무술 콤보 폭딜",
-        tip: "! 쌍 모자이크 제작 시 모든 원소 충전이 소모되지 않아 디아블로 2 최강의 화력을 냅니다."
+        tip: "! 쌍 모자이크 제작 시 모든 원소 충전이 소모되지 않아 디아2 최강의 화력을 냅니다."
       },
       "dru_tornado": {
         title: "드루이드 · 회오리 (엘리드루)",
         early: "구덩이 · 혼돈의 성역 · 고대 하수도",
         tz: "혼돈의 성역 · 세계석 성채",
         goal: "물리 + 냉기 복합 원소 딜링",
-        tip: "! 회오리는 물리 피해, 폭풍은 냉기 피해이므로 단일 면역 몬스터에게 구애받지 않습니다."
+        tip: "! 회오리는 물리 피해, 폭풍은 냉기 피해이므로 단일 면역에 구애받지 않습니다."
       },
       "dru_fury": {
         title: "드루이드 · 늑드루",
         early: "트라빈칼 · 구덩이 · 혼돈의 성역",
         tz: "혼돈의 성역 · 트라빈칼",
         goal: "분노(퓨리) 난타로 단일 타겟 극딜",
-        tip: "! 탈태 투구와 파괴 불가 양손 무기를 착용하면 보스와 정예 몬스터를 순식간에 녹입니다."
+        tip: "! 탈태 투구와 파괴 불가 무기를 착용하면 보스와 정예 몬스터를 순식간에 녹입니다."
       }
     };
 
@@ -698,7 +704,9 @@
       document.getElementById("buildTipText").innerText = b.tip;
     }
 
-    /* 사냥터 / 룬워드 / 유니크 종합 DB */
+    /* =========================================================================
+       3. 전 액트 사냥터 및 심층 면역/파밍 상세 DB
+    ========================================================================= */
     const database = [
       {
         id: "zone_act1_tristram", category: "zone", slot: "ACT 1",
@@ -760,6 +768,36 @@
         targetDesc: "2층 반짝이는 황금 궤짝과 챔피언 팩을 집중 사냥",
         tags: ["#액트1", "#TC85", "#종결 파밍"],
         tip: "2층은 좁고 챔피언이 밀집해 급사 위험이 크므로 진입 시 주의하세요."
+      },
+      {
+        id: "wp_a1_5", category: "zone", slot: "ACT 1",
+        name: "검은 습지 (잊힌 탑)", enName: "Black Marsh (Tower)",
+        sub: "ACT 1 WP 5", desc: "백작(카운테스) 룬 파밍의 핵심 거점",
+        areaLevel: 69, maxRune: "로",
+        immunesSummary: "화염 · 냉기",
+        immunes: [
+          { type: "fire", title: "화염 면역", mob: "백작 (카운테스)" },
+          { type: "cold", title: "냉기 면역", mob: "고스트 및 궁수" }
+        ],
+        targetTitle: "탑 5층 백작 (카운테스)",
+        targetDesc: "고유 룬 드롭 테이블로 중급~고급 룬 수급",
+        tags: ["#액트1", "#카운테스", "#룬 파밍", "#공포의 열쇠"],
+        tip: "카운테스는 화염/냉기 면역이 기본이므로 용병이나 물리 피해로 잡는 것이 빠릅니다."
+      },
+      {
+        id: "zone_act2_ancient_tunnels", category: "zone", slot: "ACT 2",
+        name: "고대 하수도 (에이션트 터널)", enName: "Ancient Tunnels",
+        sub: "ACT 2 잊힌 도시 지하", desc: "냉기 면역이 없는 극블리 소서리스의 성지",
+        areaLevel: 85, maxRune: "조드",
+        immunesSummary: "번개 · 독 · 화염",
+        immunes: [
+          { type: "light", title: "번개 면역", mob: "딱정벌레" },
+          { type: "poison", title: "독 면역", mob: "좀비 및 미라" }
+        ],
+        targetTitle: "언데드 정예 무리와 황금 궤짝",
+        targetDesc: "순수 냉기 면역이 없어 블리자드 스킬로 초고속 클리어",
+        tags: ["#액트2", "#TC85", "#블리소서 성지", "#냉기면역 없음"],
+        tip: "딱정벌레를 잡을 때 사방으로 튀는 번개 줄기 저항을 맞춰두세요."
       },
       {
         id: "wp_a2_7", category: "zone", slot: "ACT 2",
@@ -1067,7 +1105,6 @@
       document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
       el.classList.add("active");
 
-      // 사냥터 탭일 때만 상단 추천 배너 표시
       const banner = document.getElementById("buildRecommendBanner");
       if (category === "zone") {
         banner.style.display = "block";
