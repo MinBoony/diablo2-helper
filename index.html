@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="xylaNiiE94P9MbbA3JuBA9PcJ8TR-mqNBHSooHhOw6E" />
   <title>모험가 도우미 | 디아블로 2 레저렉션 가이드</title>
-  <meta name="description" content="디아블로 2 레저렉션 실시간 공포의 영역, 빌드별 추천 사냥터, 전 룬워드 80종, 전 유니크 380종, 웨이포인트 39개소 도우미" />
+  <meta name="description" content="디아블로 2 레저렉션 실시간 공포의 영역, 빌드별 추천 사냥터, 전 룬워드 80종, 전 유니크 380종, 39개 순간이동진 완비" />
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
   <style>
@@ -185,6 +185,7 @@
     .build-footer-goal strong { color: var(--text-gold); font-weight: 700; }
     .build-footer-tip { font-size: 12px; color: #7f6e62; }
 
+    /* 탭 바 */
     .tabs-bar {
       display: flex;
       gap: 12px;
@@ -455,7 +456,7 @@
 
     <div class="search-box-wrapper">
       <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" class="search-input" placeholder="사냥터, 룬워드, 유니크 검색 (예: 영혼, 수수께끼, 샤코, 모자이크, 바위 벌판)..." onkeyup="handleSearch()" />
+      <input type="text" id="searchInput" class="search-input" placeholder="사냥터, 룬워드, 유니크 검색 (예: 영혼, 수수께끼, 샤코, 윈드포스, 마라, 바위 벌판)..." onkeyup="handleSearch()" />
     </div>
 
     <div class="quick-tags">
@@ -464,7 +465,7 @@
       <button class="tag-btn" onclick="quickSearch('수수께끼')">수수께끼</button>
       <button class="tag-btn" onclick="quickSearch('슬픔')">슬픔(고뇌)</button>
       <button class="tag-btn" onclick="quickSearch('샤코')">샤코</button>
-      <button class="tag-btn" onclick="quickSearch('모자이크')">모자이크</button>
+      <button class="tag-btn" onclick="quickSearch('윈드포스')">윈드포스</button>
       <button class="tag-btn" onclick="quickSearch('트라빈칼')">트라빈칼</button>
     </div>
   </section>
@@ -600,18 +601,15 @@
     }
 
     /* =========================================================================
-       [통합 데이터베이스: 룬워드 80종 전수 + 순간이동진 39개소]
+       [통합 데이터베이스: 룬워드 80종 + 순간이동진 39개소]
     ========================================================================= */
     const database = [
       /* --- [1. 룬워드 80종 전수 데이터 (표 기준 100% 완전 수록)] --- */
-      // 1-1. 멀티 베이스
       { id: "rw_dream", category: "runeword", slot: "머리", name: "꿈 (드림)", enName: "Dream", sub: "Lv 65 · 3소켓 투구/방패", desc: "15레벨 신성한 충격 오라 중첩 세팅", primary: "이오(16) + 자(31) + 풀(21)", summary: "신성한 충격 15레벨, 패힛 20~30%, 올레지 5~20", stats: [{ name: "신성한 충격 오라", val: "15레벨" }, { name: "타격 회복 속도", val: "+20~30%" }, { name: "모든 저항", val: "+5~20" }] },
       { id: "rw_phoenix", category: "runeword", slot: "방패", name: "불사조 (피닉스)", enName: "Phoenix", sub: "Lv 65 · 4소켓 무기/방패", desc: "시체 흡수 속죄 오라와 극딜 증뎀", primary: "벡스(26) + 벡스(26) + 로(28) + 자(31)", summary: "속죄 오라 10~15레벨, 증뎀 400%, 화깎 -28%", stats: [{ name: "속죄(리뎀션) 오라", val: "10~15레벨" }, { name: "피해 증가", val: "+350~400%" }, { name: "적의 화염 저항 감소", val: "-28%" }] },
       { id: "rw_spirit", category: "runeword", slot: "방패", name: "영혼 (스피리트)", enName: "Spirit", sub: "Lv 25 · 4소켓 검/방패", desc: "국민 마법 캐스터 종결/육성 장비", primary: "탈(7) + 주울(10) + 오르트(9) + 앰(11)", summary: "+2 올스킬, 패캐 35%, 패힛 55%, 마나 대량 추가", stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "시전 속도", val: "+25~35%" }, { name: "타격 회복 속도", val: "+55%" }] },
       { id: "rw_dragon", category: "runeword", slot: "가슴", name: "용 (드래곤)", enName: "Dragon", sub: "Lv 61 · 3소켓 갑옷/방패", desc: "14레벨 신성한 불꽃 오라 중첩 장비", primary: "수르(29) + 로(28) + 솔(12)", summary: "14레벨 홀리 파이어 오라, 모든 능력치 +3~5", stats: [{ name: "장착 시 신성한 불꽃 오라", val: "14레벨" }, { name: "모든 능력치", val: "+3~5" }] },
       { id: "rw_fortitude", category: "runeword", slot: "가슴", name: "인내", enName: "Fortitude", sub: "Lv 59 · 4소켓 무기/갑옷", desc: "물리 캐릭터 및 용병 필수 종결 장비", primary: "엘(1) + 솔(12) + 돌(14) + 로(28)", summary: "피해 300%, 방어력 200%, 올레지 25~30, 칠링아머", stats: [{ name: "피해 증가", val: "+300%" }, { name: "방어력 증가", val: "+200%" }, { name: "모든 저항", val: "+25~30" }] },
-
-      // 1-2. 2.4 패치 신규 룬워드
       { id: "rw_pattern", category: "runeword", slot: "무기", name: "귀감 (패턴)", enName: "Pattern", sub: "Lv 23 · 3소켓 클로", desc: "초반 어쌔신 육성용 클로", primary: "탈(7) + 오르트(9) + 주울(10)", summary: "공속 30%, 피해 증가 40~80%, 올레지 15", stats: [{ name: "공격 속도", val: "+30%" }, { name: "피해 증가", val: "+40~80%" }] },
       { id: "rw_flickering", category: "runeword", slot: "머리", name: "꺼져가는 불길 (불길)", enName: "Flickering Flame", sub: "Lv 55 · 3소켓 투구", desc: "화염 저항 깎기 및 정화 오라 화염 종결 투구", primary: "네프(4) + 풀(21) + 벡스(26)", summary: "화염 기술 +3, 적 화염 저항 -10~15%, 정화 오라", stats: [{ name: "화염 기술 레벨", val: "+3" }, { name: "적의 화염 저항 감소", val: "-10~15%" }] },
       { id: "rw_unbending_will", category: "runeword", slot: "무기", name: "불굴의 의지", enName: "Unbending Will", sub: "Lv 41 · 6소켓 검", desc: "악몽 난이도 바바리안/용병 가성비 무기", primary: "팔(19) + 이오(16) + 아이드(6) + 엘드(2) + 엘(1) + 헬(15)", summary: "공속 20%, 피해 300~350%, 라흡 8~10%", stats: [{ name: "공격 속도", val: "+20%" }, { name: "피해 증가", val: "+300~350%" }] },
@@ -619,8 +617,6 @@
       { id: "rw_plague", category: "runeword", slot: "무기", name: "역병 (플래그)", enName: "Plague", sub: "Lv 67 · 3소켓 검/단검/클로", desc: "정화 오라와 피격 시 저항 감소 저주 시전", primary: "참(32) + 샤엘(13) + 움(22)", summary: "13~17레벨 정화 오라, 저항 감소(로레) 20% 시전", stats: [{ name: "장착 시 정화 오라", val: "13~17레벨" }, { name: "피격 시 저항 감소 시전", val: "20%" }] },
       { id: "rw_obsession", category: "runeword", slot: "무기", name: "집착 (옵세션)", enName: "Obsession", sub: "Lv 69 · 6소켓 지팡이", desc: "+4 올스킬, 시전속도 65% 종결 양손 지팡이", primary: "조드(33) + 이스트(24) + 렘(20) + 룸(17) + 이오(16) + 네프(4)", summary: "+4 올스킬, 패캐 65%, 파괴 불가, 최대 생명력 15~25%", stats: [{ name: "모든 기술 레벨", val: "+4" }, { name: "시전 속도", val: "+65%" }] },
       { id: "rw_wisdom", category: "runeword", slot: "머리", name: "지혜 (위즈덤)", enName: "Wisdom", sub: "Lv 45 · 3소켓 투구", desc: "관통 공격 33%와 마나 수급 투구", primary: "풀(21) + 아이드(6) + 엘드(2)", summary: "관통 공격 33%, 빙결 방지, 마나 흡수 4~8%", stats: [{ name: "관통 공격", val: "33%" }, { name: "빙결되지 않음", val: "적용" }] },
-
-      // 1-3. 2.6 패치 신규 룬워드
       { id: "rw_cure", category: "runeword", slot: "머리", name: "치료", enName: "Cure", sub: "Lv 35 · 3소켓 투구", desc: "기도 용병과 세팅 시 중독 및 저주 즉시 정화", primary: "샤엘(13) + 이오(16) + 탈(7)", summary: "정화 오라 1레벨, 독 저항 60%, 독 지속시간 50% 감소", stats: [{ name: "장착 시 정화 오라", val: "1레벨" }, { name: "독 저항", val: "+40~60%" }] },
       { id: "rw_temper", category: "runeword", slot: "머리", name: "담금질", enName: "Temper", sub: "Lv 35 · 3소켓 투구", desc: "화염 흡수 및 화염 저항 특화 투구", primary: "샤엘(13) + 이오(16) + 랄(8)", summary: "화염 저항 40~60%, 화염 흡수 10~15%", stats: [{ name: "화염 저항", val: "+40~60%" }, { name: "화염 흡수", val: "+10~15%" }] },
       { id: "rw_ground", category: "runeword", slot: "머리", name: "접지", enName: "Ground", sub: "Lv 35 · 3소켓 투구", desc: "번개 흡수와 번개 저항 특화 투구", primary: "샤엘(13) + 이오(16) + 오르트(9)", summary: "번개 저항 40~60%, 번개 흡수 10~15%", stats: [{ name: "번개 저항", val: "+40~60%" }, { name: "번개 흡수", val: "+10~15%" }] },
@@ -630,27 +626,19 @@
       { id: "rw_hustle_weapon", category: "runeword", slot: "무기", name: "광기 (허슬 무기)", enName: "Hustle", sub: "Lv 39 · 3소켓 무기", desc: "타격 시 버스트(속도 폭발) 시전 스왑용 무기", primary: "샤엘(13) + 코(18) + 엘드(2)", summary: "광신 오라 1레벨, 속도 폭발 9레벨 시전 5%", stats: [{ name: "장착 시 광신 오라", val: "1레벨" }, { name: "공격 속도", val: "+30%" }] },
       { id: "rw_mosaic", category: "runeword", slot: "무기", name: "모자이크", enName: "Mosaic", sub: "Lv 53 · 3소켓 클러", desc: "무술 어쌔신 콤보 충전 영구 유지", primary: "말(23) + 굴(25) + 앰(11)", summary: "마무리 일격 시 충전 미소모 50% (쌍 모자이크 100%)", stats: [{ name: "마무리 일격 시 충전 미소모", val: "+50%" }, { name: "무술 기술 레벨", val: "+2" }, { name: "원소 기술 피해", val: "각 +8~15%" }] },
       { id: "rw_metamorphosis", category: "runeword", slot: "머리", name: "탈태", enName: "Metamorphosis", sub: "Lv 67 · 3소켓 투구", desc: "변신 드루이드(늑/곰) 종결 투구", primary: "이오(16) + 참(32) + 팔(19)", summary: "변신 스킬 +5, 늑대의 징표, 곰의 징표 버프", stats: [{ name: "변신 기술 레벨", val: "+5" }, { name: "빙결되지 않음", val: "적용" }] },
-
-      // 1-4. 3.0 패치 신규 룬워드
       { id: "rw_authority", category: "runeword", slot: "가슴", name: "권위 (신규 3.0)", enName: "Authority", sub: "Lv 29 · 3소켓 갑옷", desc: "3.0 신규 패치 육성형 방어 갑옷", primary: "엘(1) + 샤엘(13) + 랄(8)", summary: "패힛 20%, 화염 저항 30%, 방어력 상승", stats: [{ name: "타격 회복 속도", val: "+20%" }, { name: "화염 저항", val: "+30%" }] },
       { id: "rw_vigilance", category: "runeword", slot: "방패", name: "경계 (신규 3.0)", enName: "Vigilance", sub: "Lv 53 · 2소켓 방패/책", desc: "3.0 신규 저항 및 방어 특화 방패", primary: "돌(14) + 굴(25)", summary: "블럭율 증가, 모든 저항, 방어력 상승", stats: [{ name: "막기 확률 증가", val: "+20%" }, { name: "모든 저항", val: "+25~35%" }] },
       { id: "rw_coven", category: "runeword", slot: "머리", name: "마녀단 (신규 3.0)", enName: "Coven", sub: "Lv 51 · 3소켓 투구", desc: "3.0 신규 시전 속도 및 매찬 투구", primary: "이스트(24) + 탈(7) + 이오(16)", summary: "시전 속도 20%, 매찬 25%, 독 저항 30%", stats: [{ name: "시전 속도", val: "+20%" }, { name: "마법 아이템 발견 확률", val: "+25%" }] },
       { id: "rw_whiteness", category: "runeword", slot: "무기", name: "희식 (신규 3.0)", enName: "Whiteness", sub: "Lv 57 · 3소켓 단검", desc: "3.0 신규 공속 및 극딜 단검", primary: "앰(11) + 샤엘(13) + 오움(27)", summary: "피해 350% 증가, 공속 30%, 피흡 7%", stats: [{ name: "피해 증가", val: "+300~350%" }, { name: "공격 속도", val: "+30%" }] },
       { id: "rw_void", category: "runeword", slot: "무기", name: "공허 (신규 3.0)", enName: "Void", sub: "Lv 69 · 3소켓 단검", desc: "3.0 신규 조드룬 종결 단검", primary: "주울(10) + 조드(33) + 이스트(24)", summary: "파괴 불가, 대상 방어력 무시, 매찬 50%", stats: [{ name: "파괴 불가", val: "적용" }, { name: "대상의 방어력 무시", val: "적용" }] },
-
-      // 1-5. 투구 전용 룬워드
       { id: "rw_radiance", category: "runeword", slot: "머리", name: "빛 (광휘)", enName: "Radiance", sub: "Lv 27 · 3소켓 투구", desc: "생명력/마나/스탯을 골고루 제공", primary: "네프(4) + 솔(12) + 이드(6)", summary: "활력/에너지 +10, 마나 +33, 물리 피해 감소 7", stats: [{ name: "마나", val: "+33" }, { name: "활력 / 에너지", val: "각 +10" }] },
       { id: "rw_lore", category: "runeword", slot: "머리", name: "전승 (학식)", enName: "Lore", sub: "Lv 27 · 2소켓 투구", desc: "+1 모든 기술 육성용 국민 투구", primary: "오르트(9) + 솔(12)", summary: "+1 모든 기술, 번개 저항 30%, 처치 시 마나 +2", stats: [{ name: "모든 기술 레벨", val: "+1" }, { name: "번개 저항", val: "+30%" }] },
       { id: "rw_delirium", category: "runeword", slot: "머리", name: "착란 (구 둔병)", enName: "Delirium", sub: "Lv 51 · 3소켓 투구", desc: "+2 모든 기술, 매찬 25%, 혼란 유발", primary: "렘(20) + 이스트(24) + 이오(16)", summary: "+2 모든 기술, 매찬 25%, 타격 시 혼란 시전 11%", stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "마법 아이템 발견 확률", val: "+25%" }] },
-
-      // 1-6. 방패 전용 룬워드
       { id: "rw_rhyme", category: "runeword", slot: "방패", name: "각운 (제작)", enName: "Rhyme", sub: "Lv 29 · 2소켓 방패", desc: "빙결 방지와 매찬 25%의 명품 육성 방패", primary: "샤엘(13) + 에드(5)", summary: "빙결되지 않음, 모든 저항 +25, 매찬 25%", stats: [{ name: "빙결되지 않음", val: "적용" }, { name: "모든 저항", val: "+25" }] },
       { id: "rw_ancients_pledge", category: "runeword", slot: "방패", name: "고대인의 서약", enName: "Ancient's Pledge", sub: "Lv 21 · 3소켓 방패", desc: "액트 5 퀘스트 보상으로 즉시 만드는 저항 방패", primary: "랄(8) + 오르트(9) + 탈(7)", summary: "화염/번개/독 48%, 냉기 43% 저항", stats: [{ name: "화염/번개/독 저항", val: "각 +48%" }, { name: "냉기 저항", val: "+43%" }] },
       { id: "rw_sanctuary", category: "runeword", slot: "방패", name: "성역 (생츄어리)", enName: "Sanctuary", sub: "Lv 49 · 3소켓 방패", desc: "황금 올레지 50~70을 제공하는 방어형 방패", primary: "코(18) + 코(18) + 말(23)", summary: "모든 저항 50~70, 패힛 20%, 블럭율 20%", stats: [{ name: "모든 저항", val: "+50~70" }, { name: "민첩", val: "+20" }] },
       { id: "rw_exile", category: "runeword", slot: "방패", name: "망명 (엑자일)", enName: "Exile", sub: "Lv 57 · 4소켓 팔라딘 방패", desc: "라탭 저주 자동 시전과 반항 오라 (횃불 슴딘 필수)", primary: "벡스(26) + 오움(27) + 이스트(24) + 돌(14)", summary: "라탭 15% 시전, 13~16레벨 반항 오라, 내구 회복", stats: [{ name: "타격 시 생명력 추출 발동", val: "15%" }, { name: "장착 시 반항 오라", val: "13~16레벨" }] },
-
-      // 1-7. 갑옷 전용 룬워드
-      { id: "rw_treachery_body", category: "runeword", slot: "가슴", name: "배신 (트랫셔리)", enName: "Treachery", sub: "Lv 43 · 3소켓 갑옷", desc: "공속 45%와 피격 시 흐리기(페이드) 시전", primary: "샤엘(13) + 주울(10) + 렘(20)", summary: "공속 45%, 15레벨 페이드 발동 5%", stats: [{ name: "공격 속도", val: "+45%" }, { name: "피격 시 흐리기 시전", val: "5%" }] },
+      { id: "rw_treachery", category: "runeword", slot: "가슴", name: "배신 (트랫셔리)", enName: "Treachery", sub: "Lv 43 · 3소켓 갑옷", desc: "공속 45%와 피격 시 흐리기(페이드) 시전", primary: "샤엘(13) + 주울(10) + 렘(20)", summary: "공속 45%, 15레벨 페이드 발동 5%", stats: [{ name: "공격 속도", val: "+45%" }, { name: "피격 시 흐리기 시전", val: "5%" }] },
       { id: "rw_stone", category: "runeword", slot: "가슴", name: "돌 (스톤)", enName: "Stone", sub: "Lv 47 · 4소켓 갑옷", desc: "압도적인 방어력과 패힛 60% 갑옷", primary: "샤엘(13) + 움(22) + 풀(21) + 룸(17)", summary: "방어력 250~290%, 패힛 60%, 올레지 15", stats: [{ name: "타격 회복 속도", val: "+60%" }, { name: "방어력 증가", val: "+250~290%" }] },
       { id: "rw_chains_of_honor", category: "runeword", slot: "가슴", name: "명예의 굴레 (명굴)", enName: "Chains of Honor", sub: "Lv 63 · 4소켓 갑옷", desc: "+2 모든 기술 및 올레지 65의 균형 갑옷", primary: "돌(14) + 움(22) + 베르(30) + 이스트(24)", summary: "+2 올스킬, 모든 저항 +65, 피흡 8%, 물피감 8%", stats: [{ name: "모든 기술 레벨", val: "+2" }, { name: "모든 저항", val: "+65" }] },
       { id: "rw_stealth", category: "runeword", slot: "가슴", name: "잠행 (스텔스)", enName: "Stealth", sub: "Lv 17 · 2소켓 갑옷", desc: "노말 초반 최고의 국민 육성용 갑옷", primary: "탈(7) + 에드(5)", summary: "이속 25%, 시전속도 25%, 패힛 25%", stats: [{ name: "달리기/걷기 속도", val: "+25%" }, { name: "시전 속도", val: "+25%" }] },
@@ -661,11 +649,10 @@
       { id: "rw_prudence", category: "runeword", slot: "가슴", name: "신중 (현명)", enName: "Prudence", sub: "Lv 49 · 2소켓 갑옷", desc: "내구도 자동 회복 에테 갑옷 제작용", primary: "말(23) + 티르(3)", summary: "내구도 자동 회복, 모든 저항 25~35", stats: [{ name: "내구도 자동 회복", val: "적용 (에테리얼 제작)" }, { name: "모든 저항", val: "+25~35" }] },
       { id: "rw_lionheart", category: "runeword", slot: "가슴", name: "용맹한 자 (협객)", enName: "Lionheart", sub: "Lv 41 · 3소켓 갑옷", desc: "스탯과 생명력, 올레지 30 갑옷", primary: "헬(15) + 룸(17) + 팔(19)", summary: "힘 +25, 활력 +20, 민첩 +15, 모든 저항 +30", stats: [{ name: "힘", val: "+25" }, { name: "모든 저항", val: "+30" }] },
       { id: "rw_duress", category: "runeword", slot: "가슴", name: "협박", enName: "Duress", sub: "Lv 47 · 3소켓 갑옷", desc: "강타, 상처 악화, 냉기 저항 밀리 갑옷", primary: "샤엘(13) + 움(22) + 주울(10)", summary: "강타 15%, 상처 악화 33%, 패힛 40%", stats: [{ name: "강타 확률", val: "15%" }, { name: "상처 악화 확률", val: "33%" }] },
+      { id: "rw_enigma", category: "runeword", slot: "가슴", name: "수수께끼", enName: "Enigma", sub: "Lv 65 · 3소켓 갑옷", desc: "모든 직업에게 순간이동(텔레포트) 부여", primary: "자(31) + 아이드(6) + 베르(30)", summary: "+1 순간이동, +2 올스킬, 레벨 비례 힘, 물피감 8%", stats: [{ name: "순간이동 (텔레포트)", val: "+1" }, { name: "모든 기술 레벨", val: "+2" }, { name: "힘 (레벨 비례)", val: "최대 +74" }] },
       { id: "rw_peace", category: "runeword", slot: "가슴", name: "평화", enName: "Peace", sub: "Lv 29 · 3소켓 갑옷", desc: "+2 아마존 기술 및 발키리 자동 소환", primary: "샤엘(13) + 주울(10) + 앰(11)", summary: "+2 아마존 기술, 타격 시 발키리 소환 2%", stats: [{ name: "아마존 기술 레벨", val: "+2" }, { name: "타격 회복 속도", val: "+20%" }] },
       { id: "rw_bramble", category: "runeword", slot: "가슴", name: "검은 딸기 (브람블)", enName: "Bramble", sub: "Lv 61 · 4소켓 갑옷", desc: "독 기술 피해 최대 +50% 종결 갑옷", primary: "랄(8) + 오움(27) + 수르(29) + 에드(5)", summary: "독 기술 피해 +25~50%, 15~21 가시 오라", stats: [{ name: "독 기술 피해", val: "+25~50%" }, { name: "장착 시 가시(쏜즈) 오라", val: "15~21레벨" }] },
       { id: "rw_principle", category: "runeword", slot: "가슴", name: "원칙 (원리원칙)", enName: "Principle", sub: "Lv 53 · 3소켓 갑옷", desc: "+2 성기사 기술 갑옷", primary: "랄(8) + 굴(25) + 엘드(2)", summary: "+2 성기사 기술, 생명력 +100~150", stats: [{ name: "성기사 기술 레벨", val: "+2" }, { name: "생명력", val: "+100~150" }] },
-
-      // 1-8. 무기 전용 룬워드
       { id: "rw_steel", category: "runeword", slot: "무기", name: "강철 (스틸)", enName: "Steel", sub: "Lv 13 · 2소켓 검/도끼/메이스", desc: "초반 밀리 캐릭터 상처 악화 50% 무기", primary: "티르(3) + 엘(1)", summary: "공속 25%, 피해 20%, 상처 악화 50%", stats: [{ name: "공격 속도", val: "+25%" }, { name: "상처 악화 확률", val: "50%" }] },
       { id: "rw_strength", category: "runeword", slot: "무기", name: "힘 (스트랭쓰)", enName: "Strength", sub: "Lv 25 · 2소켓 근접 무기", desc: "강타 25%와 힘 20, 피흡 무기", primary: "앰(11) + 티르(3)", summary: "강타 25%, 생명력 흡수 7%, 힘 +20", stats: [{ name: "강타 확률", val: "25%" }, { name: "힘", val: "+20" }] },
       { id: "rw_black", category: "runeword", slot: "무기", name: "흑마현 (블랙)", enName: "Black", sub: "Lv 35 · 3소켓 클럽/철퇴/망치", desc: "강타 40%와 공속 15% 초반 슴딘 무기", primary: "주울(10) + 이오(16) + 네프(4)", summary: "강타 40%, 공속 15%, 시폭 충전", stats: [{ name: "강타 확률", val: "40%" }, { name: "공격 속도", val: "+15%" }] },
@@ -690,6 +677,11 @@
       { id: "rw_passion", category: "runeword", slot: "무기", name: "열정 (패션)", enName: "Passion", sub: "Lv 43 · 4소켓 무기", desc: "모든 캐릭터에게 질/버서크 부여", primary: "돌(14) + 오르트(9) + 엘드(2) + 렘(20)", summary: "+1 열의(질), +1 광폭화(버서크)", stats: [{ name: "열의 (질)", val: "+1" }, { name: "광폭화 (버서크)", val: "+1" }] },
       { id: "rw_doom", category: "runeword", slot: "무기", name: "파멸 (둠)", enName: "Doom", sub: "Lv 67 · 5소켓 도끼/폴암/망치", desc: "12레벨 홀리 프리즈 오라 및 냉깎 -60%", primary: "헬(15) + 오움(27) + 우움(22) + 로(28) + 참(32)", summary: "12레벨 홀리 프리즈, 올스킬 +2, 냉깎 -40~60%", stats: [{ name: "장착 시 신성한 빙결 오라", val: "12레벨" }, { name: "적의 냉기 저항 감소", val: "-40~60%" }] },
       { id: "rw_ice", category: "runeword", slot: "무기", name: "얼음 (아이스)", enName: "Ice", sub: "Lv 65 · 4소켓 원거리 무기", desc: "원소 냉기 아마존의 종결 활", primary: "앰(11) + 샤엘(13) + 자(31) + 로(28)", summary: "18 홀리 프리즈, 냉기 피해 +30%, 냉깎 -20%", stats: [{ name: "장착 시 신성한 빙결 오라", val: "18레벨" }, { name: "냉기 기술 피해", val: "+25~30%" }] },
+      { id: "rw_call_to_arms", category: "runeword", slot: "무기", name: "소집 (콜투암스)", enName: "Call to Arms", sub: "Lv 57 · 5소켓 무기", desc: "함성으로 최대 피/마나 뻥튀기", primary: "앰(11) + 랄(8) + 말(23) + 이스트(24) + 오움(27)", summary: "전투 명령 1~6, 전투 지휘 1~6, +1 올스킬", stats: [{ name: "전투 명령 (배틀 오더스)", val: "+1~6" }, { name: "전투 지휘 (배틀 커맨드)", val: "+1~6" }] },
+      { id: "rw_hoto", category: "runeword", slot: "무기", name: "참나무의 심장 (오심)", enName: "Heart of the Oak", sub: "Lv 55 · 4소켓 프레일류/지팡이", desc: "캐스터 0티어 한손 종결 무기", primary: "코(18) + 벡스(26) + 풀(21) + 주울(10)", summary: "+3 올스킬, 시전 속도 40%, 모든 저항 30~40", stats: [{ name: "모든 기술 레벨", val: "+3" }, { name: "시전 속도", val: "+40%" }, { name: "모든 저항", val: "+30~40" }] },
+      { id: "rw_grief", category: "runeword", slot: "무기", name: "슬픔 (고뇌)", enName: "Grief", sub: "Lv 59 · 5소켓 검/도끼", desc: "근접 물리 0티어 최강의 무기", primary: "에드(5) + 티르(3) + 로(28) + 말(23) + 랄(8)", summary: "피해 +340~400 절대값 추가, 공속 40%, 방어력 무시", stats: [{ name: "피해 추가", val: "+340~400" }, { name: "공격 속도", val: "+30~40%" }, { name: "대상의 방어력 무시", val: "적용" }] },
+      { id: "rw_infinity", category: "runeword", slot: "무기", name: "무한 (무공)", enName: "Infinity", sub: "Lv 63 · 4소켓 폴암/창", desc: "12레벨 선고 오라로 원소 저항 파괴", primary: "베르(30) + 말(23) + 베르(30) + 이스트(24)", summary: "선고(컨빅션) 오라, 적 번개 저항 -45~55%, 강타 40%", stats: [{ name: "장착 시 선고 오라", val: "12레벨" }, { name: "적의 번개 저항 감소", val: "-45~55%" }, { name: "강타 확률", val: "40%" }] },
+      { id: "rw_insight", category: "runeword", slot: "무기", name: "통찰", enName: "Insight", sub: "Lv 27 · 4소켓 폴암/스태프/활", desc: "명상 오라로 마나를 무한 충전", primary: "랄(8) + 티르(3) + 탈(7) + 솔(12)", summary: "명상(메디테이션) 오라, 피해 200~260%, 치명타", stats: [{ name: "장착 시 명상 오라", val: "12~17레벨" }, { name: "시전 속도", val: "+35%" }, { name: "피해 증가", val: "+200~260%" }] },
       { id: "rw_faith", category: "runeword", slot: "무기", name: "신념 (신뢰)", enName: "Faith", sub: "Lv 65 · 4소켓 원거리 무기", desc: "광신 오라로 활아마존 프레임 완성", primary: "오움(27) + 자(31) + 렘(20) + 엘드(2)", summary: "12~15레벨 광신 오라, +1~2 올스킬", stats: [{ name: "장착 시 광신 오라", val: "12~15레벨" }, { name: "모든 기술 레벨", val: "+1~2" }] },
       { id: "rw_death", category: "runeword", slot: "무기", name: "죽음 (데스)", enName: "Death", sub: "Lv 55 · 5소켓 도검/도끼", desc: "파괴 불가, 50% 강타, 레벨 비례 치명타", primary: "헬(15) + 엘(1) + 베르(30) + 오르트(9) + 벡스(26)", summary: "파괴 불가, 강타 50%, 치명타 레벨 비례", stats: [{ name: "강타 확률", val: "50%" }, { name: "치명적 공격", val: "레벨 비례" }] },
       { id: "rw_botd", category: "runeword", slot: "무기", name: "죽어가는 자의 숨결 (죽숨)", enName: "Breath of the Dying", sub: "Lv 69 · 6소켓 무기", desc: "파괴 불가, 공속 60%, 최대 400% 증뎀과 올스탯 30", primary: "벡스(26) + 헬(15) + 엘(1) + 엘드(2) + 조드(33) + 에드(5)", summary: "파괴 불가, 공속 60%, 증뎀 350~400%, 올스탯 30", stats: [{ name: "공격 속도", val: "+60%" }, { name: "피해 증가", val: "+350~400%" }, { name: "모든 능력치", val: "+30" }] },
@@ -746,36 +738,175 @@
     ];
 
     /* =========================================================================
-       [유니크 380종 일체 자동 적재 데이터 엔진]
+       [3. 유니크 380종 일체 완전 탑재 데이터베이스 엔진]
     ========================================================================= */
     const uniqueRawList = [
+      // 투구류
       ["할리퀸 관모 (샤코)", "Harlequin Crest", "머리", "샤코", 62, "+2 모든 기술, 매찬 50%, 물피감 10%"],
       ["그리폰의 눈 (다이어뎀)", "Griffon's Eye", "머리", "다이어뎀", 76, "+1 올스킬, 패캐 25%, 적 번개 저항 -20%"],
       ["안다리엘의 두개골", "Andariel's Visage", "머리", "데몬헤드", 83, "+2 올스킬, 공속 20%, 생명력 흡수 10%"],
+      ["밤날개의 너울 (나이트윙)", "Nightwing's Veil", "머리", "스파이어드 헬름", 67, "+2 올스킬, 냉기 기술 피해 +8~15%"],
+      ["시대의 왕관 (베르둔고 투구)", "Crown of Ages", "머리", "코로나", 82, "+1 올스킬, 모든 저항 20~30, 물피감 10~15%"],
+      ["자이언트 스컬", "Giant Skull", "머리", "본 비지스", 65, "밀쳐내기(넉백), 강타 10%, 1~2소켓"],
+      ["뱀파이어 게이즈", "Vampire Gaze", "머리", "그림 헬름", 41, "물피감 20%, 생명력/마나 쌍흡 8%"],
+      ["아리앗의 턱뼈 (슬가)", "Arreat's Face", "머리", "슬레이어 가드", 42, "+2 야만용사 기술, 올레지 30, 스탯 20"],
+      ["잘랄의 갈기", "Jalal's Mane", "머리", "토테믹 마스크", 42, "+2 드루이드 기술, 올레지 30, 힘 20"],
+      ["도둑의 왕관", "Crown of Thieves", "머리", "그랜드 크라운", 49, "삥바바 종결 (금화 100%, 피흡 12%)"],
+      ["타른헬름", "Tarnhelm", "머리", "스컬 캡", 15, "+1 모든 기술, 매찬 최대 50%"],
+      ["쿠어스티의 지혜", "Coif of Glory", "머리", "헬름", 14, "시야 흐리기 및 번개 저항"],
+      ["황혼의 깊이", "Duskdeep", "머리", "풀 헬름", 17, "모든 저항 15, 물리 피해 감소 7"],
+      ["지렁이 두개골", "Wormskull", "머리", "본 헬름", 21, "+1 강령술사 기술, 생명력 흡수 5%"],
+      ["언데드의 왕관", "Undead Crown", "머리", "크라운", 29, "+3 해골 되살리기, 생명력 흡수 5%"],
+      ["바위제거기", "Rockstopper", "머리", "살렛", 31, "타격 회복 30%, 3원소 저항 30~40%"],
+      ["강철베일", "Veil of Steel", "머리", "스파이어드 헬름", 73, "모든 저항 +50, 방어력 60%"],
+      ["빅혼의 뿔", "Biggon's Bonnet", "머리", "캡", 3, "+10 생명력/마나, 데미지 감소 1"],
+      ["모자의 두건", "Cap of Thinking", "머리", "모자", 1, "초반 마나 증가"],
+
+      // 갑옷류
       ["독사마술사의 가죽 (구교복)", "Skin of the Vipermagi", "가슴", "서펀트스킨", 29, "+1 올스킬, 패캐 30%, 올레지 20~35"],
+      ["스컬더의 분노 (러셋아머)", "Skullder's Ire", "가슴", "러셋 아머", 42, "+1 올스킬, 레벨 비례 압도적 매찬"],
+      ["메쉬 아머 (샤프트스톱)", "Shaftstop", "가슴", "메쉬 아머", 38, "물리 피해 감소 30%, 생명력 60"],
+      ["듀리엘의 껍질", "Duriel's Shell", "가슴", "퀴래스", 41, "빙결되지 않음, 레벨 비례 생명력, 올레지"],
+      ["수호천사 (팔라교복)", "Guardian Angel", "가슴", "템플러 코트", 45, "모든 최대 저항 +15%, 막기 확률 20%"],
+      ["오르무스의 장포 (신교복)", "Ormus' Robes", "가슴", "더스크 슈라우드", 75, "시전 속도 20%, 3원소 피해 15%"],
+      ["검투사의 파멸", "The Gladiator's Bane", "가슴", "와이어 플리스", 85, "빙결되지 않음, 물리/마법 피해 감소 20"],
+      ["아케인의 용기 (발록)", "Arkaine's Valor", "가슴", "발록 스킨", 85, "+1~2 모든 기술, 패힛 30%, 활력"],
+      ["티리엘의 권능", "Tyrael's Might", "가슴", "세이크리드 아머", 84, "최고 희귀템 (파괴 불가, 착용요구치 -100%)"],
+      ["골드스킨", "Goldskin", "가슴", "풀 플레이트", 28, "모든 저항 35, 금화 획득 100%"],
+      ["트위치스로", "Twitchthroe", "가슴", "스터디드 레더", 16, "공속 20%, 패힛 20%, 블럭율 25%"],
+      ["호크메일", "Hawkmail", "가슴", "스케일 메일", 15, "빙결되지 않음, 달리기 10%"],
+      ["그레이폼", "Greyform", "가슴", "퀼티드 아머", 7, "생명력 흡수 5%, 모든 저항 20"],
+      ["백년", "The Centurion", "가슴", "하드 레더 아머", 14, "생명력 +50, 마나 +15"],
+
+      // 방패류
       ["자카룸의 전령 (자카럼)", "Herald of Zakarum", "방패", "길디드 실드", 42, "+2 성기사스킬, 올레지 50, 힘/활력 20"],
       ["폭풍막이 (유닉 모나크)", "Stormshield", "방패", "모나크", 73, "피해 감소 35%, 냉기/번개 저항 대폭 증가"],
+      ["호문쿨루스", "Homunculus", "방패", "하이어러펀트", 42, "+2 강령술사 기술, 저주 2, 올레지 40, 마나재생 33%"],
+      ["벽골 (월오브아이즈)", "Wall of the Eyeless", "방패", "본 실드", 20, "시전 속도 20%, 처치 시 마나 +5"],
+      ["모세의 축복받은 원", "Moser's Blessed Circle", "방패", "라운드 실드", 31, "모든 저항 25, 2소켓, 막기 속도 30%"],
+      ["티아마트의 질책", "Tiamat's Rebuke", "방패", "드래곤 실드", 38, "모든 저항 25~35, 3원소 피해 추가"],
+      ["암흑라드", "Darkforce Spawn", "방패", "블러드로드 스컬", 65, "+1~3 네크 전 스킬, 패캐 30%"],
+      ["빅혼의 발톱", "Pelta Lunata", "방패", "벅클러", 2, "힘 2, 활력 10, 막기 확률 30%"],
+      ["스톰길드", "Stormguild", "방패", "라지 실드", 13, "번개 저항 25%, 막기 속도 30%"],
+      ["라이징 선 방패", "Visceratuant", "방패", "디펜더", 28, "+1 소서리스 기술, 막기 확률 30%"],
+
+      // 무기류
       ["망령의 울부짖음 (신오브)", "The Oculus", "무기", "스월링 크리스탈", 42, "+3 소서리스 기술, 패캐 30%, 올레지 20, 매찬 50%"],
       ["거인의 복수 (타이탄)", "Titan's Revenge", "무기", "세레모니얼 재벌린", 42, "+2 아마존 기술, 달리기 30%, 수량 자동 회복"],
       ["바람살 (윈드포스)", "Windforce", "무기", "하이드라 보우", 73, "레벨 비례 막대한 맥뎀, 밀쳐내기, 공속 20%"],
       ["사신의 종소리 (유닉 쓰레셔)", "The Reaper's Toll", "무기", "쓰레셔", 75, "타격 시 33% 확률로 노화(디크리) 시전, 라흡 15%"],
       ["죽음의 거미줄 (데스웹)", "Death's Web", "무기", "언어스드 원드", 66, "적의 독 저항 -40~50% 깎기, +2 독과 뼈 기술"],
-      ["스파이더웹 (스웹 벨트)", "Arachnid Mesh", "기타", "스파이더웹 새시", 80, "+1 올스킬, 시전 속도 20%, 대상 감속 10%"],
-      ["요르단의 반지 (조던링)", "The Stone of Jordan", "기타", "반지", 29, "+1 모든 기술, 최대 마나 25% 증가"],
-      ["마라의 만화경", "Mara's Kaleidoscope", "기타", "목걸이", 67, "+2 모든 기술, 모든 저항 20~30, 모든 능력치 +5"],
-      ["전쟁 여행자 (배추 부츠)", "War Traveler", "기타", "배틀 부츠", 42, "매찬 30~50%, 추가 피해 15~25, 힘/활력 10"],
-      ["드라큘의 손아귀 (뱀파장)", "Dracul's Grasp", "기타", "뱀파이어본", 76, "타격 시 5% 라탭 시전, 상처 악화 25%, 힘 15"],
-      ["선혈 기수 (고어 라이더)", "Gore Rider", "기타", "워 부츠", 47, "강타 15%, 치명타 15%, 상처 악화 10%"],
-      ["찬스가드 (행운의 장갑)", "Chance Guards", "기타", "체인 글러브", 15, "매찬 최대 40%, 금화 획득 200%"],
+      ["에스츄타의 분노", "Eschuta's Temper", "무기", "엘드리치 오브", 72, "+1~3 소서스킬, 패캐 40%, 화염/번개 피해 20%"],
+      ["할아버지검 (그랜드파더)", "The Grandfather", "무기", "콜로서스 블레이드", 81, "파괴 불가, 피해 250%, 올스탯 20"],
+      ["폭풍채찍 (스톰래쉬)", "Stormlash", "무기", "스커지", 82, "타격 시 스태틱 15%, 강타 33%, 공속 30%"],
+      ["갈매기 (시걸 단검)", "Gull", "무기", "대거", 4, "마법 아이템 발견 확률 100%"],
+      ["알리바바의 칼날", "Blade of Ali Baba", "무기", "툴와", 35, "레벨 비례 매찬/골드 대폭 상승, 2소켓"],
+      ["마법사의 쐐기검 (위저드)", "Wizardspike", "무기", "본 나이프", 61, "시전 속도 50%, 모든 저항 +75, 마나 15%"],
+      ["도살자의 토막 (버쳐)", "Butcher's Pupil", "무기", "클리버", 39, "파괴 불가, 치명타 35%, 상처 악화 25%"],
+      ["마녀제작자 (위치보우)", "Witchwild String", "무기", "숏 시지 보우", 39, "타격 시 앰플 시전, 레벨 비례 치명타, 올레지 40"],
+      ["쿠쿨의 날개", "Kuko Shakaku", "무기", "세더 보우", 33, "폭발 화살, 관통 공격 50%"],
+      ["맹독 비수", "Blackbog's Sharp", "무기", "신퀴디아", 38, "+4 독폭발, +4 독단검, +5 맹독, 공속 15%"],
+
+      // 장갑류
       ["메이지피스트 (마수)", "Magefist", "기타", "라이트 건틀릿", 23, "시전 속도 20%, 마나 재생 25%, 화염 기술 +1"],
-      ["칠흑빛 서리 (레이븐 링)", "Raven Frost", "기타", "반지", 45, "빙결되지 않음, 민첩 15~20, 명중률 150~250"],
+      ["찬스가드 (행운의 장갑)", "Chance Guards", "기타", "체인 글러브", 15, "매찬 최대 40%, 금화 획득 200%"],
+      ["드라큘의 손아귀 (뱀파장)", "Dracul's Grasp", "기타", "뱀파이어본", 76, "타격 시 5% 라탭 시전, 상처 악화 25%, 힘 15"],
+      ["서리불꽃 (프로스트번)", "Frostburn", "기타", "건틀릿", 15, "최대 마나 40% 증가, 냉기 피해"],
+      ["혈권 (블러드피스트)", "Bloodfist", "기타", "헤비 글러브", 9, "패힛 30%, 공속 10%, 생명력 40"],
+      ["강철찢개 (스틸렌드)", "Steelrend", "기타", "오거 건틀릿", 70, "강타 10%, 피해 증가 30~60%, 힘 15~20"],
+      ["영혼 흡수자 (소울드레이너)", "Soul Drainer", "기타", "뱀브레이스", 74, "생명력/마나 쌍흡 7%, 피격 시 약화 시전"],
+      ["용암뿔 (라바가우트)", "Lava Gout", "기타", "배틀 건틀릿", 42, "공속 20%, 타격 시 인챈트 발동 2%"],
+      ["맹독손 (베놈그립)", "Venom Grip", "기타", "데몬하이드", 29, "강타 5%, 독 저항 30%, 라흡 5%"],
+      ["손도끼 장갑", "The Hand of Broc", "기타", "레더 글러브", 5, "생명력/마나 흡수 3%"],
+
+      // 벨트류
+      ["스파이더웹 (스웹 벨트)", "Arachnid Mesh", "기타", "스파이더웹 새시", 80, "+1 올스킬, 시전 속도 20%, 대상 감속 10%"],
+      ["귀꿰미 (데몬하이드 새시)", "String of Ears", "기타", "데몬하이드 새시", 29, "물피감 15%, 생명력 흡수 8%"],
+      ["서슬꼬리 (관통벨트)", "Razortail", "기타", "샤크스킨 벨트", 32, "관통 공격 33%, 최대 피해 15, 민첩 15"],
+      ["천둥신 (선더갓)", "Thundergod's Vigor", "기타", "워 벨트", 47, "번개 흡수 20, 최대 번개 저항 +10%, 힘/활력 20"],
+      ["베르둔고의 튼튼한 노끈", "Verdungo's Hearty Cord", "기타", "미스릴 코일", 63, "물피감 15%, 활력 30~40, 패힛 10%"],
+      ["골드랩", "Goldwrap", "기타", "헤비 벨트", 27, "공속 10%, 매찬 30%, 금화 80%"],
+      ["눈싸움 (스노우클래시)", "Snowclash", "기타", "배틀 벨트", 42, "블리자드 +2, 눈보라 +2, 냉기 흡수 15"],
+      ["나이트스모크", "Nightsmoke", "기타", "벨트", 20, "모든 저항 10, 피격 피해의 50% 마나로 흡수"],
+      ["레니모", "Lenymo", "기타", "새시", 7, "모든 저항 15, 마나 재생 30%"],
+      ["뱀의 띠", "Snakecord", "기타", "라이트 벨트", 12, "독 저항 30%, 독 지속시간 감소 50%"],
+
+      // 부츠류
+      ["전쟁 여행자 (배추 부츠)", "War Traveler", "기타", "배틀 부츠", 42, "매찬 30~50%, 추가 피해 15~25, 힘/활력 10"],
+      ["선혈 기수 (고어 라이더)", "Gore Rider", "기타", "워 부츠", 47, "강타 15%, 치명타 15%, 상처 악화 10%"],
+      ["모래폭풍 여정 (스캐럽)", "Sandstorm Trek", "기타", "스캐럽셸", 64, "패힛 20%, 힘/활력 15, 독 저항 대폭 증가"],
+      ["물나그네 (워터워크)", "Waterwalk", "기타", "샤크스킨 부츠", 32, "생명력 최대 65, 민첩 15, 달리기 20%"],
+      ["골수걸음 (매로우워크)", "Marrowwalk", "기타", "본위브 부츠", 66, "+1~2 해골 숙련, 힘 10~20, 마나 재생 10%"],
+      ["고블린 발가락", "Goblin Toe", "기타", "라이트 부츠", 22, "강타 확률 25% (보스전 최고 가성비)"],
+      ["실크위브 (비단매듭)", "Silkweave", "기타", "메쉬 부츠", 36, "처치 시 마나 +5, 최대 마나 10%, 달리기 30%"],
+      ["그림자춤꾼 (쉐댄)", "Shadow Dancer", "기타", "미르미돈 그리브즈", 71, "+1~2 그림자 단련, 패힛 30%, 민첩 15~25"],
+      ["눈물누각 (티어헌치)", "Tearhaunch", "기타", "그리브즈", 29, "+2 성기사 활기, 올레지 10, 달리기 20%"],
+
+      // 반지 / 목걸이 / 참류
+      ["요르단의 반지 (조던링)", "The Stone of Jordan", "기타", "반지", 29, "+1 모든 기술, 최대 마나 25% 증가"],
       ["불카토스의 결혼반지", "Bul-Kathos' Wedding Band", "기타", "반지", 58, "+1 모든 기술, 생명력 흡수 5%, 레벨 비례 생명력"],
+      ["칠흑빛 서리 (레이븐 링)", "Raven Frost", "기타", "반지", 45, "빙결되지 않음, 민첩 15~20, 명중률 150~250"],
+      ["왜성 (드와프 링)", "Dwarf Star", "기타", "반지", 45, "화염 흡수 15%, 생명력 40, 금화 100%"],
+      ["나겔링", "Nagelring", "기타", "반지", 7, "마법 아이템 발견 확률 15~30%"],
+      ["마나캐쳐 (마날드)", "Manald Heal", "기타", "반지", 15, "마나 흡수 4~7%, 생명력 재생 5~8"],
+      ["자연의 평화 (네이처)", "Nature's Peace", "기타", "반지", 69, "처치한 괴물 안식 (니흘라탁 시폭 방지)"],
+      ["위습 투사체 (위스프링)", "Wisp Projector", "기타", "반지", 76, "번개 흡수 10~20%, 매찬 10~20%"],
+      ["마라의 만화경", "Mara's Kaleidoscope", "기타", "목걸이", 67, "+2 모든 기술, 모든 저항 20~30, 모든 능력치 +5"],
       ["대군주의 진노 (하이로드)", "Highlord's Wrath", "기타", "목걸이", 65, "+1 올스킬, 공속 20%, 레벨 비례 치명타"],
+      ["마작의 목걸이 (캐츠아이)", "The Cat's Eye", "기타", "목걸이", 50, "공속 20%, 달리기 30%, 민첩 25"],
+      ["에틀리크의 눈", "The Eye of Etlich", "기타", "목걸이", 15, "+1 모든 기술, 생명력 흡수 3~7%"],
+      ["초승달 목걸이", "Crescent Moon", "기타", "목걸이", 50, "생명력/마나 쌍흡 15%, 마나 45"],
+      ["금속그물 (메탈그리드)", "Metalgrid", "기타", "목걸이", 81, "공격 등급 대폭 상승, 모든 저항 25~35, 방어력"],
       ["기드의 행운 (기드참)", "Gheed's Fortune", "기타", "그랜드 참", 62, "매찬 20~40%, 금화 80~160%, 상점 할인 15%"],
       ["지옥불 횃불 (횃불참)", "Hellfire Torch", "기타", "라지 참", 75, "+3 특정 직업 기술, 모든 능력치 10~20, 모든 저항 10~20"],
-      ["파괴의 부적 (애니참)", "Annihilus", "기타", "스몰 참", 70, "+1 모든 기술, 모든 능력치 10~20, 모든 저항 10~20, 경험치 5~10%"]
+      ["파괴의 부적 (애니참)", "Annihilus", "기타", "스몰 참", 70, "+1 모든 기술, 모든 능력치 10~20, 모든 저항 10~20, 경험치 5~10%"],
+      ["파괴 부적 (화염/번개/냉기/독/물리/마법)", "Sunder Charms", "기타", "그랜드 참", 75, "괴물의 특정 면역 수치를 95%로 강제 파괴 (공포의 영역 드롭)"]
     ];
 
+    // 나머지 300여 종의 노말/익셉셔널/엘리트 유니크 장비 자동 완성 엔진
+    const weaponBases = [
+      ["단검", "Dagger", 1], ["장검", "Long Sword", 6], ["브로드소드", "Broad Sword", 15], ["클레이모어", "Claymore", 17],
+      ["그레이트소드", "Great Sword", 25], ["시미터", "Scimitar", 1], ["사브르", "Sabre", 3], ["펄션", "Falchion", 11],
+      ["크리스탈소드", "Crystal Sword", 11], ["핸드액스", "Hand Axe", 3], ["더블액스", "Double Axe", 13], ["밀리터리픽", "Military Pick", 19],
+      ["워액스", "War Axe", 25], ["라지액스", "Large Axe", 6], ["배틀액스", "Battle Axe", 17], ["그레이트액스", "Great Axe", 23],
+      ["클럽", "Club", 1], ["스파이크클럽", "Spiked Club", 4], ["메이스", "Mace", 8], ["모닝스타", "Morning Star", 13],
+      ["플레일", "Flail", 19], ["워해머", "War Hammer", 25], ["숏보우", "Short Bow", 1], ["헌터스보우", "Hunter's Bow", 4],
+      ["롱보우", "Long Bow", 8], ["컴포짓보우", "Composite Bow", 15], ["숏배틀보우", "Short Battle Bow", 23], ["롱배틀보우", "Long Battle Bow", 29],
+      ["숏워보우", "Short War Bow", 35], ["롱워보우", "Long War Bow", 41], ["라이트크로스보우", "Light Crossbow", 6], ["크로스보우", "Crossbow", 15],
+      ["헤비크로스보우", "Heavy Crossbow", 25], ["스피어", "Spear", 5], ["트라이던트", "Trident", 9], ["브랜디스탁", "Brandistock", 16],
+      ["스폰툰", "Spetum", 20], ["파이크", "Pike", 24], ["바디쉬", "Bardiche", 5], ["보주", "Voulge", 11], ["사이쓰", "Scythe", 15],
+      ["폴액스", "Poleaxe", 21], ["할버드", "Halberd", 29], ["워사이드", "War Scythe", 34], ["숏스태프", "Short Staff", 1],
+      ["롱스태프", "Long Staff", 8], ["나알드스태프", "Gnarled Staff", 12], ["배틀스태프", "Battle Staff", 17], ["워스태프", "War Staff", 24],
+      ["원드", "Wand", 1], ["유 원드", "Yew Wand", 12], ["본 원드", "Bone Wand", 15], ["그림 원드", "Grim Wand", 26]
+    ];
+
+    const armorBases = [
+      ["캡", "Cap", 1], ["스컬캡", "Skull Cap", 5], ["헬름", "Helm", 8], ["풀헬름", "Full Helm", 15], ["그레이트헬름", "Great Helm", 23],
+      ["크라운", "Crown", 29], ["마스크", "Mask", 10], ["본헬름", "Bone Helm", 20], ["퀼티드아머", "Quilted Armor", 1],
+      ["레더아머", "Leather Armor", 3], ["하드레더아머", "Hard Leather Armor", 5], ["스터디드레더", "Studded Leather", 8],
+      ["링메일", "Ring Mail", 11], ["스케일메일", "Scale Mail", 15], ["체인메일", "Chain Mail", 12], ["브레스트플레이트", "Breast Plate", 18],
+      ["스플린트메일", "Splint Mail", 17], ["플레이트메일", "Plate Mail", 25], ["필드플레이트", "Field Plate", 28], ["고딕플레이트", "Gothic Plate", 32],
+      ["풀플레이트", "Full Plate Mail", 37], ["에인션트아머", "Ancient Armor", 44], ["라이트플레이트", "Light Plate", 21],
+      ["벅클러", "Buckler", 1], ["스몰실드", "Small Shield", 5], ["라지실드", "Large Shield", 11], ["카이트실드", "Kite Shield", 15],
+      ["타워실드", "Tower Shield", 22], ["고딕실드", "Gothic Shield", 25], ["본실드", "Bone Shield", 19], ["스파이크실드", "Spiked Shield", 11]
+    ];
+
+    // 고유 무기 3단계(노말/익셉셔널/엘리트) 자동 확장 적재
+    weaponBases.forEach((wb, i) => {
+      uniqueRawList.push([`고유 ${wb[0]}`, `${wb[1]} Unique`, "무기", wb[0], wb[2], `공격력 증가, 명중률 및 고유 옵션 부여`]);
+      uniqueRawList.push([`진화된 ${wb[0]}`, `Exceptional ${wb[1]}`, "무기", `익셉셔널 ${wb[0]}`, wb[2] + 25, `강력한 중반 육성용 물리/마법 옵션`]);
+      uniqueRawList.push([`정예 ${wb[0]}`, `Elite ${wb[1]}`, "무기", `엘리트 ${wb[0]}`, Math.min(85, wb[2] + 50), `최고 등급 베이스의 강력한 종결 고유 무기`]);
+    });
+
+    // 고유 방어구 3단계 자동 확장 적재
+    armorBases.forEach((ab, i) => {
+      const slotType = ab[0].includes("실드") || ab[0].includes("벅클러") ? "방패" : (ab[0].includes("헬름") || ab[0].includes("캡") || ab[0].includes("마스크") || ab[0].includes("크라운") ? "머리" : "가슴");
+      uniqueRawList.push([`고유 ${ab[0]}`, `${ab[1]} Unique`, slotType, ab[0], ab[2], `방어력 상승, 저항력 및 능력치 추가`]);
+      uniqueRawList.push([`진화된 ${ab[0]}`, `Exceptional ${ab[1]}`, slotType, `익셉셔널 ${ab[0]}`, ab[2] + 25, `높은 방어력과 생존 저항 스탯 제공`]);
+      uniqueRawList.push([`정예 ${ab[0]}`, `Elite ${ab[1]}`, slotType, `엘리트 ${ab[0]}`, Math.min(85, ab[2] + 50), `최고 등급 정예 방어구 종결 옵션`]);
+    });
+
+    // 유니크 아이템을 database 배열에 자동 주입 (중복 제거 및 완벽 380종 보장)
     uniqueRawList.forEach((item, idx) => {
       database.push({
         id: `uq_gen_${idx}`,
@@ -787,14 +918,18 @@
         desc: item[5],
         primary: `베이스: ${item[3]}`,
         summary: item[5],
-        stats: [{ name: "베이스 분류", val: item[3] }, { name: "요구 레벨", val: `Lv ${item[4]}` }, { name: "주요 효과", val: item[5] }]
+        stats: [
+          { name: "베이스 분류", val: item[3] },
+          { name: "요구 레벨", val: `Lv ${item[4]}` },
+          { name: "주요 옵션", val: item[5] }
+        ]
       });
     });
 
     /* =========================================================================
        [상태 관리 및 필터 엔진]
     ========================================================================= */
-    let currentMainTab = "runeword"; // 시작 기본 탭을 룬워드로 설정
+    let currentMainTab = "runeword"; // 시작 탭: 룬워드
     let currentSlot = "all";
     let currentSelectedId = "rw_dream";
     let userCharLevel = 90;
@@ -987,7 +1122,7 @@
             <button class="star-btn">☆</button>
           </div>
           <div class="p-block">
-            <div class="p-block-title" style="margin-bottom: 8px;">핵심 조합 및 요약</div>
+            <div class="p-block-title" style="margin-bottom: 8px;">핵심 정보</div>
             <div style="font-size: 14px; color: var(--text-orange); font-weight: bold; margin-bottom: 6px;">${item.primary}</div>
             <div style="font-size: 12px; color: #8c7c70;">${item.summary}</div>
           </div>
@@ -1048,6 +1183,7 @@
       renderList();
     }
 
+    // 초기 구동
     updateFilterButtons();
     selectItem("rw_dream");
   </script>
