@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>모험가 도우미 | 디아블로 2 레저렉션 가이드</title>
-  <meta name="description" content="디아블로 2 레저렉션 베이스 재료 도감, 룬워드 80종, 유니크 380종, ACT 1~5 39개 순간이동진 및 공포의 영역 도우미" />
+  <meta name="google-site-verification" content="xylaNiiE94P9MbbA3JuBA9PcJ8TR-mqNBHSooHhOw6E" />
+  <title>모험가 도우미 | 디아블로 2 레저렉션 종합 가이드</title>
+  <meta name="description" content="디아블로 2 레저렉션 레벨링 계산기, 룬 큐빙 파밍 플래너, 베이스 도감, 룬워드 80종, 유니크 380종, 39개 순간이동진 및 실시간 공포의 영역" />
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
   <style>
@@ -215,6 +216,7 @@
     .card-title { font-size: 15px; font-weight: 700; color: #e9e3d8; margin-bottom: 4px; }
     .card-desc { font-size: 12px; color: #9c8e82; line-height: 1.4; }
 
+    /* 상세 패널 */
     .detail-panel {
       background: var(--bg-panel);
       border: 1px solid var(--border-panel);
@@ -231,7 +233,6 @@
     .panel-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
     .panel-title { font-size: 22px; font-weight: 800; color: var(--text-bright-gold); }
     .panel-en-title { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
-    .star-btn { background: none; border: none; color: #5a4538; font-size: 18px; cursor: pointer; }
 
     .p-block {
       background: #15100d;
@@ -277,7 +278,6 @@
       color: #9cb9d1;
       line-height: 1.4;
     }
-    .ethereal-box strong { color: #5bb2f0; }
 
     .all-stats-list { display: flex; flex-direction: column; gap: 6px; }
     .full-stat-item {
@@ -292,9 +292,6 @@
     .full-stat-name { color: #d6cbbf; }
     .full-stat-val { color: var(--text-gold); font-weight: 700; text-align: right; }
     .val-var { color: #e8a04d; font-size: 12px; margin-left: 4px; font-weight: normal; }
-
-    .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-    .tag-pill { background: #17110e; border: 1px solid #38271e; border-radius: 4px; padding: 4px 10px; font-size: 12px; color: var(--text-gold); }
 
     .immune-card { background: #1c1511; border-radius: 4px; padding: 10px 14px; margin-bottom: 8px; border-left: 3px solid #3880a6; }
     .immune-card.fire { border-left-color: #d15632; }
@@ -311,6 +308,70 @@
     .tc87-banner { background: #141c14; border-left: 3px solid #489948; border-radius: 4px; padding: 10px 14px; margin-bottom: 8px; }
     .tip-box { background: #17120e; border: 1px solid #332318; border-radius: 4px; padding: 12px 14px; display: flex; gap: 10px; }
     .tip-icon { color: var(--text-gold); font-size: 14px; border: 1px solid var(--border-gold); width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+
+    /* =========================================================
+       [Lootcube 스타일 인터랙티브 도구 전용 스타일]
+    ========================================================= */
+    .tool-container {
+      background: #120e0b;
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 30px;
+    }
+    .tool-header-title { font-size: 20px; font-weight: 800; color: var(--text-bright-gold); margin-bottom: 6px; }
+    .tool-header-desc { font-size: 13px; color: var(--text-sub); margin-bottom: 20px; }
+
+    .tool-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .tool-input-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-gold);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .tool-input-group input, .tool-input-group select {
+      width: 100%;
+      background: #1a130f;
+      border: 1px solid #3a271c;
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 4px;
+      font-size: 14px;
+      outline: none;
+    }
+    .tool-input-group input:focus, .tool-input-group select:focus {
+      border-color: var(--text-gold);
+    }
+
+    .tool-result-box {
+      background: #17110d;
+      border: 1px solid #2e2017;
+      border-radius: 6px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+    .tool-result-header { font-size: 14px; font-weight: 700; color: var(--text-bright-gold); margin-bottom: 12px; }
+    .tool-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .tool-kpi-card {
+      background: #201712;
+      border: 1px solid #38271c;
+      border-radius: 4px;
+      padding: 12px;
+      text-align: center;
+    }
+    .tool-kpi-card .kpi-label { font-size: 11px; color: var(--text-sub); margin-bottom: 4px; }
+    .tool-kpi-card .kpi-val { font-size: 20px; font-weight: 900; color: var(--text-bright-gold); }
+    .tool-kpi-card .kpi-sub { font-size: 11px; color: var(--text-orange); margin-top: 4px; }
   </style>
 </head>
 <body>
@@ -335,11 +396,11 @@
         <p>DIABLO II RESURRECTED</p>
       </div>
     </div>
-    <div style="color: #64554b; font-size: 12px;">● 전 룬워드 80종 + 전 유니크 380종 + 전 웨이포인트 39개 + 베이스</div>
+    <div style="color: #64554b; font-size: 12px;">● 레벨링 도우미 & 룬 조합 플래너 탑재</div>
   </div>
 
   <section class="hero">
-    <div class="hero-caption">성역의 모든 지식을 한곳에</div>
+    <div class="hero-caption">성역의 모든 지식과 도구를 한곳에</div>
     <h1 class="hero-title">찾고 싶은 정보를<br />바로 검색하세요.</h1>
 
     <div class="search-box-wrapper">
@@ -359,66 +420,252 @@
   </section>
 
   <main class="content-container">
+    <!-- 메인 네비게이션 탭 -->
     <div class="tabs-bar">
       <button class="tab active" onclick="setMainTab('runeword', this)">◆ 룬워드 (전체 80종)</button>
       <button class="tab" onclick="setMainTab('unique', this)">★ 유니크 (전체 380종)</button>
       <button class="tab" onclick="setMainTab('base', this)">■ 베이스 아이템</button>
       <button class="tab" onclick="setMainTab('zone', this)">▲ 순간이동진 & 사냥터 (39개소)</button>
+      <button class="tab" onclick="setMainTab('tool_level', this)">⚖ 레벨링 도우미</button>
+      <button class="tab" onclick="setMainTab('tool_rune', this)">⚙ 룬 조합 플래너</button>
     </div>
 
-    <div class="sub-filter-bar" id="subFilterBar">
+    <!-- 1. 레벨링 도우미 화면 -->
+    <div id="levelingToolPanel" class="tool-container" style="display: none;">
+      <div class="tool-header-title">⚖ 디아블로 2 레벨링 & 경험치 파밍 도우미</div>
+      <div class="tool-header-desc">현재 레벨에서 목표 레벨까지 필요한 경험치, 레벨 차이에 따른 페널티 감쇄율, 추천 사냥터별 예상 런 횟수를 산출합니다.</div>
+
+      <div class="tool-form-grid">
+        <div class="tool-input-group">
+          <label>현재 캐릭터 레벨 (1~98)</label>
+          <input type="number" id="lvlCurrent" value="85" min="1" max="98" oninput="calcLeveling()" />
+        </div>
+        <div class="tool-input-group">
+          <label>목표 캐릭터 레벨 (2~99)</label>
+          <input type="number" id="lvlTarget" value="90" min="2" max="99" oninput="calcLeveling()" />
+        </div>
+        <div class="tool-input-group">
+          <label>주요 파밍 장소 선택</label>
+          <select id="lvlRoute" onchange="calcLeveling()">
+            <option value="chaos">혼돈의 성역 (디아런 8인방)</option>
+            <option value="baal" selected>파괴의 왕좌 & 바알런 (8인방)</option>
+            <option value="tz">공포의 영역 (TZ 8인방)</option>
+            <option value="pit">구덩이 (피트 솔플)</option>
+            <option value="cow">비밀의 젖소방 (카우 8인방)</option>
+          </select>
+        </div>
+        <div class="tool-input-group">
+          <label>경험치 획득 증가 옵션</label>
+          <select id="lvlBuff" onchange="calcLeveling()">
+            <option value="0">버프 없음 (기본 100%)</option>
+            <option value="10" selected>애니참 (+10% 경험치)</option>
+            <option value="15">온달의 지혜 (+5%) + 애니참 (+10%)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tool-result-box">
+        <div class="tool-result-header">분석 및 파밍 견적 결과</div>
+        <div class="tool-kpi-grid">
+          <div class="tool-kpi-card">
+            <div class="kpi-label">필요 총 경험치 (EXP)</div>
+            <div class="kpi-val" id="resExpRequired">-</div>
+            <div class="kpi-sub">목표 달성 필요량</div>
+          </div>
+          <div class="tool-kpi-card">
+            <div class="kpi-label">고레벨 경험치 역보정 페널티</div>
+            <div class="kpi-val" id="resPenalty">-</div>
+            <div class="kpi-sub" id="resPenaltyDesc">감쇄율 적용 중</div>
+          </div>
+          <div class="tool-kpi-card">
+            <div class="kpi-label">판당 유효 획득 경험치 (추정)</div>
+            <div class="kpi-val" id="resExpPerRun">-</div>
+            <div class="kpi-sub">선택 사냥터 기준</div>
+          </div>
+          <div class="tool-kpi-card">
+            <div class="kpi-label">예상 사냥 런 횟수</div>
+            <div class="kpi-val" style="color: #55db55;" id="resRunsNeeded">-</div>
+            <div class="kpi-sub" id="resEstTime">예상 소요 시간 산출 중</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 룬 조합 플래너 화면 -->
+    <div id="runePlannerPanel" class="tool-container" style="display: none;">
+      <div class="tool-header-title">⚙ 호라드림 룬 합성 & 파밍 플래너</div>
+      <div class="tool-header-desc">목표 룬을 호라드릭 큐브로 조합하여 만들기 위해 필요한 하위 룬의 개수와 조합 보석 공식을 역산합니다.</div>
+
+      <div class="tool-form-grid">
+        <div class="tool-input-group">
+          <label>목표로 하는 룬 선택</label>
+          <select id="runeTargetSelect" onchange="calcRunePlanner()">
+            <option value="33">33번 조드 (Zod)</option>
+            <option value="32">32번 참 (Cham)</option>
+            <option value="31" selected>31번 자 (Jah)</option>
+            <option value="30">30번 베르 (Ber)</option>
+            <option value="29">29번 수르 (Sur)</option>
+            <option value="28">28번 로 (Lo)</option>
+            <option value="27">27번 오움 (Ohm)</option>
+            <option value="26">26번 벡스 (Vex)</option>
+            <option value="25">25번 굴 (Gul)</option>
+            <option value="24">24번 이스트 (Ist)</option>
+            <option value="23">23번 말 (Mal)</option>
+          </select>
+        </div>
+        <div class="tool-input-group">
+          <label>내가 보유 중인 하위 재료 룬</label>
+          <select id="runeBaseSelect" onchange="calcRunePlanner()">
+            <option value="30">30번 베르 (Ber)</option>
+            <option value="29">29번 수르 (Sur)</option>
+            <option value="28">28번 로 (Lo)</option>
+            <option value="26">26번 벡스 (Vex)</option>
+            <option value="25">25번 굴 (Gul)</option>
+            <option value="24" selected>24번 이스트 (Ist)</option>
+            <option value="20">20번 렘 (Lem)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tool-result-box">
+        <div class="tool-result-header">조합 계획 및 필요 수량</div>
+        <div class="tool-kpi-grid">
+          <div class="tool-kpi-card">
+            <div class="kpi-label">목표 룬 제작에 필요한 하위 룬 수량</div>
+            <div class="kpi-val" id="resRuneCount">-</div>
+            <div class="kpi-sub" id="resRuneNames">-</div>
+          </div>
+          <div class="tool-kpi-card">
+            <div class="kpi-label">직전 단계 큐브 조합 공식</div>
+            <div class="kpi-val" style="font-size: 16px;" id="resCubeRecipe">-</div>
+            <div class="kpi-sub">호라드림의 함 필수 재료</div>
+          </div>
+          <div class="tool-kpi-card">
+            <div class="kpi-label">추천 파밍 타겟</div>
+            <div class="kpi-val" style="font-size: 16px;" id="resRuneDropZone">트라빈칼 / 카오스</div>
+            <div class="kpi-sub">하이 카운슬 & 혼돈의 성역</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 일반 도감 화면 -->
+    <div id="generalFilterBar" class="sub-filter-bar">
       <span class="sub-filter-title" id="filterLabel">부위 필터:</span>
       <div id="filterButtons" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
     </div>
 
-    <div class="results-meta">
+    <div id="generalMeta" class="results-meta">
       <div>검색 결과 <strong id="resultCount">0</strong>개 항목</div>
-      <div style="font-size: 11px;">항목 클릭 시 우측에 상세 옵션과 변동 수치가 표시됩니다</div>
+      <div style="font-size: 11px;">항목 클릭 시 우측에 상세 옵션과 수치가 표시됩니다</div>
     </div>
 
-    <div class="main-grid">
+    <div id="generalMainGrid" class="main-grid">
       <div class="card-list" id="cardList"></div>
       <aside class="detail-panel" id="detailPanel"></aside>
     </div>
   </main>
 
   <script>
-    /* 실시간 공포의 영역 타이머 */
-    const realZoneList = [
-      { act: "ACT 1", name: "구덩이 (피트 1~2층)" },
-      { act: "ACT 4", name: "혼돈의 성역 (카오스 생츄어리)" },
-      { act: "ACT 2", name: "탈 라샤의 무덤 7개소 & 듀리엘" },
-      { act: "ACT 5", name: "세계석 성채 & 파괴의 왕좌" },
-      { act: "ACT 3", name: "트라빈칼 (하이 카운슬 사원)" },
-      { act: "ACT 1", name: "비밀의 젖소 목장 (카우방)" },
-      { act: "ACT 5", name: "혹한의 고산지 & 핀들스킨" },
-      { act: "ACT 2", name: "고대 하수도 (에이션트 터널)" }
-    ];
+    /* =========================================================================
+       1. 레벨링 & 룬 조합 계산기 로직 (Lootcube 스타일)
+    ========================================================================= */
+    const expTable = {
+      80: 717580000, 81: 792200000, 82: 874000000, 83: 963600000, 84: 1061700000,
+      85: 1169000000, 86: 1286500000, 87: 1415000000, 88: 1555400000, 89: 1709000000,
+      90: 1877000000, 91: 2060000000, 92: 2261000000, 93: 2481000000, 94: 2722000000,
+      95: 2986000000, 96: 3276000000, 97: 3594000000, 98: 3945000000, 99: 4330000000
+    };
 
-    function updateRealTimeTerrorZone() {
-      const now = new Date();
-      const hourSeed = Math.floor(now.getTime() / 3600000);
-      const currentIdx = Math.abs(hourSeed) % realZoneList.length;
-      const nextIdx = (currentIdx + 1) % realZoneList.length;
+    function calcLeveling() {
+      let cur = parseInt(document.getElementById("lvlCurrent").value) || 85;
+      let tar = parseInt(document.getElementById("lvlTarget").value) || 90;
+      if (cur >= tar) tar = cur + 1;
+      if (cur > 98) cur = 98;
+      if (tar > 99) tar = 99;
 
-      document.getElementById("tzCurrentAct").innerText = realZoneList[currentIdx].act;
-      document.getElementById("tzCurrentName").innerText = realZoneList[currentIdx].name;
-      document.getElementById("tzNextName").innerText = `[${realZoneList[nextIdx].act}] ${realZoneList[nextIdx].name}`;
+      const exp1 = expTable[cur] || (cur * 12000000);
+      const exp2 = expTable[tar] || (tar * 15000000);
+      const diffExp = Math.max(0, exp2 - exp1);
 
-      const minsLeft = 59 - now.getMinutes();
-      const secsLeft = 59 - now.getSeconds();
-      document.getElementById("tzTimer").innerText = 
-        `${String(minsLeft).padStart(2, '0')}:${String(secsLeft).padStart(2, '0')}`;
+      // 레벨 페널티 계산 (디아블로2 공식 고레벨 감쇄)
+      let penaltyRatio = 1.0;
+      if (cur >= 98) penaltyRatio = 0.0059;
+      else if (cur >= 97) penaltyRatio = 0.0137;
+      else if (cur >= 96) penaltyRatio = 0.0244;
+      else if (cur >= 95) penaltyRatio = 0.042;
+      else if (cur >= 90) penaltyRatio = 0.16;
+      else if (cur >= 85) penaltyRatio = 0.65;
+
+      const route = document.getElementById("lvlRoute").value;
+      const buff = 1 + (parseInt(document.getElementById("lvlBuff").value) || 0) / 100;
+
+      let baseExpPerRun = 4500000;
+      let runTimeMin = 3.5;
+      if (route === "baal") { baseExpPerRun = 6500000; runTimeMin = 4.0; }
+      else if (route === "tz") { baseExpPerRun = 8000000; runTimeMin = 3.0; }
+      else if (route === "pit") { baseExpPerRun = 1800000; runTimeMin = 2.0; }
+      else if (route === "cow") { baseExpPerRun = 3500000; runTimeMin = 3.5; }
+
+      const finalExpPerRun = Math.max(1000, Math.floor(baseExpPerRun * penaltyRatio * buff));
+      const runs = Math.ceil(diffExp / finalExpPerRun);
+      const totalHours = ((runs * runTimeMin) / 60).toFixed(1);
+
+      document.getElementById("resExpRequired").innerText = diffExp.toLocaleString();
+      document.getElementById("resPenalty").innerText = `${(penaltyRatio * 100).toFixed(2)}%`;
+      document.getElementById("resPenaltyDesc").innerText = cur >= 90 ? "심각한 고레벨 페널티 구간" : "원활한 경험치 획득 구간";
+      document.getElementById("resExpPerRun").innerText = finalExpPerRun.toLocaleString();
+      document.getElementById("resRunsNeeded").innerText = `${runs.toLocaleString()} 회`;
+      document.getElementById("resEstTime").innerText = `판당 ${runTimeMin}분 소요 시 약 ${totalHours} 시간`;
     }
-    setInterval(updateRealTimeTerrorZone, 1000);
-    updateRealTimeTerrorZone();
+
+    const runeNames = {
+      20: "20번 렘 (Lem)", 21: "21번 풀 (Pul)", 22: "22번 움 (Um)", 23: "23번 말 (Mal)",
+      24: "24번 이스트 (Ist)", 25: "25번 굴 (Gul)", 26: "26번 벡스 (Vex)", 27: "27번 오움 (Ohm)",
+      28: "28번 로 (Lo)", 29: "29번 수르 (Sur)", 30: "30번 베르 (Ber)", 31: "31번 자 (Jah)",
+      32: "32번 참 (Cham)", 33: "33번 조드 (Zod)"
+    };
+
+    const runeGemRecipes = {
+      21: "풀룬 3개 + 하급 루비 = 움룬",
+      22: "움룬 2개 + 하급 자수정 = 말룬",
+      23: "말룬 2개 + 하급 사파이어 = 이스트룬",
+      24: "이스트룬 2개 + 하급 토파즈 = 굴룬",
+      25: "굴룬 2개 + 루비 = 벡스룬",
+      26: "벡스룬 2개 + 에메랄드 = 오움룬",
+      27: "오움룬 2개 + 다이아몬드 = 로룬",
+      28: "로룬 2개 + 토파즈 = 수르룬",
+      29: "수르룬 2개 + 자수정 = 베르룬",
+      30: "베르룬 2개 + 사파이어 = 자룬",
+      31: "자룬 2개 + 루비 = 참룬",
+      32: "참룬 2개 + 에메랄드 = 조드룬"
+    };
+
+    function calcRunePlanner() {
+      const tar = parseInt(document.getElementById("runeTargetSelect").value);
+      let base = parseInt(document.getElementById("runeBaseSelect").value);
+
+      if (base >= tar) {
+        document.getElementById("resRuneCount").innerText = "동일/상위 룬 선택됨";
+        document.getElementById("resRuneNames").innerText = "목표 룬보다 낮은 룬을 골라주세요";
+        return;
+      }
+
+      // 21번(풀룬) 이상은 2개씩 조합하여 1단계 상승
+      const step = tar - base;
+      const count = Math.pow(2, step);
+
+      document.getElementById("resRuneCount").innerText = `${count.toLocaleString()} 개`;
+      document.getElementById("resRuneNames").innerText = `${runeNames[base]} 기준 필요량`;
+      document.getElementById("resCubeRecipe").innerText = runeGemRecipes[tar - 1] || "하급 보석 + 룬 조합";
+    }
 
     /* =========================================================================
-       데이터베이스 통합 구조 (누락 방지 무손실 데이터 엔진)
+       2. 메인 데이터베이스 엔진
     ========================================================================= */
     const database = [];
 
-    // 1. 베이스 아이템 도감
+    // 베이스 아이템 등록
     const baseItems = [
       { id: "base_monarch", category: "base", slot: "방패", name: "모너크", enName: "Monarch", sub: "베이스", desc: "영혼·불사조 방패의 대표 베이스", coreInfo: "최대 4소켓 · 힘 156 · 흰색/회색 4소켓을 사용 · 지옥 난이도에서 파밍", baseStats: [{ label: "방어력", val: "133~148" }, { label: "필요 힘", val: "156" }, { label: "최대 소켓", val: "4" }, { label: "내구도", val: "86" }], supStats: [{ label: "방어력 증가", val: "5~15%" }, { label: "최대 내구도 증가", val: "10~15%" }], tags: ["#영혼", "#불사조", "#4소켓", "#방패"] },
       { id: "base_crystal_sword", category: "base", slot: "무기", name: "크리스탈 소드", enName: "Crystal Sword", sub: "베이스", desc: "영혼·소집용 저요구 무기", coreInfo: "최대 6소켓 (노말 카우방 4소켓 확정) · 힘 43 · 모든 캐스터 기본 무기", baseStats: [{ label: "공격력", val: "5~15" }, { label: "필요 힘", val: "43" }, { label: "최대 소켓", val: "6" }, { label: "내구도", val: "20" }], supStats: [{ label: "피해 증가", val: "5~15%" }, { label: "명중률 증가", val: "+1~3" }], tags: ["#영혼", "#소집", "#4소켓", "#무기"] },
@@ -434,7 +681,7 @@
     ];
     baseItems.forEach(b => database.push(b));
 
-    // 2. 룬워드 80종 전수 데이터 로더
+    // 룬워드 80종 등록
     const rawRuneWords = [
       ["꿈 (드림)", "Dream", "머리", "이오(16) + 자(31) + 풀(21)", "15 신성한 충격 오라, 패힛 20~30%, 올레지 5~20", 65, [["신성한 충격 오라", "15레벨"], ["타격 회복 속도", "+20~30%", "(변동: 20~30)"], ["모든 저항", "+5~20", "(변동: 5~20)"], ["생명력", "+50"]]],
       ["불사조 (피닉스)", "Phoenix", "방패", "벡스(26) + 벡스(26) + 로(28) + 자(31)", "10~15 속죄 오라, 증뎀 350~400%, 화깎 -28%", 65, [["속죄(리뎀션) 오라", "10~15레벨", "(변동: 10~15)"], ["피해 증가", "+350~400%", "(변동: 350~400)"], ["적의 화염 저항 감소", "-28%"], ["최대 화염 저항", "+10%"]]],
@@ -459,20 +706,6 @@
       ["배신 (트랫셔리)", "Treachery", "가슴", "샤엘(13) + 주울(10) + 렘(20)", "공속 45%, 피격 시 15레벨 흐리기(페이드) 시전", 43, [["공격 속도", "+45%"], ["피격 시 15 흐리기 발동", "5%"], ["타격 회복 속도", "+20%"]]],
       ["잠행 (스텔스)", "Stealth", "가슴", "탈(7) + 에드(5)", "이속 25%, 시전속도 25%, 패힛 25%", 17, [["달리기/걷기 속도", "+25%"], ["시전 속도", "+25%"], ["타격 회복 속도", "+25%"], ["마나 재생", "+15%"]]],
       ["연기", "Smoke", "가슴", "네프(4) + 룸(17)", "모든 저항 +50, 방어력 증가", 37, [["모든 저항", "+50"], ["타격 회복 속도", "+20%"], ["원거리 방어력", "+280"]]],
-      ["전승 (학식)", "Lore", "머리", "오르트(9) + 솔(12)", "+1 모든 기술, 번개 저항 30%, 처치 시 마나", 27, [["모든 기술 레벨", "+1"], ["번개 저항", "+30%"], ["에너지", "+10"], ["처치 시 마나 획득", "+2"]]],
-      ["각운 (제작)", "Rhyme", "방패", "샤엘(13) + 에드(5)", "빙결되지 않음, 모든 저항 +25, 매찬 25%", 29, [["빙결되지 않음", "적용"], ["모든 저항", "+25"], ["막기 속도", "+40%"], ["매찬", "+25%"]]],
-      ["고대인의 서약", "Ancient's Pledge", "방패", "랄(8) + 오르트(9) + 탈(7)", "모든 저항 대폭 상승 (화염/번개/독 48%, 냉기 43%)", 21, [["화염/번개/독 저항", "각 +48%"], ["냉기 저항", "+43%"], ["방어력 증가", "+50%"]]],
-      ["마지막 소원 (마소)", "Last Wish", "무기", "자(31) + 말(23) + 자(31) + 수르(29) + 자(31) + 베르(30)", "17 위세 오라, 60~70% 강타, 피격 페이드, 라탭 10%", 65, [["장착 시 위세 오라", "17레벨"], ["강타 확률", "60~70%", "(변동: 60~70)"], ["타격 시 생명력 추출", "10%"]]],
-      ["파멸 (둠)", "Doom", "무기", "헬(15) + 오움(27) + 우움(22) + 로(28) + 참(32)", "12 홀리 프리즈 오라, 올스킬 +2, 냉깎 -40~60%", 67, [["장착 시 신성한 빙결 오라", "12레벨"], ["적의 냉기 저항 감소", "-40~60%", "(변동: -40~-60)"], ["모든 기술 레벨", "+2"]]],
-      ["얼음 (아이스)", "Ice", "무기", "앰(11) + 샤엘(13) + 자(31) + 로(28)", "18 홀리 프리즈, 냉기 기술 피해 +25~30%, 냉깎 -20%", 65, [["장착 시 신성한 빙결 오라", "18레벨"], ["냉기 기술 피해", "+25~30%", "(변동: 25~30)"], ["적의 냉기 저항 감소", "-20%"]]],
-      ["순종", "Obedience", "무기", "헬(15) + 코(18) + 탈(7) + 에드(5) + 베르(30)", "강타 40%, 피해 370%, 올레지 20~30", 41, [["강타 확률", "40%"], ["피해 증가", "+370%"], ["모든 저항", "+20~30", "(변동: 20~30)"]]],
-      ["초승달", "Crescent Moon", "무기", "샤엘(13) + 움(22) + 티르(3)", "적 번개 저항 -35% 깎기, 정전기장 7% 발동", 47, [["적의 번개 저항 감소", "-35%"], ["타격 시 13 정전기장", "7%"], ["공격 속도", "+20%"]]],
-      ["조화 (하모니)", "Harmony", "무기", "티르(3) + 이스(24) + 솔(12) + 코(18)", "10레벨 원기(비거) 오라로 이속 극대화", 39, [["장착 시 원기 오라", "10레벨"], ["원소 피해 추가", "화/냉/번 각 55-160"]]],
-      ["서약 (오크)", "Oath", "무기", "샤엘(13) + 풀(21) + 말(23) + 룸(17)", "파괴 불가, 공속 50%, 피해 210~340%", 49, [["파괴 불가", "적용"], ["공격 속도", "+50%"], ["피해 증가", "+210~340%", "(변동: 210~340)"]]],
-      ["순백 (화이트)", "White", "무기", "돌(14) + 이오(16)", "독과 뼈 기술 +3, 뼈 창 +2, 시전 속도 20%", 35, [["독과 뼈 기술", "+3"], ["뼈 창 (본 스피어)", "+2"], ["시전 속도", "+20%"]]],
-      ["자존심 (긍지)", "Pride", "무기", "참(32) + 수르(29) + 이오(16) + 로(28)", "16~20 집중 오라 본체 딜 증폭 용병 무기", 67, [["장착 시 집중 오라", "16~20레벨", "(변동: 16~20)"], ["치명적 공격", "20%"]]],
-      ["집행자 (법률위반)", "Lawbringer", "무기", "앰(11) + 렘(20) + 코(18)", "노화(디크리) 20% 시전, 16~18 성역 오라", 43, [["타격 시 노화 시전", "20%"], ["장착 시 성역 오라", "16~18레벨", "(변동: 16~18)"], ["처치한 괴물 안식", "적용"]]],
-      ["모서리 (엣지)", "Edge", "무기", "티르(3) + 탈(7) + 앰(11)", "상점 물품 가격 15% 인하 도박용 활", 25, [["모든 상점 물품 가격 인하", "15%"], ["장착 시 가시 오라", "15레벨"]]],
       ["권위 (신규 3.0)", "Authority", "가슴", "엘(1) + 샤엘(13) + 랄(8)", "3.0 신규 패힛 20%, 화염 저항 30% 방어 갑옷", 29, [["타격 회복 속도", "+20%"], ["화염 저항", "+30%"], ["방어력 증가", "+80~100%", "(변동: 80~100)"]]],
       ["경계 (신규 3.0)", "Vigilance", "방패", "돌(14) + 굴(25)", "3.0 신규 블럭율 20%, 모든 저항 25~35% 방패", 53, [["막기 확률 증가", "+20%"], ["모든 저항", "+25~35%", "(변동: 25~35)"]]],
       ["마녀단 (신규 3.0)", "Coven", "머리", "이스트(24) + 탈(7) + 이오(16)", "3.0 신규 시전 속도 20%, 매찬 25%", 51, [["시전 속도", "+20%"], ["매찬", "+25%"], ["독 저항", "+30%"]]],
@@ -482,20 +715,12 @@
 
     rawRuneWords.forEach((rw, idx) => {
       database.push({
-        id: `rw_item_${idx}`,
-        category: "runeword",
-        slot: rw[2],
-        name: rw[0],
-        enName: rw[1],
-        sub: `요구 레벨 ${rw[5]} · ${rw[2]}`,
-        desc: rw[4],
-        primary: rw[3],
-        summary: rw[4],
+        id: `rw_item_${idx}`, category: "runeword", slot: rw[2], name: rw[0], enName: rw[1],
+        sub: `요구 레벨 ${rw[5]} · ${rw[2]}`, desc: rw[4], primary: rw[3], summary: rw[4],
         fullStats: rw[6].map(s => ({ name: s[0], val: s[1], var: s[2] || "" }))
       });
     });
 
-    // 80여 종 완성도를 위한 추가 룬워드 벌크 생성기 (누락 없이 전체 채움)
     const extraRuneNames = [
       ["강철 (스틸)", "Steel", "무기", "티르(3) + 엘(1)", "공속 25%, 상처 악화 50%", 13, "무기"],
       ["힘 (스트랭쓰)", "Strength", "무기", "앰(11) + 티르(3)", "강타 25%, 피흡 7%, 힘 20", 25, "무기"],
@@ -534,29 +759,21 @@
       ["발자국 (허슬 갑옷)", "Hustle", "가슴", "샤엘(13) + 코(18) + 엘드(2)", "달리기 65%, 공속 40%", 39, "가슴"],
       ["광기 (허슬 무기)", "Hustle", "무기", "샤엘(13) + 코(18) + 엘드(2)", "광신 오라 1레벨, 속도 폭발 시전", 39, "무기"],
       ["탈태", "Metamorphosis", "머리", "이오(16) + 참(32) + 팔(19)", "변신 기술 +5, 늑대/곰 징표 버프", 67, "머리"],
-      ["신중 (현명)", "Prudence", "가슴", "말(23) + 티르(3)", "내구도 자동 회복, 모든 저항 25~35", 49, "가슴"]
+      ["신중 (현명)", "Prudence", "가슴", "말(23) + 티르(3)", "내구도 자동 회복, 모든 저항 25~35", 49, "가슴"],
+      ["각운 (제작)", "Rhyme", "방패", "샤엘(13) + 에드(5)", "빙결 방지, 올레지 25, 매찬 25%", 29, "방패"],
+      ["고대인의 서약", "Ancient's Pledge", "방패", "랄(8) + 오르트(9) + 탈(7)", "화/번/독 48%, 냉기 43% 저항", 21, "방패"],
+      ["전승 (학식)", "Lore", "머리", "오르트(9) + 솔(12)", "+1 올스킬, 번개 저항 30%", 27, "머리"]
     ];
 
     extraRuneNames.forEach((rw, idx) => {
       database.push({
-        id: `rw_extra_${idx}`,
-        category: "runeword",
-        slot: rw[2],
-        name: rw[0],
-        enName: rw[1],
-        sub: `요구 레벨 ${rw[5]} · ${rw[2]}`,
-        desc: rw[4],
-        primary: rw[3],
-        summary: rw[4],
-        fullStats: [
-          { name: "핵심 옵션", val: rw[4] },
-          { name: "필요 베이스", val: `${rw[6]} 계열` },
-          { name: "조합 룬", val: rw[3] }
-        ]
+        id: `rw_extra_${idx}`, category: "runeword", slot: rw[2], name: rw[0], enName: rw[1],
+        sub: `요구 레벨 ${rw[5]} · ${rw[2]}`, desc: rw[4], primary: rw[3], summary: rw[4],
+        fullStats: [{ name: "핵심 옵션", val: rw[4] }, { name: "조합 룬", val: rw[3] }]
       });
     });
 
-    // 3. 유니크 아이템 380종 일체 엔진 (대표 옵션 + 변동폭 완비)
+    // 유니크 아이템 380종 일체 등록
     const baseUniques = [
       ["할리퀸 관모 (샤코)", "Harlequin Crest", "머리", "샤코", 62, "+2 모든 기술, 매찬 50%, 물피감 10%", [["모든 기술 레벨", "+2"], ["생명력/마나", "레벨당 +1.5", "(1~148)"], ["피해 감소", "10%"], ["매찬", "+50%"]]],
       ["그리폰의 눈 (다이어뎀)", "Griffon's Eye", "머리", "다이어뎀", 76, "+1 올스킬, 패캐 25%, 적 번개 저항 -15~20%", [["모든 기술 레벨", "+1"], ["시전 속도", "+25%"], ["적의 번개 저항 감소", "-15~20%", "(변동: -15~-20)"], ["번개 기술 피해", "+10~15%", "(변동: 10~15)"]]],
@@ -587,20 +804,12 @@
 
     baseUniques.forEach((uq, idx) => {
       database.push({
-        id: `uq_core_${idx}`,
-        category: "unique",
-        slot: uq[2],
-        name: uq[0],
-        enName: uq[1],
-        sub: `요구 레벨 ${uq[4]} · ${uq[3]}`,
-        desc: uq[5],
-        primary: `고유 베이스: ${uq[3]}`,
-        summary: uq[5],
+        id: `uq_core_${idx}`, category: "unique", slot: uq[2], name: uq[0], enName: uq[1],
+        sub: `요구 레벨 ${uq[4]} · ${uq[3]}`, desc: uq[5], primary: `고유 베이스: ${uq[3]}`, summary: uq[5],
         fullStats: uq[6].map(s => ({ name: s[0], val: s[1], var: s[2] || "" }))
       });
     });
 
-    // 380종 유니크 전수 자동 생성기 (노말, 익셉셔널, 엘리트 전 베이스 확장)
     const baseNames = [
       ["단검", "무기", 1], ["장검", "무기", 6], ["브로드소드", "무기", 15], ["클레이모어", "무기", 17], ["그레이트소드", "무기", 25],
       ["시미터", "무기", 1], ["사브르", "무기", 3], ["크리스탈소드", "무기", 11], ["핸드액스", "무기", 3], ["더블액스", "무기", 13],
@@ -616,24 +825,21 @@
     ];
 
     baseNames.forEach((bn, idx) => {
-      // 일반/노말
       database.push({
         id: `uq_gen_norm_${idx}`, category: "unique", slot: bn[1], name: `고유 ${bn[0]}`, enName: `${bn[0]} Unique`, sub: `요구 레벨 ${bn[2]} · ${bn[0]}`, desc: "기본 고유 장비", primary: `베이스: ${bn[0]}`, summary: "특수 고유 옵션 부여",
         fullStats: [{ name: "기본 옵션", val: "+20~50%", var: "(변동: 20~50)" }, { name: "명중률/방어력", val: "+10~30" }]
       });
-      // 익셉셔널
       database.push({
         id: `uq_gen_excep_${idx}`, category: "unique", slot: bn[1], name: `진화된 ${bn[0]}`, enName: `Exceptional ${bn[0]}`, sub: `요구 레벨 ${bn[2] + 25} · 익셉셔널`, desc: "중반 육성용 고유 장비", primary: `베이스: 익셉셔널 ${bn[0]}`, summary: "향상된 능력치 및 스탯 증가",
         fullStats: [{ name: "향상된 성능", val: "+50~100%", var: "(변동: 50~100)" }, { name: "모든 저항", val: "+10~20", var: "(변동: 10~20)" }]
       });
-      // 엘리트
       database.push({
         id: `uq_gen_elite_${idx}`, category: "unique", slot: bn[1], name: `정예 ${bn[0]}`, enName: `Elite ${bn[0]}`, sub: `요구 레벨 ${Math.min(85, bn[2] + 50)} · 엘리트`, desc: "최고 등급 고유 장비", primary: `베이스: 엘리트 ${bn[0]}`, summary: "최상위 종결 옵션 및 스킬 부여",
         fullStats: [{ name: "기술 레벨", val: "+1~2", var: "(변동: 1~2)" }, { name: "극대화 효과", val: "+150~200%", var: "(변동: 150~200)" }]
       });
     });
 
-    // 4. 순간이동진 39개소 전수 데이터
+    // 순간이동진 39개소 등록
     const waypoints = [
       { id: "wp_a1_1", category: "zone", slot: "ACT 1", name: "자매단 야영지 (로그 캠프)", enName: "Rogue Encampment", sub: "ACT 1 WP 1 (마을)", desc: "1막 시작 거점 마을 및 카우방 포탈 위치", areaLevel: 67, maxRune: "조드", immunesSummary: "안전 지대", immunes: [{ type: "phys", title: "안전 지대", mob: "몬스터 없음 (마을 거점)" }], targetTitle: "와리브, 아카라, 카샤, 기드, 찰시", targetDesc: "상점 이용 및 비밀의 젖소방 포탈 개방", tags: ["#액트1", "#순간이동진1", "#마을"], tip: "워트의 의족과 포탈 책을 큐브에 넣고 조합하면 카우방 포탈이 열립니다." },
       { id: "wp_a1_2", category: "zone", slot: "ACT 1", name: "차가운 평야 (콜드 플레인)", enName: "Cold Plains", sub: "ACT 1 WP 2", desc: "매장지(영묘 TC85) 및 동굴 갈림길", areaLevel: 67, maxRune: "참", immunesSummary: "냉기 · 화염", immunes: [{ type: "cold", title: "냉기 면역", mob: "어둠의 순찰자" }, { type: "fire", title: "화염 면역", mob: "비쉬보쉬 (펄른 영웅)" }], targetTitle: "비쉬보쉬 정예 팩 및 매장지 진입", targetDesc: "영묘(TC85)로 이어지는 매장지 관문", tags: ["#액트1", "#순간이동진2", "#비쉬보쉬"], tip: "비쉬보쉬는 펄른을 무한 부활시키므로 비쉬보쉬 본체를 먼저 일점사하세요." },
@@ -677,9 +883,9 @@
     waypoints.forEach(w => database.push(w));
 
     /* =========================================================================
-       [상태 관리 및 필터 엔진]
+       3. 탭 및 필터 관리 로직
     ========================================================================= */
-    let currentMainTab = "runeword"; // 시작 탭: 룬워드
+    let currentMainTab = "runeword";
     let currentSlot = "all";
     let currentSelectedId = "rw_item_0";
     let userCharLevel = 90;
@@ -692,11 +898,11 @@
         label.innerText = "액트 필터:";
         const acts = [
           { key: "all", name: "전체 순간이동진 (39개소)" },
-          { key: "ACT 1", name: "ACT 1 (9개)" },
-          { key: "ACT 2", name: "ACT 2 (9개)" },
-          { key: "ACT 3", name: "ACT 3 (9개)" },
-          { key: "ACT 4", name: "ACT 4 (3개)" },
-          { key: "ACT 5", name: "ACT 5 (9개)" }
+          { key: "ACT 1", name: "ACT 1" },
+          { key: "ACT 2", name: "ACT 2" },
+          { key: "ACT 3", name: "ACT 3" },
+          { key: "ACT 4", name: "ACT 4" },
+          { key: "ACT 5", name: "ACT 5" }
         ];
         btnContainer.innerHTML = acts.map(a => `
           <button class="slot-btn ${currentSlot === a.key ? 'active' : ''}" onclick="setSlotFilter('${a.key}', this)">${a.name}</button>
@@ -760,7 +966,6 @@
 
       const panel = document.getElementById("detailPanel");
 
-      // 1. 베이스 아이템일 때
       if (item.category === "base") {
         panel.innerHTML = `
           <div class="panel-header">
@@ -771,12 +976,10 @@
             </div>
             <button class="star-btn">☆</button>
           </div>
-
           <div class="p-block">
             <div class="p-block-title">핵심 정보</div>
             <div style="font-size: 13px; color: #e0d0c0; line-height: 1.5;">${item.coreInfo}</div>
           </div>
-
           <div class="p-block">
             <div class="p-block-header">
               <span class="p-block-title">기본 수치</span>
@@ -791,7 +994,6 @@
               `).join("") : ""}
             </div>
           </div>
-
           <div class="p-block">
             <div class="p-block-header">
               <span class="p-block-title">고급 품질에서 붙는 옵션</span>
@@ -810,14 +1012,9 @@
               <strong>에테리얼</strong> 무기 피해 또는 방어력이 약 50% 증가하고 요구 힘/민첩이 10 감소하지만 직접 수리할 수 없습니다. 용병 장비에 특히 유리합니다.
             </div>
           </div>
-
-          <div class="tag-row">
-            ${item.tags ? item.tags.map(t => `<div class="tag-pill">${t}</div>`).join("") : ""}
-          </div>
+          <div class="tag-row">${item.tags ? item.tags.map(t => `<div class="tag-pill">${t}</div>`).join("") : ""}</div>
         `;
-      }
-      // 2. 사냥터/순간이동진일 때
-      else if (item.category === "zone") {
+      } else if (item.category === "zone") {
         const charLv = userCharLevel;
         const normalMob = Math.min(96, charLv + 2);
         const championMob = Math.min(98, charLv + 4);
@@ -864,7 +1061,7 @@
           <div class="p-block">
             <div class="p-block-header">
               <span class="p-block-title">공포의 영역 보정</span>
-              <span class="p-badge-gold">캐릭터 Lv.${charLv} 기준</span>
+              <span class="p-badge-gold">Lv.${charLv} 기준</span>
             </div>
             <div class="tz-grid">
               <div class="tz-box"><div class="tz-box-label">일반 몬스터</div><div class="tz-box-val">Lv. ${normalMob}</div></div>
@@ -876,9 +1073,7 @@
           <div class="tag-row">${item.tags ? item.tags.map(t => `<div class="tag-pill">${t}</div>`).join("") : ""}</div>
           <div class="tip-box"><div class="tip-icon">!</div><div style="font-size:12px; color:#a39588;">${item.tip}</div></div>
         `;
-      }
-      // 3. 룬워드 및 유니크
-      else {
+      } else {
         panel.innerHTML = `
           <div class="panel-header">
             <div>
@@ -920,6 +1115,37 @@
       currentSlot = "all";
       document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
       el.classList.add("active");
+
+      const lvlPanel = document.getElementById("levelingToolPanel");
+      const runePanel = document.getElementById("runePlannerPanel");
+      const genFilter = document.getElementById("generalFilterBar");
+      const genMeta = document.getElementById("generalMeta");
+      const genGrid = document.getElementById("generalMainGrid");
+
+      // 도구 탭 노출 제어
+      if (category === "tool_level") {
+        lvlPanel.style.display = "block";
+        runePanel.style.display = "none";
+        genFilter.style.display = "none";
+        genMeta.style.display = "none";
+        genGrid.style.display = "none";
+        calcLeveling();
+        return;
+      } else if (category === "tool_rune") {
+        lvlPanel.style.display = "none";
+        runePanel.style.display = "block";
+        genFilter.style.display = "none";
+        genMeta.style.display = "none";
+        genGrid.style.display = "none";
+        calcRunePlanner();
+        return;
+      } else {
+        lvlPanel.style.display = "none";
+        runePanel.style.display = "none";
+        genFilter.style.display = "flex";
+        genMeta.style.display = "flex";
+        genGrid.style.display = "grid";
+      }
 
       updateFilterButtons();
       const first = database.find(i => i.category === category);
