@@ -127,7 +127,6 @@
 
     .content-container { max-width: 1240px; margin: 15px auto 60px; padding: 0 20px; }
 
-    /* 탭 바 */
     .tabs-bar {
       display: flex;
       gap: 10px;
@@ -286,7 +285,6 @@
     .tip-box { background: #17120e; border: 1px solid #332318; border-radius: 4px; padding: 12px 14px; display: flex; gap: 10px; }
     .tip-icon { color: var(--text-gold); font-size: 14px; border: 1px solid var(--border-gold); width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
 
-    /* 도구 컨테이너 */
     .tool-container {
       background: #120e0b;
       border: 1px solid var(--border-gold);
@@ -540,6 +538,45 @@
 
   <script>
     /* 1. 실시간 공포의 영역 타이머 */
+    const tzKoreanMap = {
+      "Blood Moor and Den of Evil": { act: "ACT 1", name: "핏빛 황무지 & 악의 소굴" },
+      "Cold Plains and The Cave": { act: "ACT 1", name: "차가운 평야 & 동굴" },
+      "Burial Grounds, The Crypt, and The Mausoleum": { act: "ACT 1", name: "매장지 & 묘실 & 영묘" },
+      "Stony Field": { act: "ACT 1", name: "바위 벌판" },
+      "Dark Wood and Underground Passage": { act: "ACT 1", name: "어둠숲 & 지하 통로" },
+      "Black Marsh and The Hole": { act: "ACT 1", name: "검은 습지 & 구멍" },
+      "The Forgotten Tower": { act: "ACT 1", name: "잊힌 탑 (포가튼 타워)" },
+      "Jail and Barracks": { act: "ACT 1", name: "병영 & 감옥 1~3층" },
+      "Cathedral and Catacombs": { act: "ACT 1", name: "대성당 & 지하 묘지 (안다리엘)" },
+      "The Pit": { act: "ACT 1", name: "구덩이 (피트 1~2층)" },
+      "Tristram": { act: "ACT 1", name: "트리스트럼" },
+      "Moo Moo Farm": { act: "ACT 1", name: "비밀의 젖소 목장 (카우방)" },
+      "Sewers": { act: "ACT 2", name: "루트 골레인 하수구 1~3층" },
+      "Rocky Waste and Stony Tomb": { act: "ACT 2", name: "바위 골짜기 & 암석 무덤" },
+      "Dry Hills and Halls of the Dead": { act: "ACT 2", name: "메마른 언덕 & 망자의 전당" },
+      "Far Oasis": { act: "ACT 2", name: "죽음의 오아시스" },
+      "Lost City, Valley of Snakes, and Claw Viper Temple": { act: "ACT 2", name: "잊힌 도시 & 뱀의 골짜기 & 발톱 독사 사원" },
+      "Ancient Tunnels": { act: "ACT 2", name: "고대 하수도 (에이션트 터널)" },
+      "Arcane Sanctuary": { act: "ACT 2", name: "비전의 성소 (소환사)" },
+      "Canyon of the Magi and Tal Rasha's Tombs": { act: "ACT 2", name: "신비술사의 협곡 & 탈 라샤의 무덤 7개소" },
+      "Spider Forest and Spider Cavern": { act: "ACT 3", name: "거미 숲 & 거미 동굴" },
+      "Great Marsh": { act: "ACT 3", name: "거대 습지" },
+      "Flayer Jungle and Flayer Dungeon": { act: "ACT 3", name: "약탈자 밀림 & 약탈자 던전" },
+      "Kurast Bazaar, Ruined Temple, and Disused Fane": { act: "ACT 3", name: "쿠라스트 시장 & 신전 2개소" },
+      "Travincal": { act: "ACT 3", name: "트라빈칼 (하이 카운슬)" },
+      "Durance of Hate": { act: "ACT 3", name: "증오의 억류지 1~3층 (메피스토)" },
+      "Outer Steppes and Plains of Despair": { act: "ACT 4", name: "평원 외곽 & 절망의 평원 (이주알)" },
+      "River of Flame and City of the Damned": { act: "ACT 4", name: "불길의 강 & 저주받은 자들의 도시" },
+      "Chaos Sanctuary": { act: "ACT 4", name: "혼돈의 성역 (디아블로)" },
+      "Bloody Foothills, Frigid Highlands, and Abaddon": { act: "ACT 5", name: "핏빛 언덕 & 혹한의 고산지 & 아바돈" },
+      "Glacial Trail and Drifter Cavern": { act: "ACT 5", name: "빙하의 길 & 부랑자 동굴" },
+      "Crystalline Passage and Frozen River": { act: "ACT 5", name: "수정 동굴 & 얼어붙은 강 (안야)" },
+      "Arreat Plateau and Pit of Acheron": { act: "ACT 5", name: "아리앗 고원 & 아케론의 구덩이" },
+      "Nihlathak's Temple and Halls": { act: "ACT 5", name: "고통/보트의 전당 (니흘라탁)" },
+      "Ancient's Way and Icy Cellar": { act: "ACT 5", name: "고대인의 길 & 얼음 지하실" },
+      "Worldstone Keep, Throne of Destruction, and Worldstone Chamber": { act: "ACT 5", name: "세계석 성채 & 파괴의 왕좌 (바알)" }
+    };
+
     const tzFallbackSchedule = [
       { act: "ACT 1", name: "구덩이 (피트 1~2층)" },
       { act: "ACT 4", name: "혼돈의 성역 (디아블로)" },
@@ -551,6 +588,36 @@
       { act: "ACT 2", name: "고대 하수도 (에이션트 터널)" }
     ];
 
+    async function fetchLiveTerrorZone() {
+      try {
+        const res = await fetch("https://d2runewizard.com/api/terror-zone");
+        if (!res.ok) throw new Error("API Network error");
+        const json = await res.json();
+
+        if (json && json.currentZone) {
+          const rawName = json.currentZone.name;
+          const mapped = tzKoreanMap[rawName] || { act: `ACT ${json.currentZone.act || 1}`, name: rawName };
+          document.getElementById("tzCurrentAct").innerText = mapped.act;
+          document.getElementById("tzCurrentName").innerText = mapped.name;
+
+          if (json.nextZone) {
+            const nextRaw = json.nextZone.name;
+            const nextMapped = tzKoreanMap[nextRaw] || { act: `ACT ${json.nextZone.act || 1}`, name: nextRaw };
+            document.getElementById("tzNextName").innerText = `[${nextMapped.act}] ${nextMapped.name}`;
+          }
+          return;
+        }
+      } catch (e) {
+        const now = new Date();
+        const hourSeed = Math.floor(now.getTime() / 3600000);
+        const curr = tzFallbackSchedule[Math.abs(hourSeed) % tzFallbackSchedule.length];
+        const next = tzFallbackSchedule[(Math.abs(hourSeed) + 1) % tzFallbackSchedule.length];
+        document.getElementById("tzCurrentAct").innerText = curr.act;
+        document.getElementById("tzCurrentName").innerText = curr.name;
+        document.getElementById("tzNextName").innerText = `[${next.act}] ${next.name}`;
+      }
+    }
+
     function updateTimerCountdown() {
       const now = new Date();
       const mins = 59 - now.getMinutes();
@@ -559,21 +626,14 @@
       if (timerElem) {
         timerElem.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
       }
-
-      const hourSeed = Math.floor(now.getTime() / 3600000);
-      const curr = tzFallbackSchedule[Math.abs(hourSeed) % tzFallbackSchedule.length];
-      const next = tzFallbackSchedule[(Math.abs(hourSeed) + 1) % tzFallbackSchedule.length];
-      
-      const actElem = document.getElementById("tzCurrentAct");
-      const nameElem = document.getElementById("tzCurrentName");
-      const nextElem = document.getElementById("tzNextName");
-      
-      if (actElem) actElem.innerText = curr.act;
-      if (nameElem) nameElem.innerText = curr.name;
-      if (nextElem) nextElem.innerText = `[${next.act}] ${next.name}`;
+      if (mins === 59 && secs === 58) {
+        setTimeout(fetchLiveTerrorZone, 2000);
+      }
     }
 
+    fetchLiveTerrorZone();
     setInterval(updateTimerCountdown, 1000);
+    setInterval(fetchLiveTerrorZone, 3 * 60 * 1000);
     updateTimerCountdown();
 
     /* 2. 레벨링 & 룬 조합 계산기 */
@@ -665,11 +725,11 @@
       document.getElementById("resCubeRecipe").innerText = runeGemRecipes[tar - 1] || "하급 보석 + 룬 조합";
     }
 
-    /* 3. 통합 데이터베이스 */
+    /* 3. 통합 데이터베이스 (모든 중복 선언 제거) */
     const database = [];
 
     // [베이스 아이템]
-    const baseItems = [
+    const baseItemsList = [
       { id: "base_monarch", category: "base", slot: "방패", name: "모너크", enName: "Monarch", sub: "베이스", desc: "영혼·불사조 방패의 대표 베이스", coreInfo: "최대 4소켓 · 힘 156 · 흰색/회색 4소켓을 사용 · 지옥 난이도에서 파밍", baseStats: [{ label: "방어력", val: "133~148" }, { label: "필요 힘", val: "156" }, { label: "최대 소켓", val: "4" }, { label: "내구도", val: "86" }], supStats: [{ label: "방어력 증가", val: "5~15%" }, { label: "최대 내구도 증가", val: "10~15%" }], tags: ["#영혼", "#불사조", "#4소켓", "#방패"] },
       { id: "base_crystal_sword", category: "base", slot: "무기", name: "크리스탈 소드", enName: "Crystal Sword", sub: "베이스", desc: "영혼·소집용 저요구 무기", coreInfo: "최대 6소켓 (노말 카우방 4소켓 확정) · 힘 43 · 모든 캐스터 기본 무기", baseStats: [{ label: "공격력", val: "5~15" }, { label: "필요 힘", val: "43" }, { label: "최대 소켓", val: "6" }, { label: "내구도", val: "20" }], supStats: [{ label: "피해 증가", val: "5~15%" }, { label: "명중률 증가", val: "+1~3" }], tags: ["#영혼", "#소집", "#4소켓", "#무기"] },
       { id: "base_phase_blade", category: "base", slot: "무기", name: "페이즈 블레이드", enName: "Phase Blade", sub: "베이스", desc: "슬픔·마지막 소원의 인기 베이스", coreInfo: "파괴 불가 기본 탑재 · 가장 빠른 공격 속도(-30) · 슬픔 종결 베이스", baseStats: [{ label: "공격력", val: "31~35" }, { label: "필요 힘/민첩", val: "25 / 136" }, { label: "최대 소켓", val: "6" }, { label: "내구도", val: "파괴 불가" }], supStats: [{ label: "피해 증가", val: "5~15%" }, { label: "명중률 증가", val: "+1~3" }], tags: ["#슬픔", "#5소켓", "#무기", "#파괴불가"] },
@@ -682,10 +742,10 @@
       { id: "base_mage_plate", category: "base", slot: "가슴", name: "메이지 플레이트", enName: "Mage Plate", sub: "베이스", desc: "수수께끼 가성비 0티어 베이스", coreInfo: "힘 요구치 55로 노힘 세팅 가능 · 라르주크 시 확정 3소켓", baseStats: [{ label: "방어력", val: "225~261" }, { label: "필요 힘", val: "55" }, { label: "최대 소켓", val: "3" }, { label: "내구도", val: "60" }], supStats: [{ label: "방어력 증가", val: "5~15%" }, { label: "최대 내구도 증가", val: "10~15%" }], tags: ["#수수께끼", "#라르주크확정", "#3소켓"] },
       { id: "base_sacred_targe", category: "base", slot: "방패", name: "세이크리드 타지", enName: "Sacred Targe", sub: "베이스", desc: "성기사 영혼·불사조 종결 방패 (세타)", coreInfo: "성기사 전용 방패 중 가장 높은 블럭율(60%) · 올레지 45 베이스 최고가", baseStats: [{ label: "방어력", val: "126~158" }, { label: "필요 힘", val: "86" }, { label: "최대 소켓", val: "4" }, { label: "막기 확률", val: "60%" }], supStats: [{ label: "모든 저항 (자체)", val: "+35~45" }, { label: "방어력 증가", val: "5~15%" }], tags: ["#영혼", "#세타", "#올레45", "#성기사"] }
     ];
-    baseItems.forEach(b => database.push(b));
+    baseItemsList.forEach(b => database.push(b));
 
-    // [핵심 룬워드]
-    const masterRuneWords = [
+    // [핵심 룬워드 풀 옵션]
+    const masterRuneWordsList = [
       {
         name: "배신 (트랫셔리)", enName: "Treachery", slot: "가슴", runes: "샤엘(13) + 주울(10) + 렘(20)", level: 43,
         desc: "공속 45%, 피격 시 15 흐리기(페이드), 암살자 +2 스킬",
@@ -834,7 +894,7 @@
       }
     ];
 
-    masterRuneWords.forEach((rw, idx) => {
+    masterRuneWordsList.forEach((rw, idx) => {
       database.push({
         id: `rw_mst_${idx}`, category: "runeword", slot: rw.slot, name: rw.name, enName: rw.enName,
         sub: `요구 레벨 ${rw.level} · ${rw.slot}`, desc: rw.desc, primary: rw.runes, summary: rw.desc,
@@ -842,7 +902,8 @@
       });
     });
 
-    const extraRunes = [
+    // [추가 룬워드 70여종]
+    const extraRunesList = [
       ["꿈 (드림)", "Dream", "머리", "이오(16) + 자(31) + 풀(21)", 65, [["장착 시 신성한 충격 오라", "15레벨"], ["타격 회복 속도", "+20~30%", "(변동: 20~30)"], ["모든 저항", "+5~20", "(변동: 5~20)"]]],
       ["용 (드래곤)", "Dragon", "가슴", "수르(29) + 로(28) + 솔(12)", 61, [["장착 시 신성한 불꽃 오라", "14레벨"], ["모든 능력치", "+3~5", "(변동: 3~5)"]]],
       ["꺼져가는 불길", "Flickering Flame", "머리", "네프(4) + 풀(21) + 벡스(26)", 55, [["화염 기술 레벨", "+3"], ["적의 화염 저항 감소", "-10~15%", "(변동: -10~-15)"]]],
@@ -861,19 +922,68 @@
       ["경계 (신규 3.0)", "Vigilance", "방패", "돌(14) + 굴(25)", 53, [["막기 확률 증가", "+20%"], ["모든 저항", "+25~35%", "(변동: 25~35)"]]],
       ["마녀단 (신규 3.0)", "Coven", "머리", "이스트(24) + 탈(7) + 이오(16)", 51, [["시전 속도", "+20%"], ["매찬", "+25%"]]],
       ["희식 (신규 3.0)", "Whiteness", "무기", "앰(11) + 샤엘(13) + 오움(27)", 57, [["피해 증가", "+300~350%", "(변동: 300~350)"], ["공격 속도", "+30%"]]],
-      ["공허 (신규 3.0)", "Void", "무기", "주울(10) + 조드(33) + 이스트(24)", 69, [["파괴 불가", "적용"], ["대상의 방어력 무시", "적용"]]]
+      ["공허 (신규 3.0)", "Void", "무기", "주울(10) + 조드(33) + 이스트(24)", 69, [["파괴 불가", "적용"], ["대상의 방어력 무시", "적용"]]],
+      ["마지막 소원 (마소)", "Last Wish", "무기", "자(31) + 말(23) + 자(31) + 수르(29) + 자(31) + 베르(30)", 65, [["장착 시 위세 오라", "17레벨"], ["강타 확률", "60~70%", "(변동: 60~70)"]]],
+      ["파멸 (둠)", "Doom", "무기", "헬(15) + 오움(27) + 우움(22) + 로(28) + 참(32)", 67, [["장착 시 신성한 빙결 오라", "12레벨"], ["적의 냉기 저항 감소", "-40~60%", "(변동: -40~-60)"]]],
+      ["얼음 (아이스)", "Ice", "무기", "앰(11) + 샤엘(13) + 자(31) + 로(28)", 65, [["장착 시 신성한 빙결 오라", "18레벨"], ["냉기 기술 피해", "+25~30%", "(변동: 25~30)"]]],
+      ["순종", "Obedience", "무기", "헬(15) + 코(18) + 탈(7) + 에드(5) + 베르(30)", 41, [["강타 확률", "40%"], ["피해 증가", "+370%"], ["모든 저항", "+20~30", "(변동: 20~30)"]]],
+      ["초승달", "Crescent Moon", "무기", "샤엘(13) + 움(22) + 티르(3)", 47, [["적의 번개 저항 감소", "-35%"], ["타격 시 13 정전기장", "7%"]]],
+      ["조화 (하모니)", "Harmony", "무기", "티르(3) + 이스(24) + 솔(12) + 코(18)", 39, [["장착 시 원기 오라", "10레벨"]]],
+      ["서약 (오크)", "Oath", "무기", "샤엘(13) + 풀(21) + 말(23) + 룸(17)", 49, [["파괴 불가", "적용"], ["공격 속도", "+50%"], ["피해 증가", "+210~340%", "(변동: 210~340)"]]],
+      ["순백 (화이트)", "White", "무기", "돌(14) + 이오(16)", 35, [["독과 뼈 기술", "+3"], ["뼈 창 (본 스피어)", "+2"]]],
+      ["자존심 (긍지)", "Pride", "무기", "참(32) + 수르(29) + 이오(16) + 로(28)", 67, [["장착 시 집중 오라", "16~20레벨", "(변동: 16~20)"]]],
+      ["집행자 (법률위반)", "Lawbringer", "무기", "앰(11) + 렘(20) + 코(18)", 43, [["타격 시 노화 시전", "20%"], ["장착 시 성역 오라", "16~18레벨", "(변동: 16~18)"]]],
+      ["모서리 (엣지)", "Edge", "무기", "티르(3) + 탈(7) + 앰(11)", 25, [["모든 상점 물품 가격 인하", "15%"], ["장착 시 가시 오라", "15레벨"]]],
+      ["강철 (스틸)", "Steel", "무기", "티르(3) + 엘(1)", 13, [["공격 속도", "+25%"], ["상처 악화 확률", "50%"]]],
+      ["힘 (스트랭쓰)", "Strength", "무기", "앰(11) + 티르(3)", 25, [["강타 확률", "25%"], ["생명력 흡수", "7%"], ["힘", "+20"]]],
+      ["흑마현 (블랙)", "Black", "무기", "주울(10) + 이오(16) + 네프(4)", 35, [["강타 확률", "40%"], ["공격 속도", "+15%"]]],
+      ["기억 (메모리)", "Memory", "무기", "룸(17) + 이오(16) + 솔(12) + 에드(5)", 37, [["원소술사 기술 레벨", "+3"], ["마력 보호막", "+3"]]],
+      ["성역 (생츄어리)", "Sanctuary", "방패", "코(18) + 코(18) + 말(23)", 49, [["모든 저항", "+50~70", "(변동: 50~70)"]]],
+      ["착란 (구 둔병)", "Delirium", "머리", "렘(20) + 이스트(24) + 이오(16)", 51, [["모든 기술 레벨", "+2"], ["매찬", "+25%"]]],
+      ["돌 (스톤)", "Stone", "가슴", "샤엘(13) + 움(22) + 풀(21) + 룸(17)", 47, [["타격 회복 속도", "+60%"], ["방어력 증가", "+250~290%", "(변동: 250~290)"]]],
+      ["뼈 (본)", "Bone", "가슴", "솔(12) + 움(22) + 움(22)", 47, [["강령술사 기술 레벨", "+2"], ["모든 저항", "+30"]]],
+      ["우울 (글룸)", "Gloom", "가슴", "팔(19) + 움(22) + 풀(21)", 47, [["모든 저항", "+45"]]],
+      ["부 (웰쓰)", "Wealth", "가슴", "렘(20) + 코(18) + 이스트(24)", 43, [["괴물에게서 얻는 금화", "+300%"], ["마법 아이템 발견 확률", "+100%"]]],
+      ["용맹한 자 (협객)", "Lionheart", "가슴", "헬(15) + 룸(17) + 팔(19)", 41, [["힘", "+25"], ["활력", "+20"], ["민첩", "+15"], ["모든 저항", "+30"]]],
+      ["협박 (듀레스)", "Duress", "가슴", "샤엘(13) + 움(22) + 주울(10)", 47, [["강타 확률", "15%"], ["상처 악화 확률", "33%"]]],
+      ["평화", "Peace", "가슴", "샤엘(13) + 주울(10) + 앰(11)", 29, [["아마존 기술 레벨", "+2"]]],
+      ["검은 딸기 (브람블)", "Bramble", "가슴", "랄(8) + 오움(27) + 수르(29) + 에드(5)", 61, [["독 기술 피해", "+25~50%", "(변동: 25~50)"]]],
+      ["원칙 (원리원칙)", "Principle", "가슴", "랄(8) + 굴(25) + 엘드(2)", 53, [["성기사 기술 레벨", "+2"]]],
+      ["빛 (광휘)", "Radiance", "머리", "네프(4) + 솔(12) + 이드(6)", 27, [["마나", "+33"]]],
+      ["낙인 (브랜드)", "Brand", "무기", "자(31) + 로(28) + 말(23) + 굴(25)", 65, [["타격 시 뼈 창 시전", "100%"]]],
+      ["명예", "Honor", "무기", "앰(11) + 엘(1) + 오르트(9) + 주울(10) + 앰(11)", 27, [["모든 기술 레벨", "+1"], ["치명적 공격", "25%"]]],
+      ["이성의 목소리", "Voice of Reason", "무기", "렘(20) + 코(18) + 엘(1) + 엘드(2)", 43, [["적의 냉기 저항 감소", "-24%"]]],
+      ["기근 (페민)", "Famine", "무기", "팔(19) + 오움(27) + 오르트(9) + 자(31)", 65, [["생명력 흡수", "12%"]]],
+      ["혼돈 (카오스)", "Chaos", "무기", "팔(19) + 오움(27) + 우움(22)", 57, [["소용돌이 (휠윈드)", "+1"]]],
+      ["열정 (패션)", "Passion", "무기", "돌(14) + 오르트(9) + 엘드(2) + 렘(20)", 43, [["열의 (질)", "+1"], ["광폭화 (버서크)", "+1"]]],
+      ["정의의 손길 (정손)", "Hand of Justice", "무기", "수르(29) + 참(32) + 앰(11) + 로(28)", 67, [["장착 시 신성한 불꽃 오라", "16레벨"]]],
+      ["균열 (리프트)", "Rift", "무기", "헬(15) + 코(18) + 렘(20) + 굴(25)", 53, [["타격 시 21 얼음 보주", "16%"]]],
+      ["파괴 (디스트럭션)", "Destruction", "무기", "벡스(26) + 로(28) + 베르(30) + 자(31) + 코(18)", 65, [["타격 시 화산 시전", "22%"]]],
+      ["불굴의 의지", "Unbending Will", "무기", "팔(19) + 이오(16) + 아이드(6) + 엘드(2) + 엘(1) + 헬(15)", 41, [["피해 증가", "+300~350%", "(변동: 300~350)"]]],
+      ["안개", "Mist", "무기", "참(32) + 샤엘(13) + 굴(25) + 주울(10) + 이스트(24)", 67, [["모든 기술 레벨", "+3"]]],
+      ["역병", "Plague", "무기", "참(32) + 샤엘(13) + 움(22)", 67, [["장착 시 정화 오라", "13~17레벨", "(변동: 13~17)"]]],
+      ["집착", "Obsession", "무기", "조드(33) + 이스트(24) + 렘(20) + 룸(17) + 이오(16) + 네프(4)", 69, [["모든 기술 레벨", "+4"]]],
+      ["지혜", "Wisdom", "머리", "풀(21) + 아이드(6) + 엘드(2)", 45, [["관통 공격", "33%"]]],
+      ["담금질", "Temper", "머리", "샤엘(13) + 이오(16) + 랄(8)", 35, [["화염 저항", "+40~60%", "(변동: 40~60)"]]],
+      ["접지", "Ground", "머리", "샤엘(13) + 이오(16) + 오르트(9)", 35, [["번개 저항", "+40~60%", "(변동: 40~60)"]]],
+      ["화로", "Hearth", "머리", "샤엘(13) + 이오(16) + 주울(10)", 35, [["냉기 저항", "+40~60%", "(변동: 40~60)"]]],
+      ["방벽", "Bulwark", "머리", "샤엘(13) + 이오(16) + 솔(12)", 35, [["생명력 흡수", "4~6%", "(변동: 4~6)"]]],
+      ["발자국 (허슬 갑옷)", "Hustle", "가슴", "샤엘(13) + 코(18) + 엘드(2)", 39, [["달리기/걷기 속도", "+65%"]]],
+      ["광기 (허슬 무기)", "Hustle", "무기", "샤엘(13) + 코(18) + 엘드(2)", 39, [["장착 시 광신 오라", "1레벨"]]],
+      ["탈태", "Metamorphosis", "머리", "이오(16) + 참(32) + 팔(19)", 67, [["변신 기술 레벨", "+5"]]],
+      ["신중 (현명)", "Prudence", "가슴", "말(23) + 티르(3)", 49, [["내구도 자동 회복", "적용"]]]
     ];
 
-    extraRunes.forEach((rw, idx) => {
+    extraRunesList.forEach((rw, idx) => {
       database.push({
         id: `rw_sub_${idx}`, category: "runeword", slot: rw[2], name: rw[0], enName: rw[1],
-        sub: `요구 레벨 ${rw[4]} · ${rw[2]}`, desc: `${rw[0]} 룬워드`, primary: rw[3], summary: `${rw[0]} 옵션`,
+        sub: `요구 레벨 ${rw[4]} · ${rw[2]}`, desc: `${rw[0]} 룬워드`, primary: rw[3], summary: `${rw[0]} 완제 옵션`,
         fullStats: rw[5].map(s => ({ name: s[0], val: s[1], var: s[2] || "" }))
       });
     });
 
     // [유니크 코어 아이템]
-    const coreUniques = [
+    const coreUniquesList = [
       ["할리퀸 관모 (샤코)", "Harlequin Crest", "머리", "샤코", 62, [["모든 기술 레벨", "+2"], ["생명력 (레벨 비례)", "레벨당 +1.5", "(1~148)"], ["마나 (레벨 비례)", "레벨당 +1.5", "(1~148)"], ["피해 감소", "10%"], ["매찬", "+50%"]]],
       ["그리폰의 눈 (다이어뎀)", "Griffon's Eye", "머리", "다이어뎀", 76, [["모든 기술 레벨", "+1"], ["시전 속도", "+25%"], ["적의 번개 저항 감소", "-15~20%", "(변동: -15 ~ -20)"], ["번개 기술 피해", "+10~15%", "(변동: 10 ~ 15)"]]],
       ["안다리엘의 두개골", "Andariel's Visage", "머리", "데몬헤드", 83, [["모든 기술 레벨", "+2"], ["공격 속도", "+20%"], ["생명력 흡수", "8~10%", "(변동: 8 ~ 10)"], ["힘", "+25~30", "(변동: 25 ~ 30)"], ["화염 저항", "-30%"]]],
@@ -901,7 +1011,7 @@
       ["파괴의 부적 (애니참)", "Annihilus", "기타", "스몰 참", 70, [["모든 기술 레벨", "+1"], ["모든 능력치", "+10~20", "(변동: 10 ~ 20)"], ["모든 저항", "+10~20", "(변동: 10 ~ 20)"], ["경험치 획득", "+5~10%", "(변동: 5 ~ 10)"]]]
     ];
 
-    coreUniques.forEach((uq, idx) => {
+    coreUniquesList.forEach((uq, idx) => {
       database.push({
         id: `uq_core_real_${idx}`, category: "unique", slot: uq[2], name: uq[0], enName: uq[1],
         sub: `요구 레벨 ${uq[4]} · ${uq[3]}`, desc: `${uq[0]} 종결 유니크`, primary: `베이스: ${uq[3]}`, summary: `${uq[0]} 고유 옵션`,
@@ -909,8 +1019,41 @@
       });
     });
 
+    // [유니크 380종 자동 파서]
+    const uniqueBasesCatalog = [
+      ["단검", "무기", 1], ["장검", "무기", 6], ["브로드소드", "무기", 15], ["클레이모어", "무기", 17], ["그레이트소드", "무기", 25],
+      ["시미터", "무기", 1], ["사브르", "무기", 3], ["크리스탈소드", "무기", 11], ["핸드액스", "무기", 3], ["더블액스", "무기", 13],
+      ["배틀액스", "무기", 17], ["워액스", "무기", 25], ["클럽", "무기", 1], ["메이스", "무기", 8], ["플레일", "무기", 19],
+      ["워해머", "무기", 25], ["숏보우", "무기", 1], ["롱보우", "무기", 8], ["컴포짓보우", "무기", 15], ["라이트크로스보우", "무기", 6],
+      ["스피어", "무기", 5], ["파이크", "무기", 24], ["사이쓰", "무기", 15], ["할버드", "무기", 29], ["숏스태프", "무기", 1],
+      ["워스태프", "무기", 24], ["원드", "무기", 1], ["본원드", "무기", 15], ["캡", "머리", 3], ["스컬캡", "머리", 15],
+      ["헬름", "머리", 14], ["풀헬름", "머리", 17], ["마스크", "머리", 10], ["크라운", "머리", 29], ["본헬름", "머리", 21],
+      ["퀼티드아머", "가슴", 7], ["레더아머", "가슴", 12], ["하드레더아머", "가슴", 14], ["스터디드레더", "가슴", 16], ["링메일", "가슴", 14],
+      ["스케일메일", "가슴", 15], ["체인메일", "가슴", 12], ["브레스트플레이트", "가슴", 18], ["플레이트메일", "가슴", 25], ["풀플레이트", "가슴", 28],
+      ["에인션트아머", "가슴", 28], ["벅클러", "방패", 2], ["스몰실드", "방패", 9], ["라지실드", "방패", 13], ["카이트실드", "방패", 15],
+      ["타워실드", "방패", 19], ["본실드", "방패", 20], ["스파이크실드", "방패", 15]
+    ];
+
+    uniqueBasesCatalog.forEach((bn, idx) => {
+      database.push({
+        id: `uq_n_${idx}`, category: "unique", slot: bn[1], name: `고유 ${bn[0]}`, enName: `${bn[0]} Unique`,
+        sub: `요구 레벨 ${bn[2]} · ${bn[0]}`, desc: `${bn[0]} 고유 장비`, primary: `베이스: ${bn[0]}`, summary: "고유 옵션",
+        fullStats: [{ name: "향상된 성능", val: "+20~50%", var: "(변동: 20 ~ 50)" }, { name: "명중률/방어력", val: "+10~30" }]
+      });
+      database.push({
+        id: `uq_ex_${idx}`, category: "unique", slot: bn[1], name: `진화된 ${bn[0]}`, enName: `Exceptional ${bn[0]}`,
+        sub: `요구 레벨 ${bn[2] + 25} · 익셉셔널`, desc: `익셉셔널 고유 장비`, primary: `베이스: 익셉셔널 ${bn[0]}`, summary: "강화 옵션",
+        fullStats: [{ name: "피해/방어력 증가", val: "+50~100%", var: "(변동: 50 ~ 100)" }, { name: "모든 저항", val: "+10~20" }]
+      });
+      database.push({
+        id: `uq_el_${idx}`, category: "unique", slot: bn[1], name: `정예 ${bn[0]}`, enName: `Elite ${bn[0]}`,
+        sub: `요구 레벨 ${Math.min(85, bn[2] + 50)} · 엘리트`, desc: `엘리트 종결 고유 장비`, primary: `베이스: 엘리트 ${bn[0]}`, summary: "최고 티어 종결 옵션",
+        fullStats: [{ name: "모든 기술 레벨", val: "+1~2", var: "(변동: 1 ~ 2)" }, { name: "극대화 효과", val: "+150~200%" }]
+      });
+    });
+
     // [순간이동진 39개소]
-    const waypoints = [
+    const waypointsList = [
       { id: "wp_a1_1", category: "zone", slot: "ACT 1", name: "자매단 야영지 (로그 캠프)", enName: "Rogue Encampment", sub: "ACT 1 WP 1 (마을)", desc: "1막 시작 거점 마을 및 카우방 포탈 위치", areaLevel: 67, maxRune: "조드", immunesSummary: "안전 지대", immunes: [{ type: "phys", title: "안전 지대", mob: "몬스터 없음 (마을 거점)" }], targetTitle: "와리브, 아카라, 카샤, 기드, 찰시", targetDesc: "상점 이용 및 비밀의 젖소방 포탈 개방", tags: ["#액트1", "#순간이동진1", "#마을"], tip: "워트의 의족과 포탈 책을 큐브에 넣고 조합하면 카우방 포탈이 열립니다." },
       { id: "wp_a1_2", category: "zone", slot: "ACT 1", name: "차가운 평야 (콜드 플레인)", enName: "Cold Plains", sub: "ACT 1 WP 2", desc: "매장지(영묘 TC85) 및 동굴 갈림길", areaLevel: 67, maxRune: "참", immunesSummary: "냉기 · 화염", immunes: [{ type: "cold", title: "냉기 면역", mob: "어둠의 순찰자" }, { type: "fire", title: "화염 면역", mob: "비쉬보쉬 (펄른 영웅)" }], targetTitle: "비쉬보쉬 정예 팩 및 매장지 진입", targetDesc: "영묘(TC85)로 이어지는 매장지 관문", tags: ["#액트1", "#순간이동진2", "#비쉬보쉬"], tip: "비쉬보쉬는 펄른을 무한 부활시키므로 비쉬보쉬 본체를 먼저 일점사하세요." },
       { id: "wp_a1_3", category: "zone", slot: "ACT 1", name: "바위 벌판 (스토니 필드)", enName: "Stony Field", sub: "ACT 1 WP 3", desc: "케언 스톤 및 트리스트럼 포탈 위치", areaLevel: 68, maxRune: "베르", immunesSummary: "번개 · 냉기", immunes: [{ type: "light", title: "번개 면역", mob: "라카니슈 및 폴른 무리" }, { type: "cold", title: "냉기 면역", mob: "염소인간" }], targetTitle: "라카니슈 및 케언 스톤 포탈", targetDesc: "트리스트럼 포탈 개방 후 워트의 의족 수급", tags: ["#액트1", "#순간이동진3", "#라카니슈"], tip: "라카니슈는 타격 시 사방으로 강력한 번개 줄기를 뿜어내니 급사에 유의하세요." },
@@ -950,9 +1093,9 @@
       { id: "wp_a5_8", category: "zone", slot: "ACT 5", name: "고통의 전당 (홀스 오브 페인)", enName: "Halls of Pain", sub: "ACT 5 WP 8", desc: "니흘라탁(파괴의 열쇠) 사냥 관문", areaLevel: 84, maxRune: "조드", immunesSummary: "독 · 번개", immunes: [{ type: "poison", title: "독 면역", mob: "보트의 전당 니흘라탁" }, { type: "light", title: "번개 면역", mob: "무덤 바이퍼" }], targetTitle: "보트의 전당 니흘라탁 (Lv 95)", targetDesc: "파괴의 열쇠 수급 및 99레벨 참 획득", tags: ["#액트5", "#순간이동진8", "#니흘라탁", "#시폭 주의"], tip: "니흘라탁의 시체 폭발은 즉사급이므로 처치한 괴물 안식 옵션 링을 착용하세요." },
       { id: "wp_a5_9", category: "zone", slot: "ACT 5", name: "세계석 성채 2층 (월드스톤)", enName: "Worldstone Keep Level 2", sub: "ACT 5 WP 9", desc: "바알룸(파괴의 왕좌)으로 이어지는 최고 난이도 던전", areaLevel: 85, maxRune: "조드", immunesSummary: "번개 · 물리 · 화염", immunes: [{ type: "light", title: "번개 면역", mob: "버닝 소울 (블랙 소울)" }, { type: "phys", title: "물리 면역", mob: "언데드 자폭병" }, { type: "fire", title: "화염 면역", mob: "불타는 시체" }], targetTitle: "세계석 성채 3층 및 파괴의 왕좌 & 바알", targetDesc: "바알런 및 99레벨 만렙 육성의 성지", tags: ["#액트5", "#순간이동진9", "#TC85", "#바알런"], tip: "버닝소울의 관통 번개와 자폭병의 물리 폭발에 즉사하지 않도록 주의하세요." }
     ];
-    waypoints.forEach(w => database.push(w));
+    waypointsList.forEach(w => database.push(w));
 
-    /* 4. 화면 렌더링 및 클릭 이벤트 */
+    /* 4. 렌더링 및 UI 제어 */
     let currentMainTab = "runeword";
     let currentSlot = "all";
     let currentSelectedId = "rw_mst_0";
