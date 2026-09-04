@@ -37,7 +37,7 @@ footer{border-top:1px solid #201813;text-align:center;padding:24px;color:#564d47
 </style>
 </head>
 <body>
-<div class="terror"><div class="tl"><span style="color:#e36d42">♨</span><span class="tz-badge">공포의 영역</span><span id="tzCurrent" class="tz-name">확인 중...</span></div><div class="tr"><span class="tz-next">다음: <b id="tzNext">확인 중</b></span><span class="tz-next" style="opacity:.72">실시간 · d2emu</span><span id="tzTimer" class="timer">30:00</span></div></div>
+<div class="terror"><div class="tl"><span style="color:#e36d42">♨</span><span class="tz-badge">공포의 영역</span><span id="tzCurrent" class="tz-name">확인 중...</span></div><div class="tr"><span class="tz-next">다음: <b id="tzNext">확인 중</b></span><span class="tz-next" style="opacity:.72">실시간 · 다중소스</span><span id="tzTimer" class="timer">30:00</span></div></div>
 <div class="brand"><div class="brand-left"><div class="diamond"><span>DⅡ</span></div><div><h2>모험가 도우미</h2><p>DIABLO II RESURRECTED</p></div></div><div class="dbtxt">한국어 통합 데이터베이스</div></div>
 <section class="hero"><small>성역의 모든 지식과 도구를 한곳에</small><h1>찾고 싶은 정보를<br>바로 검색하세요.</h1><div class="searchwrap"><span>⌕</span><input id="search" placeholder="룬워드, 유니크, 베이스, 큐빙, 사냥터 검색..."></div><div class="quick"><span>빠른 검색</span><button data-q="영혼">영혼</button><button data-q="샤코">샤코</button><button data-q="모너크">모너크</button><button data-q="구덩이">구덩이</button><button data-q="메마른 언덕">메마른 언덕</button></div></section>
 <main>
@@ -165,154 +165,222 @@ grid.addEventListener("click",e=>{const f=e.target.closest("[data-fav]");if(f){e
 document.getElementById("close").onclick=closeDetail;document.getElementById("backdrop").onclick=closeDetail;document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDetail()});
 
 
-/* 공포의 영역: 실시간 온라인 데이터
-   - Reign of the Warlock 기준 30분 로테이션
-   - 고정 순환표를 사용하지 않고, d2emu 데이터를 표시하는 공개 트래커를 읽음
-   - 실시간 데이터를 못 읽으면 임의 지역을 표시하지 않고 '불러오기 실패'로 표시
+/* 공포의 영역: 캐시 지연 방지 실시간 동기화
+   이전 버전 문제:
+   프록시 캐시 때문에 '현재'가 한 회전(30분) 늦고 '다음'이 실제 게임의 현재 지역으로 보일 수 있었음.
+   수정:
+   - Jina Reader에 X-No-Cache 사용
+   - 매 요청마다 cache-buster 추가
+   - 서로 다른 3개 트래커를 병렬 조회
+   - 같은 현재 지역을 말하는 결과를 우선 채택
+   - 회전 직후 10/25/55/90초 재확인
 */
 const TZ_KO = {
   "The Secret Cow Level":"비밀의 젖소방",
-  "Far Oasis, Maggot Lair":"머나먼 오아시스, 구더기 굴",
-  "Frozen Tundra, Infernal Pit":"얼어붙은 동토, 지옥의 구덩이",
-  "Dry Hills, Halls of the Dead":"메마른 언덕, 망자의 전당",
-  "Dry Hills":"메마른 언덕",
-  "Halls of the Dead Level 1":"망자의 전당 1층",
-  "Halls of the Dead Level 2":"망자의 전당 2층",
-  "Halls of the Dead Level 3":"망자의 전당 3층",
-  "Abaddon, Bloody Foothills, Frigid Highlands":"아바돈, 핏빛 언덕, 혹한의 고산지",
-  "Abaddon":"아바돈",
-  "Bloody Foothills":"핏빛 언덕",
-  "Frigid Highlands":"혹한의 고산지",
-  "Glacial Trail, Drifter Cavern":"빙하의 길, 부랑자의 동굴",
-  "Dark Wood, Underground Passage":"어둠숲, 지하 통로",
-  "Black Marsh, The Hole, The Forgotten Tower":"검은 습지, 구멍, 잊힌 탑",
-  "Stony Field, Tristram":"바위 벌판, 트리스트럼",
-  "Cold Plains, The Cave":"차가운 평야, 동굴",
-  "Burial Grounds, The Crypt, The Mausoleum":"매장지, 묘실, 영묘",
-  "The Pit":"구덩이",
-  "Jail, Barracks":"감옥, 병영",
-  "Cathedral, Catacombs":"대성당, 지하 묘지",
-  "Sewers":"하수구",
+  "Moo Moo Farm":"비밀의 젖소방",
+  "Rocky Waste and Stony Tomb":"바위투성이 황무지, 암석 무덤",
   "Rocky Waste, Stony Tomb":"바위투성이 황무지, 암석 무덤",
-  "Ancient Tunnels":"고대 토굴",
-  "Lost City, Valley of Snakes, Claw Viper Temple":"잊힌 도시, 뱀의 골짜기, 발톱 독사 사원",
-  "Arcane Sanctuary":"비전의 성역",
-  "Tal Rasha's Tombs":"탈 라샤의 무덤",
-  "Spider Forest, Spider Cavern":"거미 숲, 거미굴",
+  "Black Marsh, The Hole, The Forgotten Tower":"검은 습지, 구멍, 잊힌 탑",
+  "Black Marsh / The Hole / The Forgotten Tower":"검은 습지, 구멍, 잊힌 탑",
+  "Dry Hills and Halls of the Dead":"메마른 언덕, 망자의 전당",
+  "Dry Hills, Halls of the Dead":"메마른 언덕, 망자의 전당",
+  "Far Oasis and The Maggot Lair":"머나먼 오아시스, 구더기 굴",
+  "Far Oasis, Maggot Lair":"머나먼 오아시스, 구더기 굴",
+  "Cold Plains and The Cave":"차가운 평야, 동굴",
+  "Cold Plains, The Cave":"차가운 평야, 동굴",
+  "Burial Grounds, The Crypt, and the Mausoleum":"매장지, 묘실, 영묘",
+  "Burial Grounds, The Crypt, The Mausoleum":"매장지, 묘실, 영묘",
+  "Stony Field / Tristram":"바위 벌판, 트리스트럼",
+  "Stony Field, Tristram":"바위 벌판, 트리스트럼",
+  "Dark Wood / Underground Passage":"어둠숲, 지하 통로",
+  "Dark Wood, Underground Passage":"어둠숲, 지하 통로",
+  "Jail / Barracks":"감옥, 병영",
+  "Jail, Barracks":"감옥, 병영",
+  "The Pit / Tamoe Highland / Outer Cloister":"구덩이, 타모 고원, 외부 회랑",
+  "The Pit, Tamoe Highland, Outer Cloister":"구덩이, 타모 고원, 외부 회랑",
+  "Inner Cloister / Cathedral and Catacombs":"내부 회랑, 대성당, 지하 묘지",
+  "Inner Cloister, Cathedral, Catacombs":"내부 회랑, 대성당, 지하 묘지",
+  "Sewers":"하수구",
+  "Lost City, Valley of Snakes, and Claw Viper Temple, Ancient Tunnels":"잊힌 도시, 뱀의 골짜기, 발톱 독사 사원, 고대 토굴",
+  "Harem, Palace and Arcane Sanctuary":"하렘, 궁전, 비전의 성역",
+  "Canyon of the Magi and Tal Rasha's Tombs":"신비술사의 협곡, 탈 라샤의 무덤",
+  "Spider Forest and Spider Cavern / Arachnid Lair":"거미 숲, 거미 동굴, 거미굴",
   "Great Marsh":"거대 습지",
-  "Flayer Jungle, Flayer Dungeon":"약탈자 밀림, 약탈자 던전",
+  "Flayer Jungle and Flayer Dungeon / Swampy Pit":"약탈자 밀림, 약탈자 던전, 습한 구덩이",
   "Travincal":"트라빈칼",
   "Durance of Hate":"증오의 억류지",
-  "Outer Steppes, Plains of Despair":"평원 외곽, 절망의 평원",
-  "City of the Damned, River of Flame":"저주받은 자들의 도시, 불길의 강",
+  "Outer Steppes and Plains of Despair":"평원 외곽, 절망의 평원",
+  "River of Flame / City of the Damned":"불길의 강, 저주받은 자들의 도시",
   "Chaos Sanctuary":"혼돈의 성역",
-  "Crystalline Passage, Frozen River":"수정 동굴, 얼어붙은 강",
-  "Arreat Plateau, Pit of Acheron":"아리앗 고원, 아케론의 구덩이",
-  "Nihlathak's Temple, Halls of Anguish, Halls of Pain, Halls of Vaught":"니흘라탁의 사원, 고뇌의 전당, 고통의 전당, 보트의 전당",
-  "Ancient's Way, Icy Cellar":"고대인의 길, 얼음 지하실",
-  "Worldstone Keep, Throne of Destruction, Worldstone Chamber":"세계석 성채, 파괴의 왕좌, 세계석 보관실"
+  "Bloody Foothills / Frigid Highlands / Abbadon":"핏빛 언덕, 혹한의 고산지, 아바돈",
+  "Glacial Trail / Drifter Cavern":"빙하의 길, 부랑자의 동굴",
+  "Crystalline Passage and Frozen River":"수정 동굴, 얼어붙은 강",
+  "Frozen Tundra + Infernal Pit":"얼어붙은 동토, 지옥의 구덩이",
+  "Arreat Plateau / Pit of Acheron":"아리앗 고원, 아케론의 구덩이",
+  "Nihlathak's Temple, Halls of Anguish, Halls of Pain, and Halls of Vaught (Temple Halls)":"니흘라탁의 사원, 고뇌의 전당, 고통의 전당, 보트의 전당",
+  "Ancient's Way and Icy Cellar":"고대인의 길, 얼음 지하실",
+  "Worldstone Keep, Throne of Destruction, and Worldstone Chamber":"세계석 성채, 파괴의 왕좌, 세계석 보관실"
 };
 
 function cleanTZName(v){
-  let s=String(v||"").replace(/\s+/g," ").trim();
+  let s=String(v||"")
+    .replace(/^\s*ACT\s*[1-5]\s*[·:-]\s*/i,"")
+    .replace(/\s+/g," ")
+    .trim();
   return TZ_KO[s] || s;
 }
 
-function parseKoreanTracker(text){
-  const t=String(text||"").replace(/\r/g,"");
-  const cur=t.match(/현재 공포의 영역\s*(?:##\s*)?([^\n]+?)\s*(?:\n|\s)+액트\s*([1-5])/i);
-  const next=t.match(/다음 공포의 영역\s*(?:##\s*)?([^\n]+?)\s*(?:\n|\s)+액트\s*([1-5])/i);
-  if(!cur) return null;
-  return {
-    current: cur[1].replace(/^#+\s*/,"").trim(),
-    next: next ? next[1].replace(/^#+\s*/,"").trim() : "",
-    currentAct: cur[2] || "",
-    nextAct: next ? (next[2]||"") : ""
-  };
+function actFromName(name){
+  const n=cleanTZName(name);
+  const groups = [
+    ["ACT 1",["핏빛 황무지","차가운 평야","매장지","바위 벌판","어둠숲","검은 습지","감옥","구덩이","내부 회랑","비밀의 젖소방"]],
+    ["ACT 2",["하수구","바위투성이 황무지","메마른 언덕","머나먼 오아시스","잊힌 도시","하렘","신비술사의 협곡"]],
+    ["ACT 3",["거미 숲","거대 습지","약탈자 밀림","쿠라스트","트라빈칼","증오의 억류지"]],
+    ["ACT 4",["평원 외곽","불길의 강","혼돈의 성역"]],
+    ["ACT 5",["핏빛 언덕","빙하의 길","수정 동굴","얼어붙은 동토","아리앗 고원","니흘라탁","고대인의 길","세계석 성채"]]
+  ];
+  for(const [act,keys] of groups) if(keys.some(k=>n.includes(k))) return act;
+  return "";
 }
 
-function parseEnglishTracker(text){
+function parseBaeklab(text){
   const t=String(text||"").replace(/\r/g,"");
-  let cur=t.match(/Current Zone\s*(?:◂)?\s*(?:##\s*)?([^\n]+)/i);
-  let next=t.match(/Queued Next\s*(?:◂)?\s*(?:##\s*)?([^\n]+)/i);
-  if(!cur){
-    cur=t.match(/Current\s+`[^`]+`[\s\S]{0,400}?\|\s*([^\n]+)/i);
-  }
+  const cur=t.match(/현재 공포의 영역[\s\S]{0,120}?(?:##\s*)?([^\n#]+?)(?:\n|$)/i);
+  const next=t.match(/다음 공포의 영역[\s\S]{0,120}?(?:##\s*)?([^\n#]+?)(?:\n|$)/i);
   if(!cur) return null;
-  return {
-    current: cleanTZName(cur[1].replace(/^#+\s*/,"").trim()),
-    next: next ? cleanTZName(next[1].replace(/^#+\s*/,"").trim()) : "",
-    currentAct: "",
-    nextAct: ""
-  };
+  return {current:cleanTZName(cur[1]), next:next?cleanTZName(next[1]):"", source:"baeklab"};
 }
 
-async function fetchText(url, timeoutMs=9000){
+function parseTerrorZoneTracker(text){
+  const t=String(text||"").replace(/\r/g,"");
+  const cur=t.match(/Current Zone\s*(?:◂)?[\s\S]{0,80}?(?:##\s*)?([^\n]+)/i);
+  const next=t.match(/Queued Next\s*(?:◂)?\s*(?:##\s*)?([^\n]+)/i);
+  if(!cur) return null;
+  return {current:cleanTZName(cur[1]), next:next?cleanTZName(next[1]):"", source:"terrorzonetracker"};
+}
+
+function parseRunewizard(text){
+  const t=String(text||"").replace(/\r/g,"");
+  const cur=t.match(/Current Terror Zone[\s\S]{0,100}?(?:##\s*)?([^\n]+)/i);
+  const next=t.match(/Next Terror Zone(?: in [^\n]+)?[\s\S]{0,100}?(?:##\s*)?([^\n]+)/i);
+  if(!cur) return null;
+  const current=cleanTZName(cur[1]);
+  if(!current || /immunities|image:/i.test(current)) return null;
+  return {current, next:next?cleanTZName(next[1]):"", source:"d2runewizard"};
+}
+
+async function fetchFreshJina(originalUrl, parser){
+  const bust=Date.now()+"-"+Math.random().toString(36).slice(2);
+  const proxied="https://r.jina.ai/http://"+originalUrl.replace(/^https?:\/\//,"")+
+    (originalUrl.includes("?")?"&":"?")+"_tzcb="+encodeURIComponent(bust);
   const ctrl=new AbortController();
-  const timer=setTimeout(()=>ctrl.abort(),timeoutMs);
+  const timer=setTimeout(()=>ctrl.abort(),9000);
   try{
-    const r=await fetch(url,{cache:"no-store",signal:ctrl.signal});
+    const r=await fetch(proxied,{
+      cache:"no-store",
+      signal:ctrl.signal,
+      headers:{
+        "X-No-Cache":"true",
+        "X-Return-Format":"markdown",
+        "Cache-Control":"no-cache"
+      }
+    });
     if(!r.ok) throw new Error("HTTP "+r.status);
-    return await r.text();
-  } finally {
-    clearTimeout(timer);
-  }
+    const info=parser(await r.text());
+    return info&&info.current?info:null;
+  } finally { clearTimeout(timer); }
 }
+
+function normalizeForVote(v){
+  return cleanTZName(v).replace(/[·,/&+]/g," ").replace(/\s+/g," ").trim();
+}
+
+function chooseBest(results){
+  const valid=results.filter(Boolean);
+  if(!valid.length) return null;
+
+  const buckets=new Map();
+  for(const r of valid){
+    const key=normalizeForVote(r.current);
+    if(!buckets.has(key)) buckets.set(key,[]);
+    buckets.get(key).push(r);
+  }
+  const ranked=[...buckets.entries()].sort((a,b)=>b[1].length-a[1].length);
+  const bestGroup=ranked[0][1];
+
+  // 2개 이상 일치하면 그 결과를 확정
+  if(bestGroup.length>=2) {
+    const best=bestGroup[0];
+    const nextVotes=bestGroup.map(x=>x.next).filter(Boolean);
+    return {...best,next:nextVotes[0]||best.next,confirmed:true};
+  }
+
+  // 한 소스만 살아있을 때도 표시하되 "단일 소스"로 상태 표시
+  return {...valid[0],confirmed:false};
+}
+
+let lastGoodTZ=null;
+let tzRefreshing=false;
 
 async function refreshTerrorZone(){
+  if(tzRefreshing) return;
+  tzRefreshing=true;
   const currentEl=document.getElementById("tzCurrent");
   const nextEl=document.getElementById("tzNext");
 
-  const koSource="https://d2r.baeklab.com/ko/terror-zone";
-  const attempts=[
-    {url:koSource, parser:parseKoreanTracker},
-    {url:"https://api.allorigins.win/raw?url="+encodeURIComponent(koSource), parser:parseKoreanTracker},
-    {url:"https://r.jina.ai/http://d2r.baeklab.com/ko/terror-zone", parser:parseKoreanTracker},
-    {url:"https://r.jina.ai/http://terrorzonetracker.com/", parser:parseEnglishTracker}
-  ];
+  try{
+    const settled=await Promise.allSettled([
+      fetchFreshJina("terrorzonetracker.com/",parseTerrorZoneTracker),
+      fetchFreshJina("d2runewizard.com/tz-tracker",parseRunewizard),
+      fetchFreshJina("d2r.baeklab.com/ko/terror-zone",parseBaeklab)
+    ]);
+    const infos=settled.map(x=>x.status==="fulfilled"?x.value:null);
+    const best=chooseBest(infos);
 
-  for(const a of attempts){
-    try{
-      const text=await fetchText(a.url);
-      const info=a.parser(text);
-      if(info && info.current){
-        currentEl.textContent=(info.currentAct ? "ACT "+info.currentAct+" · " : "")+cleanTZName(info.current);
-        nextEl.textContent=info.next
-          ? ((info.nextAct ? "ACT "+info.nextAct+" · " : "")+cleanTZName(info.next))
-          : "예측 대기 중";
-        currentEl.title="실시간 공포의 영역 · 데이터 제공 d2emu.com";
-        nextEl.title="다음 공포의 영역 예측 · 데이터 제공 d2emu.com";
-        return true;
-      }
-    }catch(e){}
+    if(best){
+      lastGoodTZ={...best,at:Date.now()};
+      const act=actFromName(best.current);
+      currentEl.textContent=(act?act+" · ":"")+best.current;
+      nextEl.textContent=best.next||"다음 지역 예측 대기 중";
+      currentEl.title=best.confirmed
+        ?"복수 실시간 트래커 일치"
+        :"실시간 단일 트래커 기준";
+      return;
+    }
+
+    if(lastGoodTZ && Date.now()-lastGoodTZ.at<4*60*1000){
+      const act=actFromName(lastGoodTZ.current);
+      currentEl.textContent=(act?act+" · ":"")+lastGoodTZ.current;
+      nextEl.textContent=lastGoodTZ.next||"재동기화 중";
+      currentEl.title="최근 정상 수신값 · 재동기화 중";
+    }else{
+      currentEl.textContent="실시간 정보 재동기화 중";
+      nextEl.textContent="잠시 후 자동 재시도";
+    }
+  } finally {
+    tzRefreshing=false;
   }
-
-  // 틀린 지역을 보여주는 것보다 실패 상태를 명확히 표시
-  currentEl.textContent="실시간 정보 불러오기 실패";
-  nextEl.textContent="잠시 후 자동 재시도";
-  return false;
 }
 
-let lastTZBoundary="";
+let lastBoundaryKey="";
 function tickTerrorTimer(){
   const d=new Date();
   const elapsed=(d.getMinutes()%30)*60+d.getSeconds();
   const remain=1800-elapsed;
-  const mm=Math.floor(remain/60);
-  const ss=remain%60;
   document.getElementById("tzTimer").textContent=
-    String(mm).padStart(2,"0")+":"+String(ss).padStart(2,"0");
+    String(Math.floor(remain/60)).padStart(2,"0")+":"+
+    String(remain%60).padStart(2,"0");
 
-  // :00 / :30 직후 데이터 갱신
-  const boundaryKey=d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()+"-"+d.getHours()+"-"+Math.floor(d.getMinutes()/30);
-  if((d.getMinutes()%30===0 || d.getMinutes()%30===30) && d.getSeconds()<12 && boundaryKey!==lastTZBoundary){
-    lastTZBoundary=boundaryKey;
-    setTimeout(refreshTerrorZone,7000);
+  const key=d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()+"-"+d.getHours()+"-"+Math.floor(d.getMinutes()/30);
+  if(key!==lastBoundaryKey){
+    lastBoundaryKey=key;
+    // 회전 직후 API/트래커 전파 지연을 감안해 여러 번 재확인
+    [10000,25000,55000,90000].forEach(ms=>setTimeout(refreshTerrorZone,ms));
   }
 }
 
 setInterval(tickTerrorTimer,1000);
-setInterval(refreshTerrorZone,60000);
+setInterval(refreshTerrorZone,45000);
 tickTerrorTimer();
 refreshTerrorZone();
 updateSubFilters();
