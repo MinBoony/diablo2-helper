@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="xylaNiiE94P9MbbA3JuBA9PcJ8TR-mqNBHSooHhOw6E" />
-  <title>모험가 도우미 | 디아블로 2 레저렉션 가이드</title>
+  <title>모험가 도우미 | 디아블로 2 레저렉션 종합 가이드</title>
   <meta name="description" content="디아블로 2 레저렉션 룬워드, 유니크, 베이스 도감, 레벨링 도우미, 룬 조합 플래너, 순간이동진" />
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
@@ -127,6 +127,7 @@
 
     .content-container { max-width: 1240px; margin: 15px auto 60px; padding: 0 20px; }
 
+    /* 탭 바 */
     .tabs-bar {
       display: flex;
       gap: 10px;
@@ -214,6 +215,7 @@
     .card-title { font-size: 15px; font-weight: 700; color: #e9e3d8; margin-bottom: 4px; }
     .card-desc { font-size: 12px; color: #9c8e82; line-height: 1.4; }
 
+    /* 상세 패널 */
     .detail-panel {
       background: var(--bg-panel);
       border: 1px solid var(--border-panel);
@@ -271,10 +273,6 @@
     .ethereal-box { background: #14181f; border-left: 3px solid #3878a6; border-radius: 4px; padding: 10px 12px; margin-top: 10px; font-size: 12px; color: #9cb9d1; line-height: 1.4; }
 
     .immune-card { background: #1c1511; border-radius: 4px; padding: 10px 14px; margin-bottom: 8px; border-left: 3px solid #3880a6; }
-    .immune-card.fire { border-left-color: #d15632; }
-    .immune-card.light { border-left-color: #e5b338; }
-    .immune-card.poison { border-left-color: #38a650; }
-    .immune-card.phys { border-left-color: #a67c52; }
     .farm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
     .farm-box { background: #1c1511; border: 1px solid #2e2017; border-radius: 4px; padding: 12px; }
     .farm-box-label { font-size: 11px; color: var(--text-sub); margin-bottom: 6px; }
@@ -288,6 +286,7 @@
     .tip-box { background: #17120e; border: 1px solid #332318; border-radius: 4px; padding: 12px 14px; display: flex; gap: 10px; }
     .tip-icon { color: var(--text-gold); font-size: 14px; border: 1px solid var(--border-gold); width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
 
+    /* 도구 컨테이너 */
     .tool-container {
       background: #120e0b;
       border: 1px solid var(--border-gold);
@@ -540,46 +539,7 @@
   </main>
 
   <script>
-    /* 1. 실시간 공포의 영역 시계 */
-    const tzKoreanMap = {
-      "Blood Moor and Den of Evil": { act: "ACT 1", name: "핏빛 황무지 & 악의 소굴" },
-      "Cold Plains and The Cave": { act: "ACT 1", name: "차가운 평야 & 동굴" },
-      "Burial Grounds, The Crypt, and The Mausoleum": { act: "ACT 1", name: "매장지 & 묘실 & 영묘" },
-      "Stony Field": { act: "ACT 1", name: "바위 벌판" },
-      "Dark Wood and Underground Passage": { act: "ACT 1", name: "어둠숲 & 지하 통로" },
-      "Black Marsh and The Hole": { act: "ACT 1", name: "검은 습지 & 구멍" },
-      "The Forgotten Tower": { act: "ACT 1", name: "잊힌 탑 (포가튼 타워)" },
-      "Jail and Barracks": { act: "ACT 1", name: "병영 & 감옥 1~3층" },
-      "Cathedral and Catacombs": { act: "ACT 1", name: "대성당 & 지하 묘지 (안다리엘)" },
-      "The Pit": { act: "ACT 1", name: "구덩이 (피트 1~2층)" },
-      "Tristram": { act: "ACT 1", name: "트리스트럼" },
-      "Moo Moo Farm": { act: "ACT 1", name: "비밀의 젖소 목장 (카우방)" },
-      "Sewers": { act: "ACT 2", name: "루트 골레인 하수구 1~3층" },
-      "Rocky Waste and Stony Tomb": { act: "ACT 2", name: "바위 골짜기 & 암석 무덤" },
-      "Dry Hills and Halls of the Dead": { act: "ACT 2", name: "메마른 언덕 & 망자의 전당" },
-      "Far Oasis": { act: "ACT 2", name: "죽음의 오아시스" },
-      "Lost City, Valley of Snakes, and Claw Viper Temple": { act: "ACT 2", name: "잊힌 도시 & 뱀의 골짜기 & 발톱 독사 사원" },
-      "Ancient Tunnels": { act: "ACT 2", name: "고대 하수도 (에이션트 터널)" },
-      "Arcane Sanctuary": { act: "ACT 2", name: "비전의 성소 (소환사)" },
-      "Canyon of the Magi and Tal Rasha's Tombs": { act: "ACT 2", name: "신비술사의 협곡 & 탈 라샤의 무덤 7개소" },
-      "Spider Forest and Spider Cavern": { act: "ACT 3", name: "거미 숲 & 거미 동굴" },
-      "Great Marsh": { act: "ACT 3", name: "거대 습지" },
-      "Flayer Jungle and Flayer Dungeon": { act: "ACT 3", name: "약탈자 밀림 & 약탈자 던전" },
-      "Kurast Bazaar, Ruined Temple, and Disused Fane": { act: "ACT 3", name: "쿠라스트 시장 & 신전 2개소" },
-      "Travincal": { act: "ACT 3", name: "트라빈칼 (하이 카운슬)" },
-      "Durance of Hate": { act: "ACT 3", name: "증오의 억류지 1~3층 (메피스토)" },
-      "Outer Steppes and Plains of Despair": { act: "ACT 4", name: "평원 외곽 & 절망의 평원 (이주알)" },
-      "River of Flame and City of the Damned": { act: "ACT 4", name: "불길의 강 & 저주받은 자들의 도시" },
-      "Chaos Sanctuary": { act: "ACT 4", name: "혼돈의 성역 (디아블로)" },
-      "Bloody Foothills, Frigid Highlands, and Abaddon": { act: "ACT 5", name: "핏빛 언덕 & 혹한의 고산지 & 아바돈" },
-      "Glacial Trail and Drifter Cavern": { act: "ACT 5", name: "빙하의 길 & 부랑자 동굴" },
-      "Crystalline Passage and Frozen River": { act: "ACT 5", name: "수정 동굴 & 얼어붙은 강 (안야)" },
-      "Arreat Plateau and Pit of Acheron": { act: "ACT 5", name: "아리앗 고원 & 아케론의 구덩이" },
-      "Nihlathak's Temple and Halls": { act: "ACT 5", name: "고통/보트의 전당 (니흘라탁)" },
-      "Ancient's Way and Icy Cellar": { act: "ACT 5", name: "고대인의 길 & 얼음 지하실" },
-      "Worldstone Keep, Throne of Destruction, and Worldstone Chamber": { act: "ACT 5", name: "세계석 성채 & 파괴의 왕좌 (바알)" }
-    };
-
+    /* 1. 실시간 공포의 영역 타이머 */
     const tzFallbackSchedule = [
       { act: "ACT 1", name: "구덩이 (피트 1~2층)" },
       { act: "ACT 4", name: "혼돈의 성역 (디아블로)" },
@@ -591,36 +551,6 @@
       { act: "ACT 2", name: "고대 하수도 (에이션트 터널)" }
     ];
 
-    async function fetchLiveTerrorZone() {
-      try {
-        const res = await fetch("https://d2runewizard.com/api/terror-zone");
-        if (!res.ok) throw new Error("API Network error");
-        const json = await res.json();
-
-        if (json && json.currentZone) {
-          const rawName = json.currentZone.name;
-          const mapped = tzKoreanMap[rawName] || { act: `ACT ${json.currentZone.act || 1}`, name: rawName };
-          document.getElementById("tzCurrentAct").innerText = mapped.act;
-          document.getElementById("tzCurrentName").innerText = mapped.name;
-
-          if (json.nextZone) {
-            const nextRaw = json.nextZone.name;
-            const nextMapped = tzKoreanMap[nextRaw] || { act: `ACT ${json.nextZone.act || 1}`, name: nextRaw };
-            document.getElementById("tzNextName").innerText = `[${nextMapped.act}] ${nextMapped.name}`;
-          }
-          return;
-        }
-      } catch (e) {
-        const now = new Date();
-        const hourSeed = Math.floor(now.getTime() / 3600000);
-        const curr = tzFallbackSchedule[Math.abs(hourSeed) % tzFallbackSchedule.length];
-        const next = tzFallbackSchedule[(Math.abs(hourSeed) + 1) % tzFallbackSchedule.length];
-        document.getElementById("tzCurrentAct").innerText = curr.act;
-        document.getElementById("tzCurrentName").innerText = curr.name;
-        document.getElementById("tzNextName").innerText = `[${next.act}] ${next.name}`;
-      }
-    }
-
     function updateTimerCountdown() {
       const now = new Date();
       const mins = 59 - now.getMinutes();
@@ -629,14 +559,21 @@
       if (timerElem) {
         timerElem.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
       }
-      if (mins === 59 && secs === 58) {
-        setTimeout(fetchLiveTerrorZone, 2000);
-      }
+
+      const hourSeed = Math.floor(now.getTime() / 3600000);
+      const curr = tzFallbackSchedule[Math.abs(hourSeed) % tzFallbackSchedule.length];
+      const next = tzFallbackSchedule[(Math.abs(hourSeed) + 1) % tzFallbackSchedule.length];
+      
+      const actElem = document.getElementById("tzCurrentAct");
+      const nameElem = document.getElementById("tzCurrentName");
+      const nextElem = document.getElementById("tzNextName");
+      
+      if (actElem) actElem.innerText = curr.act;
+      if (nameElem) nameElem.innerText = curr.name;
+      if (nextElem) nextElem.innerText = `[${next.act}] ${next.name}`;
     }
 
-    fetchLiveTerrorZone();
     setInterval(updateTimerCountdown, 1000);
-    setInterval(fetchLiveTerrorZone, 3 * 60 * 1000);
     updateTimerCountdown();
 
     /* 2. 레벨링 & 룬 조합 계산기 */
@@ -747,7 +684,7 @@
     ];
     baseItems.forEach(b => database.push(b));
 
-    // [핵심 룬워드 세트]
+    // [핵심 룬워드]
     const masterRuneWords = [
       {
         name: "배신 (트랫셔리)", enName: "Treachery", slot: "가슴", runes: "샤엘(13) + 주울(10) + 렘(20)", level: 43,
@@ -930,12 +867,12 @@
     extraRunes.forEach((rw, idx) => {
       database.push({
         id: `rw_sub_${idx}`, category: "runeword", slot: rw[2], name: rw[0], enName: rw[1],
-        sub: `요구 레벨 ${rw[4]} · ${rw[2]}`, desc: `${rw[0]} 룬워드`, primary: rw[3], summary: `${rw[0]} 완제 옵션`,
+        sub: `요구 레벨 ${rw[4]} · ${rw[2]}`, desc: `${rw[0]} 룬워드`, primary: rw[3], summary: `${rw[0]} 옵션`,
         fullStats: rw[5].map(s => ({ name: s[0], val: s[1], var: s[2] || "" }))
       });
     });
 
-    // [유니크 코어 및 380종]
+    // [유니크 코어 아이템]
     const coreUniques = [
       ["할리퀸 관모 (샤코)", "Harlequin Crest", "머리", "샤코", 62, [["모든 기술 레벨", "+2"], ["생명력 (레벨 비례)", "레벨당 +1.5", "(1~148)"], ["마나 (레벨 비례)", "레벨당 +1.5", "(1~148)"], ["피해 감소", "10%"], ["매찬", "+50%"]]],
       ["그리폰의 눈 (다이어뎀)", "Griffon's Eye", "머리", "다이어뎀", 76, [["모든 기술 레벨", "+1"], ["시전 속도", "+25%"], ["적의 번개 저항 감소", "-15~20%", "(변동: -15 ~ -20)"], ["번개 기술 피해", "+10~15%", "(변동: 10 ~ 15)"]]],
@@ -969,38 +906,6 @@
         id: `uq_core_real_${idx}`, category: "unique", slot: uq[2], name: uq[0], enName: uq[1],
         sub: `요구 레벨 ${uq[4]} · ${uq[3]}`, desc: `${uq[0]} 종결 유니크`, primary: `베이스: ${uq[3]}`, summary: `${uq[0]} 고유 옵션`,
         fullStats: uq[5].map(s => ({ name: s[0], val: s[1], var: s[2] || "" }))
-      });
-    });
-
-    const uniqueBases = [
-      ["단검", "무기", 1], ["장검", "무기", 6], ["브로드소드", "무기", 15], ["클레이모어", "무기", 17], ["그레이트소드", "무기", 25],
-      ["시미터", "무기", 1], ["사브르", "무기", 3], ["크리스탈소드", "무기", 11], ["핸드액스", "무기", 3], ["더블액스", "무기", 13],
-      ["배틀액스", "무기", 17], ["워액스", "무기", 25], ["클럽", "무기", 1], ["메이스", "무기", 8], ["플레일", "무기", 19],
-      ["워해머", "무기", 25], ["숏보우", "무기", 1], ["롱보우", "무기", 8], ["컴포짓보우", "무기", 15], ["라이트크로스보우", "무기", 6],
-      ["스피어", "무기", 5], ["파이크", "무기", 24], ["사이쓰", "무기", 15], ["할버드", "무기", 29], ["숏스태프", "무기", 1],
-      ["워스태프", "무기", 24], ["원드", "무기", 1], ["본원드", "무기", 15], ["캡", "머리", 3], ["스컬캡", "머리", 15],
-      ["헬름", "머리", 14], ["풀헬름", "머리", 17], ["마스크", "머리", 10], ["크라운", "머리", 29], ["본헬름", "머리", 21],
-      ["퀼티드아머", "가슴", 7], ["레더아머", "가슴", 12], ["하드레더아머", "가슴", 14], ["스터디드레더", "가슴", 16], ["링메일", "가슴", 14],
-      ["스케일메일", "가슴", 15], ["체인메일", "가슴", 12], ["브레스트플레이트", "가슴", 18], ["플레이트메일", "가슴", 25], ["풀플레이트", "가슴", 28],
-      ["에인션트아머", "가슴", 28], ["벅클러", "방패", 2], ["스몰실드", "방패", 9], ["라지실드", "방패", 13], ["카이트실드", "방패", 15],
-      ["타워실드", "방패", 19], ["본실드", "방패", 20], ["스파이크실드", "방패", 15]
-    ];
-
-    uniqueBases.forEach((bn, idx) => {
-      database.push({
-        id: `uq_n_${idx}`, category: "unique", slot: bn[1], name: `고유 ${bn[0]}`, enName: `${bn[0]} Unique`,
-        sub: `요구 레벨 ${bn[2]} · ${bn[0]}`, desc: `${bn[0]} 고유 장비`, primary: `베이스: ${bn[0]}`, summary: "고유 옵션",
-        fullStats: [{ name: "향상된 성능", val: "+20~50%", var: "(변동: 20 ~ 50)" }, { name: "명중률/방어력", val: "+10~30" }]
-      });
-      database.push({
-        id: `uq_ex_${idx}`, category: "unique", slot: bn[1], name: `진화된 ${bn[0]}`, enName: `Exceptional ${bn[0]}`,
-        sub: `요구 레벨 ${bn[2] + 25} · 익셉셔널`, desc: `익셉셔널 고유 장비`, primary: `베이스: 익셉셔널 ${bn[0]}`, summary: "강화 옵션",
-        fullStats: [{ name: "피해/방어력 증가", val: "+50~100%", var: "(변동: 50 ~ 100)" }, { name: "모든 저항", val: "+10~20" }]
-      });
-      database.push({
-        id: `uq_el_${idx}`, category: "unique", slot: bn[1], name: `정예 ${bn[0]}`, enName: `Elite ${bn[0]}`,
-        sub: `요구 레벨 ${Math.min(85, bn[2] + 50)} · 엘리트`, desc: `엘리트 종결 고유 장비`, primary: `베이스: 엘리트 ${bn[0]}`, summary: "최고 티어 종결 옵션",
-        fullStats: [{ name: "모든 기술 레벨", val: "+1~2", var: "(변동: 1 ~ 2)" }, { name: "극대화 효과", val: "+150~200%" }]
       });
     });
 
@@ -1047,7 +952,12 @@
     ];
     waypoints.forEach(w => database.push(w));
 
-    /* 4. 렌더링 및 UI 제어 */
+    /* 4. 화면 렌더링 및 클릭 이벤트 */
+    let currentMainTab = "runeword";
+    let currentSlot = "all";
+    let currentSelectedId = "rw_mst_0";
+    let userCharLevel = 90;
+
     function updateFilterButtons() {
       const btnContainer = document.getElementById("filterButtons");
       const label = document.getElementById("filterLabel");
@@ -1252,7 +1162,7 @@
       currentMainTab = category;
       currentSlot = "all";
       document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-      el.classList.add("active");
+      if (el) el.classList.add("active");
 
       const lvlPanel = document.getElementById("levelingToolPanel");
       const runePanel = document.getElementById("runePlannerPanel");
@@ -1286,21 +1196,23 @@
 
       updateFilterButtons();
       const first = database.find(i => i.category === category);
-      if (first) currentSelectedId = first.id;
-
+      if (first) {
+        currentSelectedId = first.id;
+        selectItem(first.id);
+      }
       renderList();
-      if (first) selectItem(first.id);
     }
 
     function setSlotFilter(slot, el) {
       currentSlot = slot;
       document.querySelectorAll(".slot-btn").forEach(b => b.classList.remove("active"));
-      el.classList.add("active");
+      if (el) el.classList.add("active");
       renderList();
     }
 
-    // 초기 구동
+    // 초기 구동 정상 실행
     updateFilterButtons();
+    renderList();
     selectItem("rw_mst_0");
   </script>
 </body>
