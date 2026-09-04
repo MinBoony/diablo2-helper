@@ -37,7 +37,7 @@ footer{border-top:1px solid #201813;text-align:center;padding:24px;color:#564d47
 </style>
 </head>
 <body>
-<div class="terror"><div class="tl"><span style="color:#e36d42">♨</span><span class="tz-badge">공포의 영역</span><span id="tzCurrent" class="tz-name">확인 중...</span></div><div class="tr"><span class="tz-next">다음: <b id="tzNext">확인 중</b></span><span id="tzTimer" class="timer">59:59</span></div></div>
+<div class="terror"><div class="tl"><span style="color:#e36d42">♨</span><span class="tz-badge">공포의 영역</span><span id="tzCurrent" class="tz-name">확인 중...</span></div><div class="tr"><span class="tz-next">다음: <b id="tzNext">확인 중</b></span><span class="tz-next" style="opacity:.72">실시간 · d2emu</span><span id="tzTimer" class="timer">30:00</span></div></div>
 <div class="brand"><div class="brand-left"><div class="diamond"><span>DⅡ</span></div><div><h2>모험가 도우미</h2><p>DIABLO II RESURRECTED</p></div></div><div class="dbtxt">한국어 통합 데이터베이스</div></div>
 <section class="hero"><small>성역의 모든 지식과 도구를 한곳에</small><h1>찾고 싶은 정보를<br>바로 검색하세요.</h1><div class="searchwrap"><span>⌕</span><input id="search" placeholder="룬워드, 유니크, 베이스, 큐빙, 사냥터 검색..."></div><div class="quick"><span>빠른 검색</span><button data-q="영혼">영혼</button><button data-q="샤코">샤코</button><button data-q="모너크">모너크</button><button data-q="구덩이">구덩이</button><button data-q="메마른 언덕">메마른 언덕</button></div></section>
 <main>
@@ -164,9 +164,159 @@ document.getElementById("subfilters").addEventListener("click",e=>{const b=e.tar
 grid.addEventListener("click",e=>{const f=e.target.closest("[data-fav]");if(f){e.stopPropagation();const id=f.dataset.fav;favorite.has(id)?favorite.delete(id):favorite.add(id);localStorage.setItem("d2helper_fav",JSON.stringify([...favorite]));render();return}const c=e.target.closest(".card");if(!c)return;const x=DATA.find(v=>v.id===c.dataset.id);if(x)openDetail(x)});
 document.getElementById("close").onclick=closeDetail;document.getElementById("backdrop").onclick=closeDetail;document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDetail()});
 
-const TZ=["핏빛 황무지와 악의 소굴","차가운 평야와 동굴","검은 습지와 구멍","구덩이","고대 토굴","비전의 성역","탈 라샤의 무덤","트라빈칼","혼돈의 성역","세계석 성채와 파괴의 왕좌"];
-function tick(){const d=new Date(),s=(59-d.getMinutes())*60+(59-d.getSeconds());document.getElementById("tzTimer").textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");const h=Math.floor(d.getTime()/3600000),i=((h%TZ.length)+TZ.length)%TZ.length;document.getElementById("tzCurrent").textContent=TZ[i];document.getElementById("tzNext").textContent=TZ[(i+1)%TZ.length]}
-setInterval(tick,1000);tick();updateSubFilters();render();
+
+/* 공포의 영역: 실시간 온라인 데이터
+   - Reign of the Warlock 기준 30분 로테이션
+   - 고정 순환표를 사용하지 않고, d2emu 데이터를 표시하는 공개 트래커를 읽음
+   - 실시간 데이터를 못 읽으면 임의 지역을 표시하지 않고 '불러오기 실패'로 표시
+*/
+const TZ_KO = {
+  "The Secret Cow Level":"비밀의 젖소방",
+  "Far Oasis, Maggot Lair":"머나먼 오아시스, 구더기 굴",
+  "Frozen Tundra, Infernal Pit":"얼어붙은 동토, 지옥의 구덩이",
+  "Dry Hills, Halls of the Dead":"메마른 언덕, 망자의 전당",
+  "Dry Hills":"메마른 언덕",
+  "Halls of the Dead Level 1":"망자의 전당 1층",
+  "Halls of the Dead Level 2":"망자의 전당 2층",
+  "Halls of the Dead Level 3":"망자의 전당 3층",
+  "Abaddon, Bloody Foothills, Frigid Highlands":"아바돈, 핏빛 언덕, 혹한의 고산지",
+  "Abaddon":"아바돈",
+  "Bloody Foothills":"핏빛 언덕",
+  "Frigid Highlands":"혹한의 고산지",
+  "Glacial Trail, Drifter Cavern":"빙하의 길, 부랑자의 동굴",
+  "Dark Wood, Underground Passage":"어둠숲, 지하 통로",
+  "Black Marsh, The Hole, The Forgotten Tower":"검은 습지, 구멍, 잊힌 탑",
+  "Stony Field, Tristram":"바위 벌판, 트리스트럼",
+  "Cold Plains, The Cave":"차가운 평야, 동굴",
+  "Burial Grounds, The Crypt, The Mausoleum":"매장지, 묘실, 영묘",
+  "The Pit":"구덩이",
+  "Jail, Barracks":"감옥, 병영",
+  "Cathedral, Catacombs":"대성당, 지하 묘지",
+  "Sewers":"하수구",
+  "Rocky Waste, Stony Tomb":"바위투성이 황무지, 암석 무덤",
+  "Ancient Tunnels":"고대 토굴",
+  "Lost City, Valley of Snakes, Claw Viper Temple":"잊힌 도시, 뱀의 골짜기, 발톱 독사 사원",
+  "Arcane Sanctuary":"비전의 성역",
+  "Tal Rasha's Tombs":"탈 라샤의 무덤",
+  "Spider Forest, Spider Cavern":"거미 숲, 거미굴",
+  "Great Marsh":"거대 습지",
+  "Flayer Jungle, Flayer Dungeon":"약탈자 밀림, 약탈자 던전",
+  "Travincal":"트라빈칼",
+  "Durance of Hate":"증오의 억류지",
+  "Outer Steppes, Plains of Despair":"평원 외곽, 절망의 평원",
+  "City of the Damned, River of Flame":"저주받은 자들의 도시, 불길의 강",
+  "Chaos Sanctuary":"혼돈의 성역",
+  "Crystalline Passage, Frozen River":"수정 동굴, 얼어붙은 강",
+  "Arreat Plateau, Pit of Acheron":"아리앗 고원, 아케론의 구덩이",
+  "Nihlathak's Temple, Halls of Anguish, Halls of Pain, Halls of Vaught":"니흘라탁의 사원, 고뇌의 전당, 고통의 전당, 보트의 전당",
+  "Ancient's Way, Icy Cellar":"고대인의 길, 얼음 지하실",
+  "Worldstone Keep, Throne of Destruction, Worldstone Chamber":"세계석 성채, 파괴의 왕좌, 세계석 보관실"
+};
+
+function cleanTZName(v){
+  let s=String(v||"").replace(/\s+/g," ").trim();
+  return TZ_KO[s] || s;
+}
+
+function parseKoreanTracker(text){
+  const t=String(text||"").replace(/\r/g,"");
+  const cur=t.match(/현재 공포의 영역\s*(?:##\s*)?([^\n]+?)\s*(?:\n|\s)+액트\s*([1-5])/i);
+  const next=t.match(/다음 공포의 영역\s*(?:##\s*)?([^\n]+?)\s*(?:\n|\s)+액트\s*([1-5])/i);
+  if(!cur) return null;
+  return {
+    current: cur[1].replace(/^#+\s*/,"").trim(),
+    next: next ? next[1].replace(/^#+\s*/,"").trim() : "",
+    currentAct: cur[2] || "",
+    nextAct: next ? (next[2]||"") : ""
+  };
+}
+
+function parseEnglishTracker(text){
+  const t=String(text||"").replace(/\r/g,"");
+  let cur=t.match(/Current Zone\s*(?:◂)?\s*(?:##\s*)?([^\n]+)/i);
+  let next=t.match(/Queued Next\s*(?:◂)?\s*(?:##\s*)?([^\n]+)/i);
+  if(!cur){
+    cur=t.match(/Current\s+`[^`]+`[\s\S]{0,400}?\|\s*([^\n]+)/i);
+  }
+  if(!cur) return null;
+  return {
+    current: cleanTZName(cur[1].replace(/^#+\s*/,"").trim()),
+    next: next ? cleanTZName(next[1].replace(/^#+\s*/,"").trim()) : "",
+    currentAct: "",
+    nextAct: ""
+  };
+}
+
+async function fetchText(url, timeoutMs=9000){
+  const ctrl=new AbortController();
+  const timer=setTimeout(()=>ctrl.abort(),timeoutMs);
+  try{
+    const r=await fetch(url,{cache:"no-store",signal:ctrl.signal});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return await r.text();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function refreshTerrorZone(){
+  const currentEl=document.getElementById("tzCurrent");
+  const nextEl=document.getElementById("tzNext");
+
+  const koSource="https://d2r.baeklab.com/ko/terror-zone";
+  const attempts=[
+    {url:koSource, parser:parseKoreanTracker},
+    {url:"https://api.allorigins.win/raw?url="+encodeURIComponent(koSource), parser:parseKoreanTracker},
+    {url:"https://r.jina.ai/http://d2r.baeklab.com/ko/terror-zone", parser:parseKoreanTracker},
+    {url:"https://r.jina.ai/http://terrorzonetracker.com/", parser:parseEnglishTracker}
+  ];
+
+  for(const a of attempts){
+    try{
+      const text=await fetchText(a.url);
+      const info=a.parser(text);
+      if(info && info.current){
+        currentEl.textContent=(info.currentAct ? "ACT "+info.currentAct+" · " : "")+cleanTZName(info.current);
+        nextEl.textContent=info.next
+          ? ((info.nextAct ? "ACT "+info.nextAct+" · " : "")+cleanTZName(info.next))
+          : "예측 대기 중";
+        currentEl.title="실시간 공포의 영역 · 데이터 제공 d2emu.com";
+        nextEl.title="다음 공포의 영역 예측 · 데이터 제공 d2emu.com";
+        return true;
+      }
+    }catch(e){}
+  }
+
+  // 틀린 지역을 보여주는 것보다 실패 상태를 명확히 표시
+  currentEl.textContent="실시간 정보 불러오기 실패";
+  nextEl.textContent="잠시 후 자동 재시도";
+  return false;
+}
+
+let lastTZBoundary="";
+function tickTerrorTimer(){
+  const d=new Date();
+  const elapsed=(d.getMinutes()%30)*60+d.getSeconds();
+  const remain=1800-elapsed;
+  const mm=Math.floor(remain/60);
+  const ss=remain%60;
+  document.getElementById("tzTimer").textContent=
+    String(mm).padStart(2,"0")+":"+String(ss).padStart(2,"0");
+
+  // :00 / :30 직후 데이터 갱신
+  const boundaryKey=d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()+"-"+d.getHours()+"-"+Math.floor(d.getMinutes()/30);
+  if((d.getMinutes()%30===0 || d.getMinutes()%30===30) && d.getSeconds()<12 && boundaryKey!==lastTZBoundary){
+    lastTZBoundary=boundaryKey;
+    setTimeout(refreshTerrorZone,7000);
+  }
+}
+
+setInterval(tickTerrorTimer,1000);
+setInterval(refreshTerrorZone,60000);
+tickTerrorTimer();
+refreshTerrorZone();
+updateSubFilters();
+render();
 </script>
 </body>
 </html>
