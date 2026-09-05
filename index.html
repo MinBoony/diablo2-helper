@@ -131,7 +131,7 @@ function zoneDetail(x){
  return `<div class="dhead"><div class="roundicon">⌖</div><div><div class="dtitle">${esc(x.name)}</div><div class="den">${esc(x.enName)}</div></div><div class="star">☆</div></div>
  <div class="sectionTitle">핵심 정보</div><div class="summaryLine">자주 등장하는 면역: ${esc(x.immunesSummary||"지역별 상이")}</div>
  <div class="box"><div class="boxtitle">자주 등장하는 면역 <span class="difficulty">지옥 난이도</span></div>${imHtml}<div class="note">고유·챔피언 몬스터의 추가 속성에 따라 다른 면역이 생길 수 있습니다.</div></div>
- <div class="box"><div class="boxtitle">파밍 정보</div><div class="kpis"><div class="kpi"><small>지역 레벨 · 헬 기준</small><strong>${esc(al)}</strong></div><div class="kpi"><small>기대 가능한 최고 룬</small><strong>${esc(x.maxRune||"상이지역")}</strong></div></div>
+ <div class="box"><div class="boxtitle">파밍 정보</div><div class="kpis"><div class="kpi"><small>지역 레벨 (Area Level) · 헬</small><strong>${esc(al)}</strong></div><div class="kpi"><small>기대 가능한 최고 룬</small><strong>${esc(x.maxRune||"상이지역")}</strong></div></div>
  <div class="target"><small>누굴 잡아야 하나요?</small><b>${esc(x.targetTitle||"정예·챔피언 무리")}</b><p>${esc(x.targetDesc||"정예·챔피언 중심으로 사냥하세요.")}</p></div>
  <div class="note">최고 룬은 난이도·몬스터 종류·개별 드롭 테이블에 따라 달라질 수 있습니다.</div></div>
  <div class="tzbox"><div class="tzhead"><span>공포의 영역 보정</span><label class="levelctrl">캐릭터 Lv.<input id="charLv" type="number" min="1" max="99" value="82"></label></div><div id="tzCalc"></div></div>
@@ -143,10 +143,37 @@ function updateTZCalc(){
  if(!selected||selected.category!=="zone")return;
  const input=document.getElementById("charLv"); if(!input)return;
  let lv=Math.max(1,Math.min(99,parseInt(input.value)||82));
- const normal=Math.min(96,lv+2), champ=Math.min(98,lv+4), unique=Math.min(99,lv+5);
- const state=normal>=87?"TC87 조건 충족":"TC87 조건 미달";
- document.getElementById("tzCalc").innerHTML=`<div class="tzkpis"><div class="tzkpi"><small>일반 몬스터</small><b>Lv. ${normal}</b></div><div class="tzkpi"><small>챔피언</small><b>Lv. ${champ}</b></div><div class="tzkpi"><small>고유·보스</small><b>Lv. ${unique}</b></div></div>
- <div class="tcstate"><b>${state}</b><p>일반 몬스터 기준 레벨이 87 이상인지 빠르게 확인하는 보조 표시입니다. 실제 아이템 드롭은 몬스터와 보물 등급 표에 따라 달라집니다.</p></div>`;
+
+ // 공포의 영역 몬스터 레벨 보정
+ const normal=Math.min(96,lv+2);
+ const champ=Math.min(98,lv+4);
+ const unique=Math.min(99,lv+5);
+
+ // "TC85/TC87 조건"처럼 캐릭터 레벨과 TC를 같은 개념으로 보이지 않도록 분리 표시
+ const normalState = normal>=87 ? "최고급 베이스 드롭권 진입" : `몬스터 Lv.${normal}`;
+ const champState  = champ>=87  ? "최고급 베이스 드롭권 진입" : `몬스터 Lv.${champ}`;
+ const uniqueState = unique>=87 ? "최고급 베이스 드롭권 진입" : `몬스터 Lv.${unique}`;
+
+ document.getElementById("tzCalc").innerHTML=`
+ <div class="tzkpis">
+   <div class="tzkpi"><small>일반 몬스터</small><b>Lv. ${normal}</b></div>
+   <div class="tzkpi"><small>챔피언</small><b>Lv. ${champ}</b></div>
+   <div class="tzkpi"><small>고유·보스</small><b>Lv. ${unique}</b></div>
+ </div>
+
+ <div class="tcstate">
+   <b>공포의 영역 드롭 조건 안내</b>
+   <p>
+     일반: ${normalState}<br>
+     챔피언: ${champState}<br>
+     고유·보스: ${uniqueState}
+   </p>
+   <p style="margin-top:7px">
+     ※ 캐릭터 레벨과 TC는 같은 개념이 아닙니다.<br>
+     ※ '지역 레벨 85'는 캐릭터가 85레벨이어야 한다는 뜻이 아닙니다.<br>
+     ※ 실제 아이템 드롭은 몬스터의 Treasure Class(TC), 아이템 Qlvl, 몬스터 레벨에 따라 최종 결정됩니다.
+   </p>
+ </div>`;
 }
 
 function openDetail(x){
