@@ -286,16 +286,10 @@ document.getElementById("close").onclick=closeDetail;document.getElementById("ba
    - 회전 직후 10/25/55/90초 재확인
 */
 const TZ_KO = {
+  /* 트래커에서 자주 쓰는 '묶음 지역명'을 먼저 정확히 번역 */
   "The Secret Cow Level":"비밀의 젖소방",
   "Moo Moo Farm":"비밀의 젖소방",
-  "Rocky Waste and Stony Tomb":"바위투성이 황무지, 암석 무덤",
-  "Rocky Waste, Stony Tomb":"바위투성이 황무지, 암석 무덤",
-  "Black Marsh, The Hole, The Forgotten Tower":"검은 습지, 구멍, 잊힌 탑",
-  "Black Marsh / The Hole / The Forgotten Tower":"검은 습지, 구멍, 잊힌 탑",
-  "Dry Hills and Halls of the Dead":"메마른 언덕, 망자의 전당",
-  "Dry Hills, Halls of the Dead":"메마른 언덕, 망자의 전당",
-  "Far Oasis and The Maggot Lair":"머나먼 오아시스, 구더기 굴",
-  "Far Oasis, Maggot Lair":"머나먼 오아시스, 구더기 굴",
+
   "Cold Plains and The Cave":"차가운 평야, 동굴",
   "Cold Plains, The Cave":"차가운 평야, 동굴",
   "Burial Grounds, The Crypt, and the Mausoleum":"매장지, 묘실, 영묘",
@@ -304,50 +298,264 @@ const TZ_KO = {
   "Stony Field, Tristram":"바위 벌판, 트리스트럼",
   "Dark Wood / Underground Passage":"어둠숲, 지하 통로",
   "Dark Wood, Underground Passage":"어둠숲, 지하 통로",
-  "Jail / Barracks":"감옥, 병영",
-  "Jail, Barracks":"감옥, 병영",
+  "Black Marsh, The Hole, The Forgotten Tower":"검은 습지, 구멍, 잊힌 탑",
+  "Black Marsh / The Hole / The Forgotten Tower":"검은 습지, 구멍, 잊힌 탑",
+  "Tamoe Highland and The Pit":"타모 고원, 구덩이",
   "The Pit / Tamoe Highland / Outer Cloister":"구덩이, 타모 고원, 외부 회랑",
   "The Pit, Tamoe Highland, Outer Cloister":"구덩이, 타모 고원, 외부 회랑",
+  "Jail / Barracks":"감옥, 병영",
+  "Jail, Barracks":"감옥, 병영",
   "Inner Cloister / Cathedral and Catacombs":"내부 회랑, 대성당, 지하 묘지",
   "Inner Cloister, Cathedral, Catacombs":"내부 회랑, 대성당, 지하 묘지",
-  "Sewers":"하수구",
+
+  "Rocky Waste and Stony Tomb":"바위투성이 황무지, 암석 무덤",
+  "Rocky Waste, Stony Tomb":"바위투성이 황무지, 암석 무덤",
+  "Dry Hills and Halls of the Dead":"메마른 언덕, 망자의 전당",
+  "Dry Hills, Halls of the Dead":"메마른 언덕, 망자의 전당",
+  "Far Oasis and The Maggot Lair":"머나먼 오아시스, 구더기 굴",
+  "Far Oasis, Maggot Lair":"머나먼 오아시스, 구더기 굴",
   "Lost City, Valley of Snakes, and Claw Viper Temple, Ancient Tunnels":"잊힌 도시, 뱀의 골짜기, 발톱 독사 사원, 고대 토굴",
+  "Lost City, Valley of Snakes and Claw Viper Temple":"잊힌 도시, 뱀의 골짜기, 발톱 독사 사원",
   "Harem, Palace and Arcane Sanctuary":"하렘, 궁전, 비전의 성역",
   "Canyon of the Magi and Tal Rasha's Tombs":"신비술사의 협곡, 탈 라샤의 무덤",
-  "Spider Forest and Spider Cavern / Arachnid Lair":"거미 숲, 거미 동굴, 거미굴",
-  "Great Marsh":"거대 습지",
+
+  "Spider Forest and Spider Cavern / Arachnid Lair":"거미 숲, 거미굴, 거미 동굴",
   "Flayer Jungle and Flayer Dungeon / Swampy Pit":"약탈자 밀림, 약탈자 던전, 습한 구덩이",
-  "Travincal":"트라빈칼",
-  "Durance of Hate":"증오의 억류지",
+  "Kurast Bazaar, Ruined Temple and Disused Fane":"쿠라스트 시장, 폐허가 된 사원, 버려진 신당",
+  "Upper Kurast, Forgotten Temple, Forgotten Reliquary":"상부 쿠라스트, 잊힌 사원, 잊힌 유물실",
+  "Kurast Causeway, Ruined Fane and Disused Reliquary":"쿠라스트 둑길, 폐허가 된 신당, 버려진 유물실",
+
   "Outer Steppes and Plains of Despair":"평원 외곽, 절망의 평원",
   "River of Flame / City of the Damned":"불길의 강, 저주받은 자들의 도시",
-  "Chaos Sanctuary":"혼돈의 성역",
+  "City of the Damned and River of Flame":"저주받은 자들의 도시, 불길의 강",
+
   "Bloody Foothills / Frigid Highlands / Abbadon":"핏빛 언덕, 혹한의 고산지, 아바돈",
-  "Glacial Trail / Drifter Cavern":"빙하의 길, 부랑자의 동굴",
-  "Crystalline Passage and Frozen River":"수정 동굴, 얼어붙은 강",
-  "Frozen Tundra + Infernal Pit":"얼어붙은 동토, 지옥의 구덩이",
+  "Bloody Foothills, Frigid Highlands and Abaddon":"핏빛 언덕, 혹한의 고산지, 아바돈",
   "Arreat Plateau / Pit of Acheron":"아리앗 고원, 아케론의 구덩이",
-  "Nihlathak's Temple, Halls of Anguish, Halls of Pain, and Halls of Vaught (Temple Halls)":"니흘라탁의 사원, 고뇌의 전당, 고통의 전당, 보트의 전당",
+  "Arreat Plateau and Pit of Acheron":"아리앗 고원, 아케론의 구덩이",
+  "Crystalline Passage and Frozen River":"수정 동굴, 얼어붙은 강",
+  "Glacial Trail / Drifter Cavern":"빙하의 길, 부랑자의 동굴",
+  "Frozen Tundra + Infernal Pit":"얼어붙은 동토, 지옥의 구덩이",
+  "Frozen Tundra and Infernal Pit":"얼어붙은 동토, 지옥의 구덩이",
   "Ancient's Way and Icy Cellar":"고대인의 길, 얼음 지하실",
+  "Nihlathak's Temple, Halls of Anguish, Halls of Pain, and Halls of Vaught (Temple Halls)":"니흘라탁의 사원, 고뇌의 전당, 고통의 전당, 보트의 전당",
+  "Nihlathak's Temple and Halls of Anguish, Pain and Vaught":"니흘라탁의 사원, 고뇌의 전당, 고통의 전당, 보트의 전당",
   "Worldstone Keep, Throne of Destruction, and Worldstone Chamber":"세계석 성채, 파괴의 왕좌, 세계석 보관실"
+};
+
+/* 묶음명이 조금 달라도 영어 지역명이 남지 않도록 개별 지역명 전체를 번역 */
+const TZ_AREA_KO = {
+  "Rogue Encampment":"자매단 야영지",
+  "Blood Moor":"핏빛 황무지",
+  "Den of Evil":"악의 소굴",
+  "Cold Plains":"차가운 평야",
+  "The Cave":"동굴",
+  "Cave Level 1":"동굴 1층",
+  "Cave Level 2":"동굴 2층",
+  "Burial Grounds":"매장지",
+  "The Crypt":"묘실",
+  "Crypt":"묘실",
+  "The Mausoleum":"영묘",
+  "Mausoleum":"영묘",
+  "Stony Field":"바위 벌판",
+  "Tristram":"트리스트럼",
+  "Underground Passage":"지하 통로",
+  "Underground Passage Level 1":"지하 통로 1층",
+  "Underground Passage Level 2":"지하 통로 2층",
+  "Dark Wood":"어둠숲",
+  "Black Marsh":"검은 습지",
+  "The Hole":"구멍",
+  "Hole Level 1":"구멍 1층",
+  "Hole Level 2":"구멍 2층",
+  "The Forgotten Tower":"잊힌 탑",
+  "Forgotten Tower":"잊힌 탑",
+  "Tower Cellar Level 1":"탑 지하 1층",
+  "Tower Cellar Level 2":"탑 지하 2층",
+  "Tower Cellar Level 3":"탑 지하 3층",
+  "Tower Cellar Level 4":"탑 지하 4층",
+  "Tower Cellar Level 5":"탑 지하 5층",
+  "Tamoe Highland":"타모 고원",
+  "The Pit":"구덩이",
+  "Pit Level 1":"구덩이 1층",
+  "Pit Level 2":"구덩이 2층",
+  "Monastery Gate":"수도원 정문",
+  "Outer Cloister":"외부 회랑",
+  "Barracks":"병영",
+  "Jail":"감옥",
+  "Jail Level 1":"감옥 1층",
+  "Jail Level 2":"감옥 2층",
+  "Jail Level 3":"감옥 3층",
+  "Inner Cloister":"내부 회랑",
+  "Cathedral":"대성당",
+  "Catacombs":"지하 묘지",
+  "Catacombs Level 1":"지하 묘지 1층",
+  "Catacombs Level 2":"지하 묘지 2층",
+  "Catacombs Level 3":"지하 묘지 3층",
+  "Catacombs Level 4":"지하 묘지 4층",
+  "The Secret Cow Level":"비밀의 젖소방",
+  "Moo Moo Farm":"비밀의 젖소방",
+
+  "Lut Gholein":"루트 골레인",
+  "Sewers":"하수구",
+  "Sewers Level 1":"하수구 1층",
+  "Sewers Level 2":"하수구 2층",
+  "Sewers Level 3":"하수구 3층",
+  "Rocky Waste":"바위투성이 황무지",
+  "Stony Tomb":"암석 무덤",
+  "Stony Tomb Level 1":"암석 무덤 1층",
+  "Stony Tomb Level 2":"암석 무덤 2층",
+  "Dry Hills":"메마른 언덕",
+  "Halls of the Dead":"망자의 전당",
+  "Halls of the Dead Level 1":"망자의 전당 1층",
+  "Halls of the Dead Level 2":"망자의 전당 2층",
+  "Halls of the Dead Level 3":"망자의 전당 3층",
+  "Far Oasis":"머나먼 오아시스",
+  "Maggot Lair":"구더기 굴",
+  "Maggot Lair Level 1":"구더기 굴 1층",
+  "Maggot Lair Level 2":"구더기 굴 2층",
+  "Maggot Lair Level 3":"구더기 굴 3층",
+  "Lost City":"잊힌 도시",
+  "Ancient Tunnels":"고대 토굴",
+  "Valley of Snakes":"뱀의 골짜기",
+  "Claw Viper Temple":"발톱 독사 사원",
+  "Claw Viper Temple Level 1":"발톱 독사 사원 1층",
+  "Claw Viper Temple Level 2":"발톱 독사 사원 2층",
+  "Harem":"하렘",
+  "Harem Level 1":"하렘 1층",
+  "Harem Level 2":"하렘 2층",
+  "Palace":"궁전",
+  "Palace Cellar Level 1":"궁전 지하 1층",
+  "Palace Cellar Level 2":"궁전 지하 2층",
+  "Palace Cellar Level 3":"궁전 지하 3층",
+  "Arcane Sanctuary":"비전의 성역",
+  "Canyon of the Magi":"신비술사의 협곡",
+  "Tal Rasha's Tombs":"탈 라샤의 무덤",
+  "Tal Rasha's Tomb":"탈 라샤의 무덤",
+  "Duriel's Lair":"듀리엘의 방",
+
+  "Kurast Docks":"쿠라스트 부두",
+  "Spider Forest":"거미 숲",
+  "Spider Cavern":"거미굴",
+  "Spider Cave":"거미 동굴",
+  "Arachnid Lair":"거미 동굴",
+  "Great Marsh":"거대 습지",
+  "Flayer Jungle":"약탈자 밀림",
+  "Flayer Dungeon":"약탈자 던전",
+  "Flayer Dungeon Level 1":"약탈자 던전 1층",
+  "Flayer Dungeon Level 2":"약탈자 던전 2층",
+  "Flayer Dungeon Level 3":"약탈자 던전 3층",
+  "Swampy Pit":"습한 구덩이",
+  "Swampy Pit Level 1":"습한 구덩이 1층",
+  "Swampy Pit Level 2":"습한 구덩이 2층",
+  "Swampy Pit Level 3":"습한 구덩이 3층",
+  "Lower Kurast":"하부 쿠라스트",
+  "Kurast Bazaar":"쿠라스트 시장",
+  "Ruined Temple":"폐허가 된 사원",
+  "Disused Fane":"버려진 신당",
+  "Upper Kurast":"상부 쿠라스트",
+  "Forgotten Temple":"잊힌 사원",
+  "Forgotten Reliquary":"잊힌 유물실",
+  "Kurast Causeway":"쿠라스트 둑길",
+  "Ruined Fane":"폐허가 된 신당",
+  "Disused Reliquary":"버려진 유물실",
+  "Travincal":"트라빈칼",
+  "Durance of Hate":"증오의 억류지",
+  "Durance of Hate Level 1":"증오의 억류지 1층",
+  "Durance of Hate Level 2":"증오의 억류지 2층",
+  "Durance of Hate Level 3":"증오의 억류지 3층",
+
+  "Pandemonium Fortress":"혼돈의 요새",
+  "The Pandemonium Fortress":"혼돈의 요새",
+  "Outer Steppes":"평원 외곽",
+  "Plains of Despair":"절망의 평원",
+  "City of the Damned":"저주받은 자들의 도시",
+  "River of Flame":"불길의 강",
+  "Chaos Sanctuary":"혼돈의 성역",
+
+  "Harrogath":"하로가스",
+  "Bloody Foothills":"핏빛 언덕",
+  "Frigid Highlands":"혹한의 고산지",
+  "Abaddon":"아바돈",
+  "Abbadon":"아바돈",
+  "Arreat Plateau":"아리앗 고원",
+  "Pit of Acheron":"아케론의 구덩이",
+  "Crystalline Passage":"수정 동굴",
+  "Crystalized Passage":"수정 동굴",
+  "Frozen River":"얼어붙은 강",
+  "Glacial Trail":"빙하의 길",
+  "Drifter Cavern":"부랑자의 동굴",
+  "Frozen Tundra":"얼어붙은 동토",
+  "Infernal Pit":"지옥의 구덩이",
+  "Ancient's Way":"고대인의 길",
+  "Icy Cellar":"얼음 지하실",
+  "Arreat Summit":"아리앗 정상",
+  "Nihlathak's Temple":"니흘라탁의 사원",
+  "Nihlathaks Temple":"니흘라탁의 사원",
+  "Halls of Anguish":"고뇌의 전당",
+  "Halls of Pain":"고통의 전당",
+  "Halls of Vaught":"보트의 전당",
+  "Worldstone Keep":"세계석 성채",
+  "Worldstone Keep Level 1":"세계석 성채 1층",
+  "Worldstone Keep Level 2":"세계석 성채 2층",
+  "Worldstone Keep Level 3":"세계석 성채 3층",
+  "Throne of Destruction":"파괴의 왕좌",
+  "Worldstone Chamber":"세계석 보관실"
 };
 
 function cleanTZName(v){
   let s=String(v||"")
-    .replace(/^\s*ACT\s*[1-5]\s*[·:-]\s*/i,"")
+    .replace(/^\s*(?:ACT|Act|액트)\s*[1-5]\s*[·:—–-]\s*/i,"")
+    .replace(/&amp;/gi,"&")
+    .replace(/[“”]/g,'"')
+    .replace(/[’]/g,"'")
     .replace(/\s+/g," ")
     .trim();
-  return TZ_KO[s] || s;
+
+  if(!s) return "";
+
+  /* 1. 트래커 묶음명 정확 일치 */
+  if(TZ_KO[s]) return TZ_KO[s];
+
+  /* 2. 개별 지역명을 긴 이름부터 치환 */
+  let out=s;
+  Object.keys(TZ_AREA_KO)
+    .sort((a,b)=>b.length-a.length)
+    .forEach(en=>{
+      if(out.toLowerCase().includes(en.toLowerCase())){
+        out=out.replace(new RegExp(en.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi"),TZ_AREA_KO[en]);
+      }
+    });
+
+  /* 3. 영어 연결어/구분자 정리 */
+  out=out
+    .replace(/\s+(?:and|&)\s+/gi,", ")
+    .replace(/\s*\/\s*/g,", ")
+    .replace(/\s*\+\s*/g,", ")
+    .replace(/\s*,\s*/g,", ")
+    .replace(/\bLevel\s*(\d+)\b/gi,"$1층")
+    .replace(/\bTemple Halls\b/gi,"전당")
+    .replace(/\bThe\b/gi,"")
+    .replace(/\s+/g," ")
+    .replace(/,\s*,+/g,",")
+    .replace(/^,\s*|\s*,$/g,"")
+    .trim();
+
+  /* 영어가 남는 예외는 화면에 그대로 노출하지 않고 한국어 상태 표시 */
+  if(/[A-Za-z]/.test(out)){
+    console.warn("미번역 공포의 영역명:",s);
+    return "공포의 영역 정보 확인 중";
+  }
+  return out;
 }
 
 function actFromName(name){
   const n=cleanTZName(name);
   const groups = [
-    ["ACT 1",["핏빛 황무지","차가운 평야","매장지","바위 벌판","어둠숲","검은 습지","감옥","구덩이","내부 회랑","비밀의 젖소방"]],
-    ["ACT 2",["하수구","바위투성이 황무지","메마른 언덕","머나먼 오아시스","잊힌 도시","하렘","신비술사의 협곡"]],
-    ["ACT 3",["거미 숲","거대 습지","약탈자 밀림","쿠라스트","트라빈칼","증오의 억류지"]],
-    ["ACT 4",["평원 외곽","불길의 강","혼돈의 성역"]],
-    ["ACT 5",["핏빛 언덕","빙하의 길","수정 동굴","얼어붙은 동토","아리앗 고원","니흘라탁","고대인의 길","세계석 성채"]]
+    ["액트 1",["핏빛 황무지","악의 소굴","차가운 평야","동굴","매장지","묘실","영묘","바위 벌판","트리스트럼","지하 통로","어둠숲","검은 습지","구멍","잊힌 탑","타모 고원","구덩이","수도원","회랑","병영","감옥","대성당","지하 묘지","비밀의 젖소방"]],
+    ["액트 2",["루트 골레인","하수구","바위투성이 황무지","암석 무덤","메마른 언덕","망자의 전당","머나먼 오아시스","구더기 굴","잊힌 도시","고대 토굴","뱀의 골짜기","발톱 독사 사원","하렘","궁전","비전의 성역","신비술사의 협곡","탈 라샤","듀리엘"]],
+    ["액트 3",["쿠라스트","거미 숲","거미굴","거미 동굴","거대 습지","약탈자 밀림","약탈자 던전","습한 구덩이","폐허가 된","버려진","잊힌 유물실","트라빈칼","증오의 억류지"]],
+    ["액트 4",["혼돈의 요새","평원 외곽","절망의 평원","저주받은 자들의 도시","불길의 강","혼돈의 성역"]],
+    ["액트 5",["하로가스","핏빛 언덕","혹한의 고산지","아바돈","아리앗 고원","아케론의 구덩이","수정 동굴","얼어붙은 강","빙하의 길","부랑자의 동굴","얼어붙은 동토","지옥의 구덩이","고대인의 길","얼음 지하실","아리앗 정상","니흘라탁","고뇌의 전당","고통의 전당","보트의 전당","세계석 성채","파괴의 왕좌","세계석 보관실"]]
   ];
   for(const [act,keys] of groups) if(keys.some(k=>n.includes(k))) return act;
   return "";
@@ -450,8 +658,10 @@ async function refreshTerrorZone(){
     if(best){
       lastGoodTZ={...best,at:Date.now()};
       const act=actFromName(best.current);
-      currentEl.textContent=(act?act+" · ":"")+best.current;
-      nextEl.textContent=best.next||"다음 지역 예측 대기 중";
+      currentEl.textContent=(act?act+" · ":"")+cleanTZName(best.current);
+      const nextName=cleanTZName(best.next);
+      const nextAct=actFromName(nextName);
+      nextEl.textContent=nextName ? ((nextAct?nextAct+" · ":"")+nextName) : "다음 지역 예측 대기 중";
       currentEl.title=best.confirmed
         ?"복수 실시간 트래커 일치"
         :"실시간 단일 트래커 기준";
@@ -460,8 +670,10 @@ async function refreshTerrorZone(){
 
     if(lastGoodTZ && Date.now()-lastGoodTZ.at<4*60*1000){
       const act=actFromName(lastGoodTZ.current);
-      currentEl.textContent=(act?act+" · ":"")+lastGoodTZ.current;
-      nextEl.textContent=lastGoodTZ.next||"재동기화 중";
+      currentEl.textContent=(act?act+" · ":"")+cleanTZName(lastGoodTZ.current);
+      const nextName=cleanTZName(lastGoodTZ.next);
+      const nextAct=actFromName(nextName);
+      nextEl.textContent=nextName ? ((nextAct?nextAct+" · ":"")+nextName) : "재동기화 중";
       currentEl.title="최근 정상 수신값 · 재동기화 중";
     }else{
       currentEl.textContent="실시간 정보 재동기화 중";
