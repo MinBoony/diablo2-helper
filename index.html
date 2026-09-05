@@ -31,6 +31,22 @@ main{max-width:1240px;margin:auto;padding:10px 20px 70px} .tabs{display:flex;gap
 .tzbox{margin-top:22px;border:1px solid #643b25;background:#100d0b;padding:15px} .tzhead{display:flex;justify-content:space-between;align-items:center;color:#d79b42;font-size:12px} .levelctrl{display:flex;align-items:center;gap:5px;border:1px solid #946625;padding:4px 6px;color:#e9b24b;font-size:10px} .levelctrl input{width:38px;border:0;background:transparent;color:#ffd06c;outline:none;font-weight:800}
 .tzkpis{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px} .tzkpi{border:1px solid #3b2c21;background:#171411;padding:11px} .tzkpi small{display:block;font-size:10px;color:#7c7067;margin-bottom:6px} .tzkpi b{font-size:15px;color:#ffbd4c} .tcstate{margin-top:8px;border-left:3px solid #6f5b45;background:#15130f;padding:10px} .tcstate b{font-size:12px;color:#e7d6c7} .tcstate p{font-size:10px;color:#7c7067;line-height:1.5;margin:5px 0 0}
 .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:22px} .tag{border:1px solid #3a2b21;padding:6px 9px;font-size:10px;color:#9a8979} .tip{margin-top:22px;border-left:2px solid #d18b22;background:#17140f;padding:14px;display:flex;gap:10px} .tip i{width:25px;height:25px;border-radius:50%;border:1px solid #b8781c;display:grid;place-items:center;color:#e9a72d;font-style:normal;flex:0 0 auto} .tip b{color:#dfa94a;font-size:12px} .tip p{margin:5px 0 0;font-size:11px;line-height:1.55;color:#9b8d81}
+
+.countessbox{margin-top:18px;border:1px solid #4a3320;background:#0d0d0b;padding:14px}
+.countesshead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.countesshead b{color:#dda34b;font-size:12px}
+.countesshead small{color:#70645c;font-size:9px}
+.countess-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.countess-tab{border:1px solid #3c2c21;background:#17130f;color:#95877c;padding:5px 9px;border-radius:4px;font-size:10px}
+.countess-tab.active{border-color:#a36e29;color:#f1bd5a;background:#24180f}
+.countess-table{width:100%;border-collapse:collapse;font-size:11px}
+.countess-table th{padding:7px 6px;border-bottom:1px solid #493420;color:#9d8b7d;font-weight:700;text-align:right}
+.countess-table th:first-child,.countess-table td:first-child{text-align:left}
+.countess-table td{padding:6px;border-bottom:1px solid #221913;text-align:right;color:#cdbfb3}
+.countess-table td:first-child{color:#e0a85a;font-weight:800}
+.countess-table tr:last-child td{border-bottom:0}
+.countess-note{margin-top:9px;color:#6f645b;font-size:9px;line-height:1.5}
+
 .statrow{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #241b15;font-size:12px} .statrow span:first-child{color:#cdbfb2} .statrow span:last-child{color:#e3ab4c;text-align:right;font-weight:700} .basegrid{display:grid;grid-template-columns:1fr 1fr;gap:8px} .basecell{border:1px solid #38291f;background:#17130f;padding:11px} .basecell small{display:block;color:#7d7167;font-size:10px} .basecell b{display:block;color:#edbd69;font-size:16px;margin-top:4px}
 footer{border-top:1px solid #201813;text-align:center;padding:24px;color:#564d47;font-size:10px}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}} @media(max-width:620px){.grid{grid-template-columns:1fr} main{padding-left:12px;padding-right:12px} .hero h1{font-size:27px} .terror{padding:8px 10px} .tz-next{display:none} .tz-name{max-width:180px} .dbtxt{display:none}}
@@ -123,6 +139,58 @@ function normalDetail(x){
  <div class="tip"><i>!</i><div><b>모험가 팁</b><p>${x.category==="base"?"룬워드 제작 전 소켓 수와 아이템 종류를 반드시 확인하세요.":x.category==="unique"?"변동 옵션이 있는 유니크는 수치에 따라 가치가 크게 달라질 수 있습니다.":"게임 내 최신 패치와 실제 아이템 표기를 함께 확인하세요."}</p></div></div>`;
 }
 
+
+const COUNTESS_RUNE_DROPS={
+  normal:[
+    ["엘","10.13%","10"],["엘드","6.84%","15"],["티르","22.10%","5"],["네프","15.12%","7"],
+    ["에드","29.31%","4"],["아이드","20.22%","5"],["탈","40.04%","3"],["랄","28.05%","4"]
+  ],
+  nightmare:[
+    ["엘","4.54%","23"],["엘드","3.04%","33"],["티르","11.10%","10"],["네프","7.49%","14"],
+    ["에드","15.32%","7"],["아이드","10.38%","10"],["탈","21.40%","5"],["랄","14.62%","7"],
+    ["오르트","21.40%","5"],["주울","14.62%","7"],["앰","16.82%","6"],["솔","11.42%","9"],
+    ["샤엘","10.32%","10"],["돌","6.96%","15"],["헬","5.82%","18"],["이오","3.90%","26"],
+    ["룸","0.04%","2559"],["코","0.03%","3837"]
+  ],
+  hell:[
+    ["엘","4.29%","24"],["엘드","2.87%","35"],["티르","10.50%","10"],["네프","7.08%","15"],
+    ["에드","14.51%","7"],["아이드","9.83%","11"],["탈","20.30%","5"],["랄","13.85%","8"],
+    ["오르트","20.30%","5"],["주울","13.85%","8"],["앰","15.93%","7"],["솔","10.81%","10"],
+    ["샤엘","9.76%","11"],["돌","6.58%","16"],["헬","5.50%","19"],["이오","3.69%","28"],
+    ["룸","2.93%","35"],["코","1.96%","52"],["팔","1.51%","67"],["렘","1.01%","100"],
+    ["풀","0.77%","131"],["우움","0.51%","196"],["말","0.52%","192"],["이스트","0.35%","287"],
+    ["굴","0.0047%","21435"],["벡스","0.0031%","32151"],["오움","0.0033%","30520"],["로","0.0022%","45779"]
+  ]
+};
+
+function countessTableHtml(mode="hell"){
+  const title={normal:"노멀",nightmare:"나이트메어",hell:"헬"}[mode]||"헬";
+  const rows=(COUNTESS_RUNE_DROPS[mode]||[]).map(r=>`
+    <tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("");
+  return `<div class="countessbox">
+    <div class="countesshead"><b>백작 룬 드롭 확률</b><small>참고용 드랍율</small></div>
+    <div class="countess-tabs">
+      <button class="countess-tab ${mode==="normal"?"active":""}" data-countess-mode="normal">노멀</button>
+      <button class="countess-tab ${mode==="nightmare"?"active":""}" data-countess-mode="nightmare">나이트메어</button>
+      <button class="countess-tab ${mode==="hell"?"active":""}" data-countess-mode="hell">헬</button>
+    </div>
+    <div class="boxtitle" style="margin-bottom:5px">${title} 카운테스</div>
+    <table class="countess-table">
+      <thead><tr><th>룬</th><th>드랍율</th><th>마릿수</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="countess-note">※ 사용자가 제공한 참고표의 수치를 그대로 등록했습니다. ‘마릿수’는 표에 기재된 참고값입니다.</div>
+  </div>`;
+}
+
+function isCountessZone(x){
+  return x && x.category==="zone" && (
+    x.order===25 ||
+    x.order===6 ||
+    /백작|카운테스/i.test(String(x.targetTitle||""))
+  );
+}
+
 function zoneDetail(x){
  const im=(x.immunes||[]);
  const imHtml=x.safeZone?`<div class="immune var"><b>안전 지대</b><span>몬스터가 없는 마을 거점입니다.</span></div>`:
@@ -135,6 +203,7 @@ function zoneDetail(x){
  <div class="box"><div class="boxtitle">파밍 정보</div><div class="kpis"><div class="kpi"><small>지역 레벨 (Area Level) · 헬</small><strong>${esc(al)}</strong></div><div class="kpi"><small>기대 가능한 최고 룬</small><strong>${esc(x.maxRune||"상이지역")}</strong></div></div>
  <div class="target"><small>누굴 잡아야 하나요?</small><b>${esc(x.targetTitle||"정예·챔피언 무리")}</b><p>${esc(x.targetDesc||"정예·챔피언 중심으로 사냥하세요.")}</p></div>
  <div class="note">최고 룬은 난이도·몬스터 종류·개별 드롭 테이블에 따라 달라질 수 있습니다.</div></div>
+ ${isCountessZone(x)?`<div id="countessDropWrap">${countessTableHtml("hell")}</div>`:""}
  <div class="tzbox"><div class="tzhead"><span>공포의 영역 보정</span><label class="levelctrl">캐릭터 Lv.<input id="charLv" type="number" min="1" max="99" value="82"></label></div><div id="tzCalc"></div></div>
  <div class="tags">${tags}</div>
  <div class="tip"><i>!</i><div><b>모험가 팁</b><p>${esc(x.tip||"일반 몬스터만 지나치지 말고 챔피언과 고유 몬스터 무리를 함께 처치하세요.")}</p></div></div>`;
@@ -181,7 +250,20 @@ function openDetail(x){
  selected=x;
  document.getElementById("detail").innerHTML=x.category==="zone"?zoneDetail(x):normalDetail(x);
  document.body.classList.add("open"); document.getElementById("drawer").setAttribute("aria-hidden","false");
- if(x.category==="zone"){updateTZCalc();document.getElementById("charLv").addEventListener("input",updateTZCalc)}
+ if(x.category==="zone"){
+   updateTZCalc();
+   document.getElementById("charLv").addEventListener("input",updateTZCalc);
+   if(isCountessZone(x)){
+     const wrap=document.getElementById("countessDropWrap");
+     if(wrap){
+       wrap.addEventListener("click",e=>{
+         const b=e.target.closest("[data-countess-mode]");
+         if(!b)return;
+         wrap.innerHTML=countessTableHtml(b.dataset.countessMode);
+       });
+     }
+   }
+ }
 }
 function closeDetail(){document.body.classList.remove("open");document.getElementById("drawer").setAttribute("aria-hidden","true")}
 
