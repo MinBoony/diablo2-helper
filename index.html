@@ -17,7 +17,27 @@ button,input{font:inherit} button{cursor:pointer}
 main{max-width:1240px;margin:auto;padding:10px 20px 70px} .tabs{display:flex;gap:7px;flex-wrap:wrap;padding-bottom:10px;border-bottom:1px solid #281e17} .tab{background:transparent;color:#8d8076;border:1px solid transparent;border-radius:5px;padding:8px 11px;font-size:12px;font-weight:700} .tab:hover{background:#130f0c;border-color:#30231b;color:#d1aa70} .tab.active{background:#21170f;border-color:#684927;color:#f0c980}
 .subfilters{display:none;gap:7px;flex-wrap:wrap;margin:12px 0 0;padding:9px;background:#100d0b;border:1px solid #241a14;border-radius:6px} .subfilters.show{display:flex} .filterbtn{background:#16110e;border:1px solid #33261d;color:#95877b;border-radius:4px;padding:5px 9px;font-size:11px} .filterbtn.active{border-color:#a47132;color:#f0bd63;background:#24180f}
 .meta{display:flex;justify-content:space-between;align-items:center;margin:13px 0;color:#766a62;font-size:11px} .meta strong{color:#d6a154}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px} .card{position:relative;min-height:129px;padding:14px 38px 14px 14px;background:linear-gradient(#14100d,#100d0b);border:1px solid #2a2018;border-radius:6px;transition:.15s} .card:hover{transform:translateY(-1px);border-color:#5b4028;background:#18120e} .kind{font-size:10px;color:#c28c42;margin-bottom:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .card h3{font-size:15px;margin:0 0 4px;color:#e9e0d7} .en{font-size:10px;color:#6e635b;margin-bottom:9px} .desc{font-size:11px;line-height:1.45;color:#9b8d82} .fav{position:absolute;right:7px;top:7px;border:0;background:none;color:#5d5149;font-size:20px} .fav.on{color:#e0ad54} .wpdot{display:inline-block;margin-left:5px;padding:1px 5px;border:1px solid #664728;border-radius:3px;color:#daa85c;font-size:9px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px} .card{position:relative;min-height:129px;padding:14px 38px 14px 14px;background:linear-gradient(#14100d,#100d0b);border:1px solid #2a2018;border-radius:6px;transition:.15s} .card:hover{transform:translateY(-1px);border-color:#5b4028;background:#18120e}
+
+.card.tz-current{
+  border-color:#a92d24;
+  background:linear-gradient(180deg,rgba(92,18,14,.38),#130d0b);
+  box-shadow:0 0 0 1px rgba(205,55,43,.12),0 0 18px rgba(177,38,28,.12);
+}
+.card.tz-current:hover{border-color:#d84b3d;background:linear-gradient(180deg,rgba(112,24,18,.44),#160e0c)}
+.card.tz-next{
+  border-color:#68459a;
+  background:linear-gradient(180deg,rgba(59,35,91,.34),#110d14);
+  box-shadow:0 0 0 1px rgba(113,78,173,.10),0 0 18px rgba(84,52,137,.10);
+}
+.card.tz-next:hover{border-color:#8b63c3;background:linear-gradient(180deg,rgba(70,43,105,.42),#130f17)}
+.tz-card-badge{
+  display:inline-flex;align-items:center;gap:4px;margin-left:6px;
+  border-radius:3px;padding:2px 6px;font-size:9px;font-weight:900;letter-spacing:.02em
+}
+.tz-card-badge.current{background:#8f261e;border:1px solid #c74739;color:#ffe4df}
+.tz-card-badge.next{background:#443065;border:1px solid #7958a8;color:#e8dfff}
+ .kind{font-size:10px;color:#c28c42;margin-bottom:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .card h3{font-size:15px;margin:0 0 4px;color:#e9e0d7} .en{font-size:10px;color:#6e635b;margin-bottom:9px} .desc{font-size:11px;line-height:1.45;color:#9b8d82} .fav{position:absolute;right:7px;top:7px;border:0;background:none;color:#5d5149;font-size:20px} .fav.on{color:#e0ad54} .wpdot{display:inline-block;margin-left:5px;padding:1px 5px;border:1px solid #664728;border-radius:3px;color:#daa85c;font-size:9px}
 .empty{grid-column:1/-1;padding:60px;text-align:center;color:#6a5f57}
 
 .backdrop{position:fixed;inset:0;background:#000a;z-index:70;opacity:0;pointer-events:none;transition:.18s} .drawer{position:fixed;z-index:71;right:0;top:0;width:min(410px,95vw);height:100vh;overflow:auto;background:#0d0d0b;border-left:1px solid #7a582f;box-shadow:-20px 0 55px #000b;padding:27px 27px 40px;transform:translateX(102%);transition:.2s} body.open .backdrop{opacity:1;pointer-events:auto} body.open .drawer{transform:none}
@@ -94,6 +114,54 @@ function updateSubFilters(){
  box.innerHTML=opts.map(([k,n])=>`<button class="filterbtn ${zoneFilter===k?"active":""}" data-zf="${k}">${n}</button>`).join("");
 }
 
+
+let CURRENT_TZ_NAME="";
+let NEXT_TZ_NAME="";
+
+/* 묶음 공포의 영역 이름과 개별 사냥터 카드를 연결하기 위한 별칭 */
+const TZ_ZONE_PARENT_KO = {
+  "동굴 1층":"동굴","동굴 2층":"동굴",
+  "지하 통로 1층":"지하 통로","지하 통로 2층":"지하 통로",
+  "구멍 1층":"구멍","구멍 2층":"구멍",
+  "구덩이 1층":"구덩이","구덩이 2층":"구덩이",
+  "탑 지하 1층":"잊힌 탑","탑 지하 2층":"잊힌 탑","탑 지하 3층":"잊힌 탑",
+  "탑 지하 4층":"잊힌 탑","탑 지하 5층":"잊힌 탑",
+  "감옥 1층":"감옥","감옥 2층":"감옥","감옥 3층":"감옥",
+  "지하 묘지 1층":"지하 묘지","지하 묘지 2층":"지하 묘지","지하 묘지 3층":"지하 묘지","지하 묘지 4층":"지하 묘지",
+  "하수구 1층":"하수구","하수구 2층":"하수구","하수구 3층":"하수구",
+  "암석 무덤 1층":"암석 무덤","암석 무덤 2층":"암석 무덤",
+  "망자의 전당 1층":"망자의 전당","망자의 전당 2층":"망자의 전당","망자의 전당 3층":"망자의 전당",
+  "발톱 독사 사원 1층":"발톱 독사 사원","발톱 독사 사원 2층":"발톱 독사 사원",
+  "구더기 굴 1층":"구더기 굴","구더기 굴 2층":"구더기 굴","구더기 굴 3층":"구더기 굴",
+  "탈 라샤의 무덤 1":"탈 라샤의 무덤","탈 라샤의 무덤 2":"탈 라샤의 무덤","탈 라샤의 무덤 3":"탈 라샤의 무덤",
+  "탈 라샤의 무덤 4":"탈 라샤의 무덤","탈 라샤의 무덤 5":"탈 라샤의 무덤","탈 라샤의 무덤 6":"탈 라샤의 무덤","탈 라샤의 무덤 7":"탈 라샤의 무덤",
+  "약탈자 던전 1층":"약탈자 던전","약탈자 던전 2층":"약탈자 던전","약탈자 던전 3층":"약탈자 던전",
+  "습한 구덩이 1층":"습한 구덩이","습한 구덩이 2층":"습한 구덩이","습한 구덩이 3층":"습한 구덩이",
+  "증오의 억류지 1층":"증오의 억류지","증오의 억류지 2층":"증오의 억류지","증오의 억류지 3층":"증오의 억류지",
+  "세계석 성채 1층":"세계석 성채","세계석 성채 2층":"세계석 성채","세계석 성채 3층":"세계석 성채"
+};
+
+function zoneMatchesTZ(x,tzName){
+  if(!x || x.category!=="zone" || !tzName) return false;
+  const t=norm(cleanTZName(tzName));
+  const candidates=[
+    x.name,
+    TZ_ZONE_PARENT_KO[x.name]||"",
+    x.enName
+  ].filter(Boolean);
+
+  return candidates.some(v=>{
+    const k=norm(cleanTZName(v));
+    return k && (t.includes(k) || k.includes(t));
+  });
+}
+
+function tzCardState(x){
+  if(zoneMatchesTZ(x,CURRENT_TZ_NAME)) return "current";
+  if(zoneMatchesTZ(x,NEXT_TZ_NAME)) return "next";
+  return "";
+}
+
 function render(){
  const nq=norm(query);
  let rows=DATA.filter(x=>category==="all"||x.category===category);
@@ -103,12 +171,20 @@ function render(){
  }
  rows=rows.filter(x=>!nq||norm([x.name,x.enName,x.desc,x.primary,x.sub,x.targetTitle,x.targetDesc,x.baseName,(x.aliases||[]).join(" "),x.code].join(" ")).includes(nq));
  count.textContent=rows.length;
- grid.innerHTML=rows.length?rows.map(x=>`<article class="card" data-id="${esc(x.id)}">
+ grid.innerHTML=rows.length?rows.map(x=>{
+ const tzState=tzCardState(x);
+ const tzBadge=tzState==="current"
+   ? '<span class="tz-card-badge current">● 현재 공포</span>'
+   : tzState==="next"
+     ? '<span class="tz-card-badge next">◆ 다음 공포</span>'
+     : "";
+ return `<article class="card ${tzState==="current"?"tz-current":tzState==="next"?"tz-next":""}" data-id="${esc(x.id)}">
  <button class="fav ${favorite.has(x.id)?"on":""}" data-fav="${esc(x.id)}">☆</button>
- <div class="kind">${ICON[x.category]||"•"} ${esc(x.sub||LABEL[x.category])} ${x.hasWaypoint?'<span class="wpdot">WP</span>':""}</div>
+ <div class="kind">${ICON[x.category]||"•"} ${esc(x.sub||LABEL[x.category])} ${x.hasWaypoint?'<span class="wpdot">WP</span>':""}${tzBadge}</div>
  <h3>${esc(x.name)}</h3><div class="en">${esc(x.enName||"")}</div>
  <div class="desc">${esc(x.category==="zone"?(x.targetTitle||x.desc):x.desc||x.primary||"")}</div>
- </article>`).join(""):`<div class="empty">검색 결과가 없습니다.</div>`;
+ </article>`;
+ }).join(""):`<div class="empty">검색 결과가 없습니다.</div>`;
 }
 
 function statsHtml(stats){
@@ -657,27 +733,43 @@ async function refreshTerrorZone(){
 
     if(best){
       lastGoodTZ={...best,at:Date.now()};
-      const act=actFromName(best.current);
-      currentEl.textContent=(act?act+" · ":"")+cleanTZName(best.current);
+      const currentName=cleanTZName(best.current);
+      const act=actFromName(currentName);
       const nextName=cleanTZName(best.next);
       const nextAct=actFromName(nextName);
+
+      CURRENT_TZ_NAME=currentName;
+      NEXT_TZ_NAME=nextName;
+
+      currentEl.textContent=(act?act+" · ":"")+currentName;
       nextEl.textContent=nextName ? ((nextAct?nextAct+" · ":"")+nextName) : "다음 지역 예측 대기 중";
       currentEl.title=best.confirmed
         ?"복수 실시간 트래커 일치"
         :"실시간 단일 트래커 기준";
+
+      render();
       return;
     }
 
     if(lastGoodTZ && Date.now()-lastGoodTZ.at<4*60*1000){
-      const act=actFromName(lastGoodTZ.current);
-      currentEl.textContent=(act?act+" · ":"")+cleanTZName(lastGoodTZ.current);
+      const currentName=cleanTZName(lastGoodTZ.current);
+      const act=actFromName(currentName);
       const nextName=cleanTZName(lastGoodTZ.next);
       const nextAct=actFromName(nextName);
+
+      CURRENT_TZ_NAME=currentName;
+      NEXT_TZ_NAME=nextName;
+
+      currentEl.textContent=(act?act+" · ":"")+currentName;
       nextEl.textContent=nextName ? ((nextAct?nextAct+" · ":"")+nextName) : "재동기화 중";
       currentEl.title="최근 정상 수신값 · 재동기화 중";
+      render();
     }else{
+      CURRENT_TZ_NAME="";
+      NEXT_TZ_NAME="";
       currentEl.textContent="실시간 정보 재동기화 중";
       nextEl.textContent="잠시 후 자동 재시도";
+      render();
     }
   } finally {
     tzRefreshing=false;
