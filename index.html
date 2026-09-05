@@ -98,7 +98,7 @@ let DATA=[{"id":"rw_core_0","category":"runeword","slot":"가슴","name":"배신
 const FALLBACK_DATA=DATA.slice();
 const LABEL={runeword:"룬워드",unique:"유니크",base:"베이스",cube:"큐빙",zone:"사냥터"};
 const ICON={runeword:"◆",unique:"★",base:"▣",cube:"⬡",zone:"⌖"};
-let category="all", zoneFilter="all", query="", selected=null;
+let category="all", zoneFilter="all", equipFilter="all", query="", selected=null;
 const favorite=new Set(JSON.parse(localStorage.getItem("d2helper_fav")||"[]"));
 const grid=document.getElementById("grid"), count=document.getElementById("count"), search=document.getElementById("search");
 
@@ -106,12 +106,101 @@ function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 function norm(s){return String(s??"").toLowerCase().replace(/\s+/g,"")}
 function immuneClass(t){return ["cold","fire","light","phys","poison","magic","var"].includes(t)?t:"var"}
 
+const EQUIP_FILTERS=[
+  ["all","전체"],
+  ["head","머리"],
+  ["chest","가슴"],
+  ["weapon_shield","무기/방패"],
+  ["gloves","장갑"],
+  ["boots","신발"],
+  ["belt","벨트"],
+  ["accessory","악세"]
+];
+
+function groupFromTypeCode(code){
+  const c=String(code||"").toLowerCase().trim();
+  if(!c) return "";
+  if(["helm","circ","phlm","pelt"].includes(c)) return "head";
+  if(["tors","armo"].includes(c)) return "chest";
+  if(["glov"].includes(c)) return "gloves";
+  if(["boot"].includes(c)) return "boots";
+  if(["belt"].includes(c)) return "belt";
+  if(["ring","rin","amul","amu","jewl","jew","char","cm1","cm2","cm3"].includes(c)) return "accessory";
+  if([
+    "shld","ashd","pala","head","necr","grim",
+    "weap","mele","swor","axe","pole","spea","staf","scep","mace","hamm","club",
+    "miss","bow","xbow","h2h","h2h2","knif","wand","orb","jave","tkni"
+  ].includes(c)) return "weapon_shield";
+  return "";
+}
+
+function equipmentGroup(x){
+  if(!x) return "";
+  if(x.equipGroup) return x.equipGroup;
+
+  const codeGroup=groupFromTypeCode(x.typeCode||x.baseTypeCode||"");
+  if(codeGroup) return codeGroup;
+
+  const t=norm([
+    x.slot,x.baseName,x.name,x.enName,x.sub,
+    ...(x.aliases||[])
+  ].join(" "));
+
+  // 악세부터 먼저 분류
+  if(/반지|링|ring|목걸이|아뮬|amulet|주얼|jewel|부적|charm/.test(t)) return "accessory";
+
+  // 장갑 / 신발 / 벨트
+  if(/장갑|글러브|glove|gauntlet|mitt/.test(t)) return "gloves";
+  if(/장화|부츠|신발|boot|greave/.test(t)) return "boots";
+  if(/허리띠|벨트|밸트|belt|sash/.test(t)) return "belt";
+
+  // 머리
+  if(/투구|헬름|헬멧|서클릿|코로넷|티아라|다이어뎀|helm|helmet|circlet|coronet|tiara|diadem|pelt/.test(t)) return "head";
+
+  // 가슴
+  if(/갑옷|아머|플레이트|메일|로브|armor|armour|plate|mail|robe|hauberk|cuirass/.test(t)) return "chest";
+
+  // 무기/방패
+  if(/방패|쉴드|shield|도검|검|소드|도끼|액스|미늘창|폴암|창|스피어|지팡이|스태프|홀|셉터|철퇴|메이스|망치|해머|활|보우|쇠뇌|크로스보우|클러|단검|대거|마법봉|완드|보주|오브|투창|재벌린|무기|weapon|sword|axe|polearm|spear|staff|scepter|mace|hammer|bow|crossbow|claw|dagger|wand|orb|javelin/.test(t)) return "weapon_shield";
+
+  return "";
+}
+
 function updateSubFilters(){
- const box=document.getElementById("subfilters");
- if(category!=="zone"){box.className="subfilters";box.innerHTML="";return}
- const opts=[["all","전체 지역"],["waypoint","웨이포인트"],["hunt","일반 사냥터"],["ACT 1","ACT 1"],["ACT 2","ACT 2"],["ACT 3","ACT 3"],["ACT 4","ACT 4"],["ACT 5","ACT 5"]];
- box.className="subfilters show";
- box.innerHTML=opts.map(([k,n])=>`<button class="filterbtn ${zoneFilter===k?"active":""}" data-zf="${k}">${n}</button>`).join("");
+  const box=document.getElementById("subfilters");
+
+  if(category==="zone"){
+    const opts=[
+      ["all","전체 지역"],["waypoint","웨이포인트"],["hunt","일반 사냥터"],
+      ["ACT 1","ACT 1"],["ACT 2","ACT 2"],["ACT 3","ACT 3"],["ACT 4","ACT 4"],["ACT 5","ACT 5"]
+    ];
+    box.className="subfilters show";
+    box.innerHTML=opts.map(([k,n])=>
+      `<button class="filterbtn ${zoneFilter===k?"active":""}" data-zf="${k}">${n}</button>`
+    ).join("");
+    return;
+  }
+
+  if(["runeword","unique","base"].includes(category)){
+    const categoryRows=DATA.filter(x=>x.category===category);
+    const counts={};
+    EQUIP_FILTERS.forEach(([key])=>{
+      counts[key]=key==="all"
+        ? categoryRows.length
+        : categoryRows.filter(x=>equipmentGroup(x)===key).length;
+    });
+
+    box.className="subfilters show";
+    box.innerHTML=EQUIP_FILTERS.map(([k,n])=>
+      `<button class="filterbtn ${equipFilter===k?"active":""}" data-eq="${k}">
+        ${n}<span style="margin-left:5px;opacity:.62">${counts[k]}</span>
+      </button>`
+    ).join("");
+    return;
+  }
+
+  box.className="subfilters";
+  box.innerHTML="";
 }
 
 
@@ -165,10 +254,16 @@ function tzCardState(x){
 function render(){
  const nq=norm(query);
  let rows=DATA.filter(x=>category==="all"||x.category===category);
+
  if(category==="zone"){
    rows=rows.filter(x=>zoneFilter==="all"|| (zoneFilter==="waypoint"&&x.hasWaypoint) || (zoneFilter==="hunt"&&!x.hasWaypoint) || x.slot===zoneFilter);
    rows.sort((a,b)=>(a.order||999)-(b.order||999));
  }
+
+ if(["runeword","unique","base"].includes(category) && equipFilter!=="all"){
+   rows=rows.filter(x=>equipmentGroup(x)===equipFilter);
+ }
+
  rows=rows.filter(x=>!nq||norm([x.name,x.enName,x.desc,x.primary,x.sub,x.targetTitle,x.targetDesc,x.baseName,(x.aliases||[]).join(" "),x.code].join(" ")).includes(nq));
  count.textContent=rows.length;
  grid.innerHTML=rows.length?rows.map(x=>{
@@ -345,8 +440,32 @@ function closeDetail(){document.body.classList.remove("open");document.getElemen
 
 search.addEventListener("input",e=>{query=e.target.value;render()});
 document.querySelectorAll(".quick button").forEach(b=>b.onclick=()=>{query=b.dataset.q;search.value=query;render()});
-document.getElementById("tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");category=b.dataset.cat;zoneFilter="all";updateSubFilters();render()});
-document.getElementById("subfilters").addEventListener("click",e=>{const b=e.target.closest("[data-zf]");if(!b)return;zoneFilter=b.dataset.zf;updateSubFilters();render()});
+document.getElementById("tabs").addEventListener("click",e=>{
+  const b=e.target.closest(".tab");if(!b)return;
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  category=b.dataset.cat;
+  zoneFilter="all";
+  equipFilter="all";
+  updateSubFilters();
+  render();
+});
+document.getElementById("subfilters").addEventListener("click",e=>{
+  const zb=e.target.closest("[data-zf]");
+  if(zb){
+    zoneFilter=zb.dataset.zf;
+    updateSubFilters();
+    render();
+    return;
+  }
+
+  const eb=e.target.closest("[data-eq]");
+  if(eb){
+    equipFilter=eb.dataset.eq;
+    updateSubFilters();
+    render();
+  }
+});
 grid.addEventListener("click",e=>{const f=e.target.closest("[data-fav]");if(f){e.stopPropagation();const id=f.dataset.fav;favorite.has(id)?favorite.delete(id):favorite.add(id);localStorage.setItem("d2helper_fav",JSON.stringify([...favorite]));render();return}const c=e.target.closest(".card");if(!c)return;const x=DATA.find(v=>v.id===c.dataset.id);if(x)openDetail(x)});
 document.getElementById("close").onclick=closeDetail;document.getElementById("backdrop").onclick=closeDetail;document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDetail()});
 
@@ -1110,6 +1229,8 @@ function makeBase(row,kind,locale){
     coreInfo:`${ethPossible?"에테리얼 가능 · ":""}${sockets?`최대 ${sockets}소켓 · `:""}룬워드 제작 시 정확한 아이템 종류와 소켓 수를 확인하세요.`,
     tier,
     sockets,
+    typeCode:row.type||row.type2||"",
+    equipGroup:groupFromTypeCode(row.type||row.type2||""),
     source:"D2R weapons/armor"
   };
 }
@@ -1166,6 +1287,21 @@ async function loadFullDatabase(){
         level:lv,
         fullStats:parseRunewordStats(r),
         statsComplete:false,
+        equipGroup:(()=>{
+          const rawTypes=[1,2,3,4,5,6].map(i=>r[`itype${i}`]).filter(Boolean);
+          const groups=[...new Set(rawTypes.map(groupFromTypeCode).filter(Boolean))];
+          if(groups.length===1) return groups[0];
+          // 무기 + 방패 같이 허용되는 룬워드는 사용자 요청대로 한 그룹
+          if(groups.every(g=>g==="weapon_shield")) return "weapon_shield";
+          // 투구 전용, 갑옷 전용은 각각 따로
+          if(groups.includes("head") && groups.length===1) return "head";
+          if(groups.includes("chest") && groups.length===1) return "chest";
+          // 혼합형 룬워드는 실제 사용처가 많은 무기/방패 그룹으로 분류
+          if(groups.includes("weapon_shield")) return "weapon_shield";
+          if(groups.includes("head")) return "head";
+          if(groups.includes("chest")) return "chest";
+          return "";
+        })(),
         source:"D2R runes.txt"
       };
       return mergePreferStatic(generated,existingRW);
@@ -1177,7 +1313,9 @@ async function loadFullDatabase(){
       if(!r.code) return;
       baseCodeMap.set(r.code,{
         en:r.name||r["*ItemName"]||r.code,
-        ko:fixedKoreanBaseName(localName(locale,r.namestr||r.code,r.name||r.code))
+        ko:fixedKoreanBaseName(localName(locale,r.namestr||r.code,r.name||r.code)),
+        typeCode:r.type||r.type2||"",
+        equipGroup:groupFromTypeCode(r.type||r.type2||"")
       });
     });
 
@@ -1205,6 +1343,8 @@ async function loadFullDatabase(){
         level:Number(r["lvl req"]||0),
         qlvl:Number(r.lvl||0),
         baseName:base.ko,
+        typeCode:base.typeCode||"",
+        equipGroup:base.equipGroup||"",
         dropState:state,
         fullStats:parseUniqueStats(r),
         tags:[`#${state.split(" · ")[0]}`,`#Qlvl${r.lvl||0}`],
@@ -1246,6 +1386,7 @@ async function loadFullDatabase(){
       status.textContent=`전체 DB 완료 · 룬워드 ${counts.rw} · 유니크 ${counts.uq} · 베이스 ${counts.bs}`;
       status.title="현재 D2R 게임 데이터 테이블 기반";
     }
+    updateSubFilters();
     render();
   }catch(err){
     console.error("Full database load failed:",err);
@@ -1254,6 +1395,7 @@ async function loadFullDatabase(){
       status.textContent="전체 DB 연결 실패 · 기본 내장 데이터 사용 중";
       status.title=String(err&&err.message||err);
     }
+    updateSubFilters();
     render();
   }
 }
